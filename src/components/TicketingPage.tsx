@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { CheckCircle, AlertCircle, Send, Plane, PlaneTakeoff, PlaneLanding, Users, Calendar } from 'lucide-react';
+import { Plane, PlaneTakeoff, PlaneLanding, Users, Calendar, MessageCircle, MapPin, Briefcase } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 const translations = {
@@ -9,92 +9,128 @@ const translations = {
     subtitle: "Seamless flight arrangements through our elite airline network. Best rates guaranteed.",
     partners: "Our Elite Airline Partners",
     form: {
+      title: "Flight Inquiry",
       departure: "Departure City",
       destination: "Destination City",
-      departDate: "Departure Date",
-      returnDate: "Return Date",
+      date: "Preferred Date",
       passengers: "Number of Passengers",
-      cabin: "Cabin Class",
-      fullName: "Full Name",
-      phone: "Phone Number",
-      email: "Email Address",
-      submit: "Request Flight Quote",
-      sending: "Sending...",
+      whatsappBtn: "Get Best Price on WhatsApp",
     },
-    options: {
-      cabins: ["Economy", "Business", "First Class"]
+    whatsappMsg: "Hi Darul Safar, I want to book a flight from {departure} to {destination} on {date} for {passengers} people. Please send me the best price!",
+    popularRoutes: {
+      title: "Top Destinations",
+      dubai: "Dubai, UAE",
+      dubaiDesc: "Daily flights with Emirates & FlyDubai.",
+      jeddah: "Jeddah, KSA",
+      jeddahDesc: "Direct routes for Umrah & Business.",
+      istanbul: "Istanbul, Turkey",
+      istanbulDesc: "Connecting Europe and Asia.",
+      london: "London, UK",
+      londonDesc: "Premium direct flights via Ethiopian.",
     },
-    success: "Thank you! A Darul Safar ticketing agent has received your request and will contact you shortly with the best options.",
-    disclaimer: "Fares and availability are subject to change until ticketed."
+    baggageGuide: {
+      title: "Baggage & Services Guide",
+      ethiopian: "2x 23kg bags included",
+      qatar: "Award-winning service",
+      saudia: "Generous baggage allowance",
+      emirates: "Premium In-flight Dining"
+    }
   },
   ar: {
     title: "حجز التذاكر العالمية والخدمات اللوجستية",
     subtitle: "ترتيبات طيران سلسة من خلال شبكة خطوطنا الجوية النخبة. أفضل الأسعار مضمونة.",
     partners: "شركاؤنا من الخطوط الجوية النخبة",
     form: {
+      title: "استفسار عن رحلة",
       departure: "مدينة المغادرة",
       destination: "مدينة الوصول",
-      departDate: "تاريخ المغادرة",
-      returnDate: "تاريخ العودة",
+      date: "التاريخ المفضل",
       passengers: "عدد الركاب",
-      cabin: "درجة السفر",
-      fullName: "الاسم الكامل",
-      phone: "رقم الهاتف",
-      email: "البريد الإلكتروني",
-      submit: "طلب عرض سعر رحلة",
-      sending: "جاري الإرسال...",
+      whatsappBtn: "احصل على أفضل سعر على واتساب",
     },
-    options: {
-      cabins: ["الدرجة السياحية", "درجة رجال الأعمال", "الدرجة الأولى"]
+    whatsappMsg: "مرحباً دار السفر، أريد حجز رحلة من {departure} إلى {destination} بتاريخ {date} لـ {passengers} أشخاص. يرجى إرسال أفضل سعر!",
+    popularRoutes: {
+      title: "أفضل الوجهات",
+      dubai: "دبي، الإمارات",
+      dubaiDesc: "رحلات يومية مع طيران الإمارات وفلاي دبي.",
+      jeddah: "جدة، السعودية",
+      jeddahDesc: "رحلات مباشرة للعمرة والأعمال.",
+      istanbul: "إسطنبول، تركيا",
+      istanbulDesc: "ربط أوروبا وآسيا.",
+      london: "لندن، المملكة المتحدة",
+      londonDesc: "رحلات مباشرة فاخرة عبر الخطوط الإثيوبية.",
     },
-    success: "شكراً لك! لقد تلقى وكيل تذاكر دار السفر طلبك وسيتصل بك قريباً بأفضل الخيارات.",
-    disclaimer: "الأسعار والتوافر عرضة للتغيير حتى يتم إصدار التذكرة."
+    baggageGuide: {
+      title: "دليل الأمتعة والخدمات",
+      ethiopian: "حقيبتان بوزن 23 كجم متضمنة",
+      qatar: "خدمة حائزة على جوائز",
+      saudia: "وزن أمتعة سخي",
+      emirates: "طعام فاخر على متن الطائرة"
+    }
   },
   am: {
     title: "ዓለም አቀፍ የአየር ትኬት እና ሎጂስቲክስ",
     subtitle: "በእኛ ምርጥ የአየር መንገድ አውታረ መረብ በኩል እንከን የለሽ የበረራ ዝግጅቶች። ምርጥ ዋጋዎች ተረጋግጠዋል።",
     partners: "የእኛ ምርጥ የአየር መንገድ አጋሮች",
     form: {
+      title: "የበረራ ጥያቄ",
       departure: "መነሻ ከተማ",
       destination: "መድረሻ ከተማ",
-      departDate: "የመነሻ ቀን",
-      returnDate: "የመመለሻ ቀን",
+      date: "የሚመረጥበት ቀን",
       passengers: "የመንገደኞች ብዛት",
-      cabin: "የበረራ ክፍል",
-      fullName: "ሙሉ ስም",
-      phone: "ስልክ ቁጥር",
-      email: "ኢሜይል",
-      submit: "የበረራ ዋጋ ይጠይቁ",
-      sending: "በመላክ ላይ...",
+      whatsappBtn: "በዋትስአፕ ምርጥ ዋጋ ያግኙ",
     },
-    options: {
-      cabins: ["ኢኮኖሚ", "ቢዝነስ", "አንደኛ ደረጃ"]
+    whatsappMsg: "ሰላም ዳሩል ሰፈር፣ ከ {departure} ወደ {destination} በ {date} ለ {passengers} ሰዎች በረራ መያዝ እፈልጋለሁ። እባክዎ ምርጥ ዋጋ ይላኩልኝ!",
+    popularRoutes: {
+      title: "ዋና መዳረሻዎች",
+      dubai: "ዱባይ፣ የተባበሩት አረብ ኤሚሬቶች",
+      dubaiDesc: "በየቀኑ በኤሚሬትስ እና ፍላይ ዱባይ በረራዎች።",
+      jeddah: "ጂዳ፣ ሳዑዲ አረቢያ",
+      jeddahDesc: "ለዑምራ እና ንግድ ቀጥታ መስመሮች።",
+      istanbul: "ኢስታንቡል፣ ቱርክ",
+      istanbulDesc: "አውሮፓን እና እስያን ማገናኘት።",
+      london: "ለንደን፣ ዩናይትድ ኪንግደም",
+      londonDesc: "በኢትዮጵያ አየር መንገድ ፕሪሚየም ቀጥታ በረራዎች።",
     },
-    success: "እናመሰግናለን! የዳሩል ሰፈር የትኬት ወኪል ጥያቄዎን ተቀብሏል እና በቅርቡ ምርጥ አማራጮችን ይዞ ያነጋግርዎታል።",
-    disclaimer: "ትኬት እስኪቆረጥ ድረስ ዋጋዎች እና ተገኝነት ሊለወጡ ይችላሉ።"
+    baggageGuide: {
+      title: "የሻንጣ እና አገልግሎቶች መመሪያ",
+      ethiopian: "2x 23 ኪ.ግ ሻንጣዎች ተካትተዋል",
+      qatar: "ተሸላሚ አገልግሎት",
+      saudia: "ለጋስ የሻንጣ አበል",
+      emirates: "ፕሪሚየም የበረራ ውስጥ ምግብ"
+    }
   },
   om: {
     title: "Tikeetii Qilleensaa Idil-addunyaa fi Loojistiksii",
     subtitle: "Qophii balalii rakkoo hin qabne karaa networkii daandii qilleensaa keenya filatamaa ta'een. Gatiin gaariin mirkanaa'aadha.",
     partners: "Michoota Daandii Qilleensaa Keenya Filatamoo",
     form: {
+      title: "Gaaffii Balalii",
       departure: "Magaalaa Ka'umsaa",
       destination: "Magaalaa Gahumsaa",
-      departDate: "Guyyaa Ka'umsaa",
-      returnDate: "Guyyaa Deebii",
+      date: "Guyyaa Filatamaa",
       passengers: "Baay'ina Imaltootaa",
-      cabin: "Kutaa Balalii",
-      fullName: "Maqaa Guutuu",
-      phone: "Lakkoofsa Bilbilaa",
-      email: "Imeelii",
-      submit: "Gatii Balalii Gaafadhu",
-      sending: "Ergamaa Jira...",
+      whatsappBtn: "Gatii Gaarii WhatsApp Irraan Argadhu",
     },
-    options: {
-      cabins: ["Ikoonomii", "Bizinasi", "Sadarkaa Tokkoffaa"]
+    whatsappMsg: "Akkam Darul Safar, balalii {departure} irraa gara {destination} guyyaa {date} namoota {passengers} tiif qabsiisuu barbaada. Maaloo gatii gaarii naaf ergaa!",
+    popularRoutes: {
+      title: "Bakkeewwan Gahumsaa Beekamoo",
+      dubai: "Dubaa'ii, UAE",
+      dubaiDesc: "Balalii guyyaa guyyaa Emirates fi FlyDubai waliin.",
+      jeddah: "Jiddaa, KSA",
+      jeddahDesc: "Daandii kallattii Umrah fi Bizinasiif.",
+      istanbul: "Istanbuul, Tarkii",
+      istanbulDesc: "Awurooppaa fi Eeshiyaa walquunnamsiisuu.",
+      london: "Landan, UK",
+      londonDesc: "Balalii kallattii sadarkaa olaanaa daandii xiyyaaraa Itoophiyaatiin.",
     },
-    success: "Galatoomaa! Bakka bu'aan tikeetii Darul Safar gaaffii keessan fudhateera, filannoowwan gaarii ta'aniin dhiyoottis isin quunnama.",
-    disclaimer: "Gatiin fi argamuun hanga tikeetiin muramutti jijjiiramuu danda'a."
+    baggageGuide: {
+      title: "Qajeelfama Meeshaa fi Tajaajilootaa",
+      ethiopian: "Borsaa 2x 23kg of keessatti qabata",
+      qatar: "Tajaajila badhaasa argate",
+      saudia: "Eeyyama meeshaa gaarii",
+      emirates: "Nyaata balalii keessaa sadarkaa olaanaa"
+    }
   }
 };
 
@@ -112,47 +148,26 @@ export default function TicketingPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   
   const [formData, setFormData] = useState({
-    departure: '',
+    departure: 'Addis Ababa',
     destination: '',
-    departDate: '',
-    returnDate: '',
-    passengers: '1',
-    cabin: '',
-    fullName: '',
-    phone: '',
-    email: ''
+    date: '',
+    passengers: '1'
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleWhatsApp = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
+    const msg = t.whatsappMsg
+      .replace('{departure}', formData.departure || 'Addis Ababa')
+      .replace('{destination}', formData.destination || '[Destination]')
+      .replace('{date}', formData.date || '[Date]')
+      .replace('{passengers}', formData.passengers || '1');
     
-    try {
-      const response = await fetch('https://formspree.io/f/mlgokzaw', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          ...formData,
-          _subject: `New Flight Inquiry from ${formData.fullName}`
-        })
-      });
-
-      if (response.ok) {
-        setIsSubmitted(true);
-      } else {
-        console.error("Form submission failed");
-      }
-    } catch (error) {
-      console.error("Error submitting form:", error);
-    } finally {
-      setIsSubmitting(false);
-    }
+    const encodedMsg = encodeURIComponent(msg);
+    window.open(`https://wa.me/251911000000?text=${encodedMsg}`, '_blank');
   };
 
   return (
@@ -231,146 +246,140 @@ export default function TicketingPage() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="bg-white/70 backdrop-blur-2xl border border-white/60 hover:border-blue-200 transition-colors duration-500 rounded-[2.5rem] p-8 md:p-12 shadow-[0_20px_40px_rgb(0,0,0,0.08)] relative overflow-hidden"
+          className="bg-white/40 backdrop-blur-3xl border border-white/60 hover:border-blue-200 transition-colors duration-500 rounded-[2.5rem] p-8 md:p-12 shadow-[0_20px_40px_rgb(0,0,0,0.08)] relative overflow-hidden"
         >
           {/* Decorative Background Elements */}
           <div className="absolute -top-24 -right-24 w-64 h-64 bg-blue-400/10 rounded-full blur-3xl pointer-events-none"></div>
           <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-teal-400/10 rounded-full blur-3xl pointer-events-none"></div>
 
-          <AnimatePresence mode="wait">
-            {!isSubmitted ? (
-              <motion.form 
-                key="form"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0, y: -20 }}
-                onSubmit={handleSubmit}
-                className="relative z-10 space-y-8"
+          <div className="relative z-10 mb-8 text-center">
+            <h3 className="text-2xl font-headline font-bold text-gray-900">{t.form.title}</h3>
+          </div>
+
+          <form 
+            onSubmit={handleWhatsApp}
+            className="relative z-10 space-y-8"
+          >
+            {/* Flight Details */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="space-y-2">
+                <label className="flex items-center gap-2 text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
+                  <PlaneTakeoff className="w-4 h-4" /> {t.form.departure}
+                </label>
+                <input name="departure" value={formData.departure} onChange={handleChange} required type="text" className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm" placeholder="Addis Ababa" />
+              </div>
+
+              <div className="space-y-2">
+                <label className="flex items-center gap-2 text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
+                  <PlaneLanding className="w-4 h-4" /> {t.form.destination}
+                </label>
+                <input name="destination" value={formData.destination} onChange={handleChange} required type="text" className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm" placeholder="City or Airport Code" />
+              </div>
+
+              <div className="space-y-2">
+                <label className="flex items-center gap-2 text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
+                  <Calendar className="w-4 h-4" /> {t.form.date}
+                </label>
+                <input name="date" value={formData.date} onChange={handleChange} required type="date" className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm" />
+              </div>
+
+              <div className="space-y-2">
+                <label className="flex items-center gap-2 text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
+                  <Users className="w-4 h-4" /> {t.form.passengers}
+                </label>
+                <input name="passengers" value={formData.passengers} onChange={handleChange} required type="number" min="1" className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm" />
+              </div>
+            </div>
+
+            <div className="pt-8 flex justify-center">
+              <motion.button 
+                type="submit"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-full md:w-auto bg-green-500 text-white font-headline font-bold px-8 py-4 rounded-2xl hover:bg-green-600 transition-all flex items-center justify-center gap-3 shadow-lg shadow-green-500/30 text-lg"
               >
-                {/* Flight Details */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div className="space-y-2">
-                    <label className="flex items-center gap-2 text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
-                      <PlaneTakeoff className="w-4 h-4" /> {t.form.departure}
-                    </label>
-                    <input name="departure" value={formData.departure} onChange={handleChange} required type="text" className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm" placeholder="City or Airport Code" />
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="flex items-center gap-2 text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
-                      <PlaneLanding className="w-4 h-4" /> {t.form.destination}
-                    </label>
-                    <input name="destination" value={formData.destination} onChange={handleChange} required type="text" className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm" placeholder="City or Airport Code" />
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="flex items-center gap-2 text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
-                      <Calendar className="w-4 h-4" /> {t.form.departDate}
-                    </label>
-                    <input name="departDate" value={formData.departDate} onChange={handleChange} required type="date" className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm" />
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="flex items-center gap-2 text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
-                      <Calendar className="w-4 h-4" /> {t.form.returnDate}
-                    </label>
-                    <input name="returnDate" value={formData.returnDate} onChange={handleChange} type="date" className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm" />
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="flex items-center gap-2 text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
-                      <Users className="w-4 h-4" /> {t.form.passengers}
-                    </label>
-                    <input name="passengers" value={formData.passengers} onChange={handleChange} required type="number" min="1" className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm" />
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="block text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
-                      {t.form.cabin}
-                    </label>
-                    <select name="cabin" value={formData.cabin} onChange={handleChange} required className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all appearance-none shadow-sm">
-                      <option value="" disabled className="text-gray-500">Select...</option>
-                      {t.options.cabins.map((opt, i) => (
-                        <option key={i} value={opt} className="bg-white text-gray-900">{opt}</option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                <div className="w-full h-px bg-gray-200 my-8"></div>
-
-                {/* Contact Details */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div className="space-y-2">
-                    <label className="block text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
-                      {t.form.fullName}
-                    </label>
-                    <input name="fullName" value={formData.fullName} onChange={handleChange} required type="text" className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm" placeholder="John Doe" />
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="block text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
-                      {t.form.phone}
-                    </label>
-                    <input name="phone" value={formData.phone} onChange={handleChange} required type="tel" className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm" placeholder="+251..." />
-                  </div>
-
-                  <div className="space-y-2 md:col-span-2">
-                    <label className="block text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
-                      {t.form.email}
-                    </label>
-                    <input name="email" value={formData.email} onChange={handleChange} required type="email" className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm" placeholder="john@example.com" />
-                  </div>
-                </div>
-
-                <div className="pt-8 border-t border-gray-200 flex flex-col md:flex-row items-center justify-between gap-6">
-                  <div className="flex items-center gap-3 text-gray-500 text-sm">
-                    <AlertCircle className="w-5 h-5 text-blue-600 shrink-0" />
-                    <p>{t.disclaimer}</p>
-                  </div>
-                  <button 
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full md:w-auto bg-blue-600 text-white font-headline font-bold px-8 py-4 rounded-2xl hover:bg-blue-700 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:hover:scale-100 shadow-lg shadow-blue-500/30"
-                  >
-                    {isSubmitting ? t.form.sending : (
-                      <>
-                        {t.form.submit}
-                        <Send className="w-5 h-5" />
-                      </>
-                    )}
-                  </button>
-                </div>
-              </motion.form>
-            ) : (
-              <motion.div 
-                key="success"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="relative z-10 flex flex-col items-center justify-center text-center py-16"
-              >
-                <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mb-6 shadow-sm border border-green-100">
-                  <CheckCircle className="w-10 h-10 text-green-500" />
-                </div>
-                <h3 className="text-3xl font-headline font-bold text-gray-900 mb-4">Request Received</h3>
-                <p className="text-gray-500 font-body max-w-md">
-                  {t.success}
-                </p>
-                <button 
-                  onClick={() => {
-                    setIsSubmitted(false);
-                    setFormData({
-                      departure: '', destination: '', departDate: '', returnDate: '', passengers: '1', cabin: '', fullName: '', phone: '', email: ''
-                    });
-                  }}
-                  className="mt-8 px-8 py-3 bg-white border border-gray-200 text-gray-900 rounded-2xl hover:bg-gray-50 hover:border-gray-300 transition-colors shadow-sm font-bold"
-                >
-                  Submit Another Request
-                </button>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                <MessageCircle className="w-6 h-6" />
+                {t.form.whatsappBtn}
+              </motion.button>
+            </div>
+          </form>
         </motion.div>
+      </section>
+
+      {/* Popular Routes Section */}
+      <section className="w-full px-4 md:px-8 max-w-7xl mx-auto mb-32 md:mb-48">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-headline font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-600 tracking-tight">{t.popularRoutes.title}</h2>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            { city: t.popularRoutes.dubai, desc: t.popularRoutes.dubaiDesc, icon: "🏙️" },
+            { city: t.popularRoutes.jeddah, desc: t.popularRoutes.jeddahDesc, icon: "🕋" },
+            { city: t.popularRoutes.istanbul, desc: t.popularRoutes.istanbulDesc, icon: "🕌" },
+            { city: t.popularRoutes.london, desc: t.popularRoutes.londonDesc, icon: "🎡" }
+          ].map((route, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              whileHover={{ scale: 1.05 }}
+              transition={{ delay: index * 0.1, duration: 0.5, ease: "easeOut" }}
+              className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-3xl p-6 shadow-sm hover:shadow-xl hover:shadow-blue-500/10 transition-all cursor-pointer group"
+            >
+              <div className="text-4xl mb-4 group-hover:scale-110 transition-transform origin-left">{route.icon}</div>
+              <h3 className="text-xl font-headline font-bold text-gray-900 mb-2">{route.city}</h3>
+              <p className="text-sm text-gray-500 font-body leading-relaxed">{route.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* Baggage & Services Guide */}
+      <section className="w-full px-4 md:px-8 max-w-7xl mx-auto mb-32 md:mb-48">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-headline font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-600 tracking-tight">{t.baggageGuide.title}</h2>
+        </motion.div>
+
+        <div className="flex overflow-x-auto pb-8 gap-6 snap-x snap-mandatory scrollbar-hide">
+          {[
+            { name: "Ethiopian Airlines", logo: "/ethiopian.png", highlight: t.baggageGuide.ethiopian },
+            { name: "Qatar Airways", logo: "/qatar.png", highlight: t.baggageGuide.qatar },
+            { name: "Saudia", logo: "/saudia.png", highlight: t.baggageGuide.saudia },
+            { name: "Emirates", logo: "/emirates.png", highlight: t.baggageGuide.emirates }
+          ].map((airline, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              whileHover={{ scale: 1.05 }}
+              transition={{ delay: index * 0.1, duration: 0.5, ease: "easeOut" }}
+              className="snap-center shrink-0 w-72 bg-white/60 backdrop-blur-xl border border-white/80 rounded-3xl p-6 shadow-sm hover:shadow-xl hover:shadow-blue-500/10 transition-all flex flex-col items-center text-center"
+            >
+              <div className="h-16 flex items-center justify-center mb-6">
+                <img src={airline.logo} alt={airline.name} className="max-h-full max-w-full object-contain" />
+              </div>
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-700 rounded-full text-sm font-bold">
+                <Briefcase className="w-4 h-4" />
+                {airline.highlight}
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </section>
     </div>
   );

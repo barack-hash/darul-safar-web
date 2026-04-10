@@ -43,6 +43,43 @@ interface Translations {
     tools: string;
     toolsDesc: string;
   };
+  toolsPage: {
+    title: string;
+    subtitle: string;
+    amount: string;
+    from: string;
+    to: string;
+    lastUpdated: string;
+    commonPairs: string;
+    loading: string;
+    error: string;
+    clock: {
+      title: string;
+      localTime: string;
+      addisAbaba: string;
+      riyadh: string;
+      dubai: string;
+    };
+    planner: {
+      title: string;
+      itinerary: string;
+      addDay: string;
+      day: string;
+      activity: string;
+      location: string;
+      budget: string;
+      flights: string;
+      accommodation: string;
+      food: string;
+      visas: string;
+      totalBudget: string;
+      estInEtb: string;
+      currency: string;
+      clearAll: string;
+      activityDetails: string;
+      locationNotes: string;
+    };
+  };
 }
 
 const translations: Record<Lang, Translations> = {
@@ -78,6 +115,43 @@ const translations: Record<Lang, Translations> = {
       visasDesc: "Expert processing for work, tourist, medical, and education permits globally.",
       tools: "Specialized Travel",
       toolsDesc: "Advanced logistics for enterprise-scale travel and bespoke vacation planning."
+    },
+    toolsPage: {
+      title: "Live Currency Converter",
+      subtitle: "Real-time exchange rates for the global Ethiopian traveler.",
+      amount: "Amount",
+      from: "From",
+      to: "To",
+      lastUpdated: "Last Updated",
+      commonPairs: "Quick Reference (to ETB)",
+      loading: "Fetching live rates...",
+      error: "Unable to load live rates.",
+      clock: {
+        title: "World Clock",
+        localTime: "Local Time",
+        addisAbaba: "Addis Ababa",
+        riyadh: "Riyadh",
+        dubai: "Dubai"
+      },
+      planner: {
+        title: "Travel Planner",
+        itinerary: "Itinerary Timeline",
+        addDay: "Add Day",
+        day: "Day",
+        activity: "Activity",
+        location: "Location",
+        budget: "Smart Budget",
+        flights: "Flights",
+        accommodation: "Accommodation",
+        food: "Food",
+        visas: "Visas",
+        totalBudget: "Total Budget",
+        estInEtb: "Est. in ETB",
+        currency: "Currency",
+        clearAll: "Clear All",
+        activityDetails: "Activity Details",
+        locationNotes: "Location Notes"
+      }
     }
   },
   ar: {
@@ -112,6 +186,43 @@ const translations: Record<Lang, Translations> = {
       visasDesc: "معالجة خبيرة لتصاريح العمل والسياحة والطبية والتعليمية على مستوى العالم.",
       tools: "سفر متخصص",
       toolsDesc: "لوجستيات متقدمة لسفر الشركات وتخطيط العطلات المخصصة."
+    },
+    toolsPage: {
+      title: "محول العملات المباشر",
+      subtitle: "أسعار صرف في الوقت الفعلي للمسافر الإثيوبي العالمي.",
+      amount: "المبلغ",
+      from: "من",
+      to: "إلى",
+      lastUpdated: "آخر تحديث",
+      commonPairs: "مرجع سريع (إلى البير الإثيوبي)",
+      loading: "جاري جلب الأسعار المباشرة...",
+      error: "تعذر تحميل الأسعار المباشرة.",
+      clock: {
+        title: "الساعة العالمية",
+        localTime: "التوقيت المحلي",
+        addisAbaba: "أديس أبابا",
+        riyadh: "الرياض",
+        dubai: "دبي"
+      },
+      planner: {
+        title: "مخطط السفر",
+        itinerary: "الجدول الزمني للرحلة",
+        addDay: "إضافة يوم",
+        day: "يوم",
+        activity: "النشاط",
+        location: "الموقع",
+        budget: "الميزانية الذكية",
+        flights: "رحلات الطيران",
+        accommodation: "الإقامة",
+        food: "الطعام",
+        visas: "التأشيرات",
+        totalBudget: "إجمالي الميزانية",
+        estInEtb: "التقدير بالبير الإثيوبي",
+        currency: "العملة",
+        clearAll: "مسح الكل",
+        activityDetails: "تفاصيل النشاط",
+        locationNotes: "ملاحظات الموقع"
+      }
     }
   },
   am: {
@@ -146,6 +257,43 @@ const translations: Record<Lang, Translations> = {
       visasDesc: "ለስራ፣ ለቱሪስት፣ ለህክምና እና ለትምህርት ፈቃዶች በዓለም አቀፍ ደረጃ የባለሙያ ሂደት።",
       tools: "ልዩ የጉዞ አገልግሎት",
       toolsDesc: "ለድርጅት ደረጃ ጉዞ እና ለተበጀ የእረፍት ጊዜ እቅድ የላቀ ሎጂስቲክስ።"
+    },
+    toolsPage: {
+      title: "የቀጥታ ምንዛሬ መቀየሪያ",
+      subtitle: "ለዓለም አቀፍ ኢትዮጵያዊ ተጓዥ የእውነተኛ ጊዜ የምንዛሬ ተመኖች።",
+      amount: "መጠን",
+      from: "ከ",
+      to: "ወደ",
+      lastUpdated: "ለመጨረሻ ጊዜ የዘመነው",
+      commonPairs: "ፈጣን ማጣቀሻ (ወደ ብር)",
+      loading: "የቀጥታ ተመኖችን በማምጣት ላይ...",
+      error: "የቀጥታ ተመኖችን መጫን አልተቻለም።",
+      clock: {
+        title: "የዓለም ሰዓት",
+        localTime: "የአካባቢ ሰዓት",
+        addisAbaba: "አዲስ አበባ",
+        riyadh: "ሪያድ",
+        dubai: "ዱባይ"
+      },
+      planner: {
+        title: "የጉዞ እቅድ አውጪ",
+        itinerary: "የጉዞ የጊዜ ሰሌዳ",
+        addDay: "ቀን ያክሉ",
+        day: "ቀን",
+        activity: "እንቅስቃሴ",
+        location: "ቦታ",
+        budget: "ስማርት በጀት",
+        flights: "በረራዎች",
+        accommodation: "ማረፊያ",
+        food: "ምግብ",
+        visas: "ቪዛዎች",
+        totalBudget: "አጠቃላይ በጀት",
+        estInEtb: "በብር ግምት",
+        currency: "ምንዛሬ",
+        clearAll: "ሁሉንም አጽዳ",
+        activityDetails: "የእንቅስቃሴ ዝርዝሮች",
+        locationNotes: "የቦታ ማስታወሻዎች"
+      }
     }
   },
   om: {
@@ -180,6 +328,43 @@ const translations: Record<Lang, Translations> = {
       visasDesc: "Eeyyama hojii, tuuristii, yaalaa fi barnootaa idil-addunyaatti ogeessotaan raawwachuu.",
       tools: "Imala Addaa",
       toolsDesc: "Loojistiksii olaanaa imala dhaabbataaf fi karoora boqonnaa addaa."
+    },
+    toolsPage: {
+      title: "Jijjiirraa Maallaqaa Kallattii",
+      subtitle: "Imaltoota Itoophiyaa idil-addunyaaf gatii sharafaa yeroo ammaa.",
+      amount: "Hanga",
+      from: "Irraa",
+      to: "Gara",
+      lastUpdated: "Yeroo Dhumaa Kan Haaromfame",
+      commonPairs: "Wabii Salphaa (gara ETB)",
+      loading: "Gatii kallattii fidaa jira...",
+      error: "Gatii kallattii fe'uun hin danda'amne.",
+      clock: {
+        title: "Sa'aatii Addunyaa",
+        localTime: "Sa'aatii Naannoo",
+        addisAbaba: "Finfinnee",
+        riyadh: "Riyaad",
+        dubai: "Dubay"
+      },
+      planner: {
+        title: "Karoora Imalaa",
+        itinerary: "Sagantaa Imalaa",
+        addDay: "Guyyaa Ida'i",
+        day: "Guyyaa",
+        activity: "Hojii",
+        location: "Bakka",
+        budget: "Baajata Qaxalee",
+        flights: "Balali'aa",
+        accommodation: "Bultii",
+        food: "Nyaata",
+        visas: "Viizaa",
+        totalBudget: "Baajata Waliigalaa",
+        estInEtb: "Tilmaama ETB",
+        currency: "Maallaqa",
+        clearAll: "Hunda Haqi",
+        activityDetails: "Ibsa Hojii",
+        locationNotes: "Yaada Bakka"
+      }
     }
   }
 };

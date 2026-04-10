@@ -1,141 +1,151 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { Calculator, Info, DollarSign, Plane, Building, FileText } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, animate } from 'motion/react';
+import { RefreshCw, ArrowRightLeft, Clock, Plus, MapPin, Activity, Plane, Building, Utensils, FileText, ChevronDown, Trash2 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
-const translations = {
-  en: {
-    title: "Strategic Utility Hub",
-    subtitle: "Precision tools designed for the modern pilgrim and global trader.",
-    form: {
-      estimatorTitle: "Smart Budgeter",
-      destination: "Destination",
-      travelers: "Travelers",
-      duration: "Duration (Days)",
-      tier: "Package Tier",
-      calculate: "Calculate Estimate",
-    },
-    options: {
-      destinations: ["Umrah", "Dubai", "Europe", "SE Asia"],
-      tiers: ["Economy", "Standard", "Premium"]
-    },
-    results: {
-      breakdown: "Estimated Breakdown",
-      flights: "Flights & Transit",
-      visa: "Visa Fees",
-      lodging: "Lodging & Subsistence",
-      total: "Total Estimate",
-      disclaimer: "Estimates are based on current market averages. Contact Darul Safar for a live quote."
+const CURRENCIES = ["USD", "ETB", "SAR", "AED", "EUR"];
+
+function AnimatedNumber({ value }: { value: number }) {
+  const nodeRef = useRef<HTMLSpanElement>(null);
+  const prevValue = useRef(value);
+
+  useEffect(() => {
+    const node = nodeRef.current;
+    if (node) {
+      const controls = animate(prevValue.current, value, {
+        duration: 0.5,
+        ease: "easeOut",
+        onUpdate(v) {
+          node.textContent = v.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+      });
+      prevValue.current = value;
+      return () => controls.stop();
     }
-  },
-  ar: {
-    title: "مركز المرافق الاستراتيجية",
-    subtitle: "أدوات دقيقة مصممة للحاج الحديث والتاجر العالمي.",
-    form: {
-      estimatorTitle: "مقدر الميزانية الذكي",
-      destination: "الوجهة",
-      travelers: "المسافرون",
-      duration: "المدة (أيام)",
-      tier: "مستوى الباقة",
-      calculate: "حساب التقدير",
-    },
-    options: {
-      destinations: ["عمرة", "دبي", "أوروبا", "جنوب شرق آسيا"],
-      tiers: ["اقتصادي", "قياسي", "ممتاز"]
-    },
-    results: {
-      breakdown: "التفصيل المقدر",
-      flights: "الرحلات الجوية والعبور",
-      visa: "رسوم التأشيرة",
-      lodging: "السكن والإعاشة",
-      total: "التقدير الإجمالي",
-      disclaimer: "تستند التقديرات إلى متوسطات السوق الحالية. اتصل بدار السفر للحصول على عرض أسعار مباشر."
-    }
-  },
-  am: {
-    title: "ስትራቴጂካዊ የፍጆታ ማዕከል",
-    subtitle: "ለዘመናዊው መንገደኛ እና ዓለም አቀፍ ነጋዴ የተነደፉ ትክክለኛ መሳሪያዎች።",
-    form: {
-      estimatorTitle: "ስማርት የበጀት ግምት",
-      destination: "መዳረሻ",
-      travelers: "ተጓዦች",
-      duration: "ቆይታ (ቀናት)",
-      tier: "የጥቅል ደረጃ",
-      calculate: "ግምቱን አስላ",
-    },
-    options: {
-      destinations: ["ዑምራ", "ዱባይ", "አውሮፓ", "ደቡብ ምስራቅ እስያ"],
-      tiers: ["ኢኮኖሚ", "መደበኛ", "ፕሪሚየም"]
-    },
-    results: {
-      breakdown: "የተገመተው ዝርዝር",
-      flights: "በረራዎች እና ትራንዚት",
-      visa: "የቪዛ ክፍያዎች",
-      lodging: "ማረፊያ እና ቀለብ",
-      total: "አጠቃላይ ግምት",
-      disclaimer: "ግምቶች አሁን ባለው የገበያ አማካይ ላይ የተመሰረቱ ናቸው። ለቀጥታ ዋጋ ዳሩል ሰፈርን ያነጋግሩ።"
-    }
-  },
-  om: {
-    title: "Wiirtuu Tajaajila Tarsiimawaa",
-    subtitle: "Meeshaalee sirrii imaltoota ammayyaa fi daldaltoota idil-addunyaaf qophaa'an.",
-    form: {
-      estimatorTitle: "Tilmaama Baajataa Qaxalee",
-      destination: "Bakka Deeman",
-      travelers: "Imaltoota",
-      duration: "Turtii (Guyyoota)",
-      tier: "Sadarkaa Paakeejii",
-      calculate: "Tilmaama Herregi",
-    },
-    options: {
-      destinations: ["Umrah", "Dubay", "Awurooppaa", "Eshiyaa Kibba-Bahaa"],
-      tiers: ["Ekonomii", "Idilee", "Piriimiyemii"]
-    },
-    results: {
-      breakdown: "Qoodiinsa Tilmaamame",
-      flights: "Balali'aa fi Geejjibaa",
-      visa: "Kaffaltii Viizaa",
-      lodging: "Bultii fi Nyaata",
-      total: "Tilmaama Waliigalaa",
-      disclaimer: "Tilmaamni kun giddugaleessa gabaa ammaa irratti hundaa'a. Gatii kallattiif Darul Safar quunnamaa."
-    }
-  }
-};
+  }, [value]);
+
+  return <span ref={nodeRef}>{value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>;
+}
 
 export default function ToolsPage() {
-  const { lang } = useLanguage();
-  const t = translations[lang];
+  const { lang, t } = useLanguage();
+  const pageT = t.toolsPage;
   
-  const [destination, setDestination] = useState(t.options.destinations[0]);
-  const [travelers, setTravelers] = useState(1);
-  const [duration, setDuration] = useState(14);
-  const [tier, setTier] = useState(t.options.tiers[1]);
+  const [amount, setAmount] = useState<string>("1000");
+  const [fromCurrency, setFromCurrency] = useState("USD");
+  const [toCurrency, setToCurrency] = useState("ETB");
   
-  const [isCalculated, setIsCalculated] = useState(false);
-  const [results, setResults] = useState({ flights: 0, visa: 0, lodging: 0, total: 0 });
+  const [rates, setRates] = useState<Record<string, number> | null>(null);
+  const [lastUpdated, setLastUpdated] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [isSwapping, setIsSwapping] = useState(false);
+  
+  const [currentTime, setCurrentTime] = useState(new Date());
 
-  const handleCalculate = (e: React.FormEvent) => {
-    e.preventDefault();
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const fetchRates = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+        if (!response.ok) throw new Error('Failed to fetch');
+        const data = await response.json();
+        setRates(data.rates);
+        
+        // Format date
+        const date = new Date(data.time_last_updated * 1000);
+        setLastUpdated(date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' ' + date.toLocaleDateString());
+        setError(false);
+      } catch (err) {
+        console.error(err);
+        setError(true);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchRates();
+  }, []);
+
+  const handleSwap = () => {
+    setIsSwapping(true);
+    setFromCurrency(toCurrency);
+    setToCurrency(fromCurrency);
+    setTimeout(() => setIsSwapping(false), 300);
+  };
+
+  const calculateConversion = (amt: number, from: string, to: string) => {
+    if (!rates) return 0;
+    const rateFrom = rates[from];
+    const rateTo = rates[to];
+    if (!rateFrom || !rateTo) return 0;
     
-    // Placeholder logic
-    let baseCost = 200; // Standard
-    if (tier === t.options.tiers[0]) baseCost = 100; // Economy
-    if (tier === t.options.tiers[2]) baseCost = 400; // Premium
+    // Convert to USD first, then to target
+    const inUSD = amt / rateFrom;
+    return inUSD * rateTo;
+  };
 
-    let flightCost = 800; // Default
-    let visaFee = 150;
+  const numericAmount = parseFloat(amount) || 0;
+  const result = calculateConversion(numericAmount, fromCurrency, toCurrency);
 
-    if (destination === t.options.destinations[1]) { flightCost = 400; visaFee = 100; } // Dubai
-    if (destination === t.options.destinations[2]) { flightCost = 900; visaFee = 120; } // Europe
-    if (destination === t.options.destinations[3]) { flightCost = 700; visaFee = 80; } // SE Asia
+  const formatTime = (date: Date, timeZone: string) => {
+    return date.toLocaleTimeString('en-US', { timeZone, hour: '2-digit', minute: '2-digit', hour12: true });
+  };
 
-    const flights = flightCost * travelers;
-    const visa = visaFee * travelers;
-    const lodging = baseCost * duration * travelers;
-    const total = flights + visa + lodging;
+  const formatDate = (date: Date, timeZone: string) => {
+    return date.toLocaleDateString('en-US', { timeZone, weekday: 'short', month: 'short', day: 'numeric' });
+  };
 
-    setResults({ flights, visa, lodging, total });
-    setIsCalculated(true);
+  const clockCities = [
+    { id: 'addisAbaba', tz: 'Africa/Addis_Ababa', name: pageT.clock.addisAbaba },
+    { id: 'riyadh', tz: 'Asia/Riyadh', name: pageT.clock.riyadh },
+    { id: 'dubai', tz: 'Asia/Dubai', name: pageT.clock.dubai }
+  ];
+
+  // Itinerary State
+  const [itinerary, setItinerary] = useState([{ id: 1, activity: '', location: '' }]);
+  const [expandedDayId, setExpandedDayId] = useState<number | null>(1);
+
+  const addDay = () => {
+    const newId = itinerary.length + 1;
+    setItinerary([...itinerary, { id: newId, activity: '', location: '' }]);
+    setExpandedDayId(newId);
+  };
+
+  const updateDay = (id: number, field: 'activity' | 'location', value: string) => {
+    setItinerary(itinerary.map(day => day.id === id ? { ...day, [field]: value } : day));
+  };
+
+  // Budget State
+  const [budgetCurrency, setBudgetCurrency] = useState("USD");
+  const [budget, setBudget] = useState({
+    flights: 0,
+    accommodation: 0,
+    food: 0,
+    visas: 0
+  });
+
+  const updateBudget = (field: keyof typeof budget, value: string) => {
+    setBudget({ ...budget, [field]: parseFloat(value) || 0 });
+  };
+
+  const totalBudgetInBase = budget.flights + budget.accommodation + budget.food + budget.visas;
+  const totalBudgetInETB = calculateConversion(totalBudgetInBase, budgetCurrency, "ETB");
+
+  const getPercentage = (value: number) => {
+    if (totalBudgetInBase === 0) return 0;
+    return (value / totalBudgetInBase) * 100;
+  };
+
+  const handleClearAll = () => {
+    setItinerary([{ id: 1, activity: '', location: '' }]);
+    setExpandedDayId(1);
+    setBudget({ flights: 0, accommodation: 0, food: 0, visas: 0 });
   };
 
   return (
@@ -149,7 +159,7 @@ export default function ToolsPage() {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="font-headline text-5xl md:text-7xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-gray-900 to-gray-600 mb-6"
           >
-            Strategic <span className="text-blue-600">Utility</span> Hub
+            {pageT.title.split(' ')[0]} <span className="text-blue-600">{pageT.title.split(' ').slice(1).join(' ')}</span>
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0, y: 30 }}
@@ -157,155 +167,383 @@ export default function ToolsPage() {
             transition={{ delay: 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="text-gray-500 max-w-2xl mx-auto text-xl font-body leading-relaxed"
           >
-            {t.subtitle}
+            {pageT.subtitle}
           </motion.p>
         </section>
       </div>
 
-      {/* Tools Grid */}
-      <section className="w-full px-4 md:px-8 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          
-          {/* Smart Budget Estimator */}
-          <div className="lg:col-span-8 lg:col-start-3 bg-white/70 backdrop-blur-2xl rounded-[2.5rem] p-8 md:p-12 border border-white/60 hover:border-blue-200 transition-colors duration-500 shadow-[0_20px_40px_rgb(0,0,0,0.08)] flex flex-col relative overflow-hidden">
-            {/* Decorative Background Elements */}
-            <div className="absolute -top-24 -right-24 w-64 h-64 bg-blue-400/10 rounded-full blur-3xl pointer-events-none"></div>
-            <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-teal-400/10 rounded-full blur-3xl pointer-events-none"></div>
+      {/* Converter Section */}
+      <section className="w-full px-4 md:px-8 max-w-3xl mx-auto relative z-20">
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="bg-white/40 backdrop-blur-3xl border border-white/60 hover:border-blue-200 transition-colors duration-500 rounded-[2.5rem] p-8 md:p-12 shadow-[0_20px_40px_rgb(0,0,0,0.08)] relative overflow-hidden"
+        >
+          {/* Decorative Background Elements */}
+          <div className="absolute -top-24 -right-24 w-64 h-64 bg-blue-400/10 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-teal-400/10 rounded-full blur-3xl pointer-events-none"></div>
 
-            <div className="flex items-center gap-5 mb-10 relative z-10">
-              <div className="p-4 bg-blue-50 rounded-2xl shadow-sm border border-blue-100">
-                <Calculator className="w-8 h-8 text-blue-600" />
-              </div>
-              <h2 className="font-headline text-3xl font-bold text-gray-900 tracking-tight">{t.form.estimatorTitle}</h2>
+          {isLoading ? (
+            <div className="flex flex-col items-center justify-center py-20 relative z-10">
+              <RefreshCw className="w-10 h-10 text-blue-600 animate-spin mb-4" />
+              <p className="text-gray-500 font-body">{pageT.loading}</p>
             </div>
-
-            <form onSubmit={handleCalculate} className="space-y-8 flex-grow relative z-10">
-              {/* Inputs Section */}
-              <div className="space-y-6">
-                <div className="space-y-2">
-                  <label className="text-xs font-label uppercase tracking-[0.2em] text-blue-600 font-bold">
-                    {t.form.destination}
-                  </label>
+          ) : error ? (
+            <div className="flex flex-col items-center justify-center py-20 relative z-10">
+              <p className="text-red-500 font-body">{pageT.error}</p>
+            </div>
+          ) : (
+            <div className="relative z-10 flex flex-col gap-6">
+              
+              {/* From Input */}
+              <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-3xl p-6 shadow-sm transition-all focus-within:ring-2 focus-within:ring-blue-500/50">
+                <label className="block text-xs font-label font-bold text-gray-500 uppercase tracking-widest mb-2">
+                  {pageT.from}
+                </label>
+                <div className="flex items-center justify-between gap-4">
+                  <input 
+                    type="number"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                    className="w-full bg-transparent text-4xl md:text-5xl font-headline font-bold text-gray-900 focus:outline-none"
+                    placeholder="0.00"
+                  />
                   <select 
-                    value={destination}
-                    onChange={(e) => setDestination(e.target.value)}
-                    className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-2xl p-4 text-gray-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 font-body transition-all appearance-none shadow-sm"
+                    value={fromCurrency}
+                    onChange={(e) => setFromCurrency(e.target.value)}
+                    className="bg-gray-100/80 text-gray-900 font-headline font-bold text-xl rounded-xl px-4 py-2 focus:outline-none appearance-none cursor-pointer hover:bg-gray-200 transition-colors"
                   >
-                    {t.options.destinations.map((opt, i) => (
-                      <option key={i} value={opt} className="bg-white text-gray-900">{opt}</option>
-                    ))}
+                    {CURRENCIES.map(c => <option key={c} value={c}>{c}</option>)}
                   </select>
                 </div>
+              </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-xs font-label uppercase tracking-[0.2em] text-blue-600 font-bold">
-                      {t.form.travelers}
-                    </label>
-                    <input 
-                      type="number" 
-                      min="1" 
-                      value={travelers}
-                      onChange={(e) => setTravelers(parseInt(e.target.value) || 1)}
-                      className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-2xl p-4 text-gray-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 font-body transition-all shadow-sm"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-xs font-label uppercase tracking-[0.2em] text-blue-600 font-bold">
-                      {t.form.tier}
-                    </label>
-                    <select 
-                      value={tier}
-                      onChange={(e) => setTier(e.target.value)}
-                      className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-2xl p-4 text-gray-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 font-body transition-all appearance-none shadow-sm"
-                    >
-                      {t.options.tiers.map((opt, i) => (
-                        <option key={i} value={opt} className="bg-white text-gray-900">{opt}</option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
+              {/* Swap Button */}
+              <div className="flex justify-center -my-10 relative z-20">
+                <motion.button
+                  onClick={handleSwap}
+                  animate={{ rotate: isSwapping ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="w-14 h-14 bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg shadow-blue-500/30 hover:bg-blue-700 hover:scale-110 active:scale-95 transition-all"
+                >
+                  <ArrowRightLeft className="w-6 h-6" />
+                </motion.button>
+              </div>
 
-                <div className="space-y-4 pt-4">
-                  <div className="flex justify-between items-center">
-                    <label className="text-xs font-label uppercase tracking-[0.2em] text-blue-600 font-bold">
-                      {t.form.duration}
-                    </label>
-                    <span className="font-headline font-bold text-blue-600 text-xl">{duration}</span>
+              {/* To Input (Result) */}
+              <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-3xl p-6 shadow-sm transition-all">
+                <label className="block text-xs font-label font-bold text-gray-500 uppercase tracking-widest mb-2">
+                  {pageT.to}
+                </label>
+                <div className="flex items-center justify-between gap-4">
+                  <div className="w-full text-4xl md:text-5xl font-headline font-bold text-blue-600 overflow-hidden text-ellipsis">
+                    <AnimatedNumber value={result} />
                   </div>
-                  <input 
-                    type="range" 
-                    min="1" 
-                    max="30" 
-                    value={duration}
-                    onChange={(e) => setDuration(parseInt(e.target.value))}
-                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
-                  />
+                  <select 
+                    value={toCurrency}
+                    onChange={(e) => setToCurrency(e.target.value)}
+                    className="bg-gray-100/80 text-gray-900 font-headline font-bold text-xl rounded-xl px-4 py-2 focus:outline-none appearance-none cursor-pointer hover:bg-gray-200 transition-colors"
+                  >
+                    {CURRENCIES.map(c => <option key={c} value={c}>{c}</option>)}
+                  </select>
                 </div>
               </div>
 
-              <button 
-                type="submit"
-                className="w-full bg-blue-600 text-white font-headline font-bold py-4 rounded-2xl shadow-lg shadow-blue-500/30 hover:bg-blue-700 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2"
-              >
-                {t.form.calculate}
-              </button>
+              {/* Last Updated */}
+              <div className="flex items-center justify-center gap-2 mt-4 text-xs text-gray-400 font-body">
+                <Clock className="w-4 h-4" />
+                <span>{pageT.lastUpdated}: {lastUpdated}</span>
+              </div>
 
-              {/* Results Section */}
-              <AnimatePresence>
-                {isCalculated && (
-                  <motion.div 
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                    className="overflow-hidden"
-                  >
-                    <div className="bg-white border border-gray-200 rounded-[2rem] p-8 space-y-6 mt-8 shadow-sm">
-                      <h3 className="font-label text-xs uppercase tracking-[0.2em] text-blue-600 font-bold mb-4">
-                        {t.results.breakdown}
-                      </h3>
-                      
-                      <div className="space-y-4">
-                        <div className="flex justify-between items-center text-base">
-                          <span className="text-gray-600 font-body flex items-center gap-3">
-                            <Plane className="w-5 h-5 text-gray-400" />
-                            {t.results.flights}
-                          </span>
-                          <span className="font-headline font-bold text-gray-900">${results.flights.toLocaleString()}</span>
-                        </div>
-                        <div className="flex justify-between items-center text-base">
-                          <span className="text-gray-600 font-body flex items-center gap-3">
-                            <FileText className="w-5 h-5 text-gray-400" />
-                            {t.results.visa}
-                          </span>
-                          <span className="font-headline font-bold text-gray-900">${results.visa.toLocaleString()}</span>
-                        </div>
-                        <div className="flex justify-between items-center text-base">
-                          <span className="text-gray-600 font-body flex items-center gap-3">
-                            <Building className="w-5 h-5 text-gray-400" />
-                            {t.results.lodging}
-                          </span>
-                          <span className="font-headline font-bold text-gray-900">${results.lodging.toLocaleString()}</span>
-                        </div>
-                        
-                        <div className="pt-6 border-t border-gray-100 flex justify-between items-center">
-                          <span className="font-headline font-bold text-gray-900 uppercase tracking-widest text-sm">{t.results.total}</span>
-                          <span className="font-headline font-black text-4xl text-blue-600">${results.total.toLocaleString()}</span>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start gap-3 mt-6 text-gray-500 text-sm bg-gray-50 p-5 rounded-2xl border border-gray-200">
-                      <Info className="w-5 h-5 text-blue-600 shrink-0" />
-                      <p className="italic leading-relaxed">{t.results.disclaimer}</p>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </form>
+            </div>
+          )}
+        </motion.div>
+
+        {/* Common Pairs Grid */}
+        {!isLoading && !error && rates && (
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-16"
+          >
+            <h3 className="text-center font-label font-bold text-gray-400 uppercase tracking-[0.2em] mb-8">
+              {pageT.commonPairs}
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                { from: "USD", symbol: "$" },
+                { from: "SAR", symbol: "﷼" },
+                { from: "AED", symbol: "د.إ" }
+              ].map((pair) => (
+                <motion.div 
+                  key={pair.from}
+                  whileHover={{ scale: 1.05 }}
+                  className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-3xl p-6 shadow-sm hover:shadow-xl hover:shadow-blue-500/10 transition-all flex flex-col items-center justify-center gap-2"
+                >
+                  <span className="text-gray-500 font-headline font-bold text-lg">1 {pair.from}</span>
+                  <span className="text-2xl font-headline font-black text-gray-900">
+                    {calculateConversion(1, pair.from, "ETB").toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ETB
+                  </span>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+
+        {/* World Clock Section */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-24"
+        >
+          <div className="text-center mb-10">
+            <h2 className="font-headline text-3xl font-bold text-gray-900 tracking-tight mb-2">
+              {pageT.clock.title}
+            </h2>
+            <p className="text-gray-500 font-body uppercase tracking-widest text-xs font-bold">
+              {pageT.clock.localTime}
+            </p>
           </div>
 
-        </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {clockCities.map((city, idx) => (
+              <motion.div 
+                key={city.id}
+                whileHover={{ scale: 1.05 }}
+                className="bg-white/40 backdrop-blur-3xl border border-white/60 rounded-[2rem] p-8 shadow-sm hover:shadow-xl hover:shadow-blue-500/10 transition-all flex flex-col items-center justify-center gap-4 relative overflow-hidden group"
+              >
+                {/* Live Indicator */}
+                <div className="absolute top-6 right-6 flex items-center gap-2">
+                  <span className="relative flex h-2.5 w-2.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-500"></span>
+                  </span>
+                </div>
+
+                <h3 className="text-gray-500 font-headline font-bold text-lg uppercase tracking-widest">
+                  {city.name}
+                </h3>
+                
+                <div className="font-headline font-light text-6xl tracking-tighter text-gray-900 flex items-baseline justify-center gap-1.5">
+                  <span>{formatTime(currentTime, city.tz).split(' ')[0]}</span>
+                  <span className="text-2xl font-medium text-gray-500 tracking-normal">{formatTime(currentTime, city.tz).split(' ')[1]}</span>
+                </div>
+                
+                <div className="text-gray-400 font-body text-sm font-medium">
+                  {formatDate(currentTime, city.tz)}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Integrated Planners Section */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-24"
+        >
+          <div className="flex flex-col md:flex-row items-center justify-between mb-10 gap-4">
+            <div className="md:w-32 hidden md:block"></div>
+            <h2 className="font-headline text-3xl font-bold text-gray-900 tracking-tight text-center">
+              {pageT.planner.title}
+            </h2>
+            <div className="md:w-32 flex justify-end">
+              <button 
+                onClick={handleClearAll}
+                className="flex items-center gap-2 text-red-400 hover:text-red-600 transition-colors bg-white/50 px-4 py-2 rounded-xl backdrop-blur-md border border-red-100 hover:border-red-200 shadow-sm"
+              >
+                <Trash2 className="w-4 h-4" />
+                <span className="font-headline font-bold text-sm">{pageT.planner.clearAll}</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-16">
+            {/* Itinerary Planner */}
+            <div className="w-full bg-white/40 backdrop-blur-3xl border border-white/60 rounded-[2.5rem] p-8 shadow-[0_20px_40px_rgb(0,0,0,0.08)]">
+              <h3 className="font-headline text-2xl font-bold text-gray-900 mb-6">{pageT.planner.itinerary}</h3>
+              
+              <div className="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-gray-200 before:to-transparent">
+                {itinerary.map((day, index) => (
+                  <motion.div 
+                    key={day.id}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.4 }}
+                    className="relative flex items-start gap-6 group is-active"
+                  >
+                    {/* Icon */}
+                    <div className="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-blue-100 text-blue-600 shadow shrink-0 z-10 mt-4">
+                      <span className="font-headline font-bold text-sm">{day.id}</span>
+                    </div>
+                    
+                    {/* Card */}
+                    <motion.div 
+                      layout
+                      onClick={() => setExpandedDayId(expandedDayId === day.id ? null : day.id)}
+                      className={`flex-1 cursor-pointer backdrop-blur-xl border rounded-2xl shadow-sm hover:shadow-md transition-all overflow-hidden ${
+                        expandedDayId === day.id ? 'bg-white/70 p-10 border-blue-300 shadow-blue-500/10' : 'bg-white/60 p-5 border-white/80 hover:border-blue-200'
+                      }`}
+                    >
+                      <motion.div layout className="flex items-center justify-between mb-2">
+                        <span className="font-headline font-bold text-gray-900">
+                          {pageT.planner.day} {day.id}
+                        </span>
+                        <motion.div
+                          animate={{ rotate: expandedDayId === day.id ? 180 : 0 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <ChevronDown className="w-4 h-4 text-gray-400" />
+                        </motion.div>
+                      </motion.div>
+
+                      {expandedDayId === day.id ? (
+                        <motion.div 
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ delay: 0.1 }}
+                          className="flex flex-col gap-4 mt-4"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <div className="flex items-start gap-2 text-gray-500 focus-within:text-blue-600 transition-colors">
+                            <Activity className="w-4 h-4 shrink-0 mt-1" />
+                            <textarea 
+                              placeholder={pageT.planner.activityDetails}
+                              value={day.activity}
+                              onChange={(e) => updateDay(day.id, 'activity', e.target.value)}
+                              onInput={(e) => {
+                                const target = e.target as HTMLTextAreaElement;
+                                target.style.height = 'auto';
+                                target.style.height = `${target.scrollHeight}px`;
+                              }}
+                              className="w-full bg-transparent border-b border-gray-200 focus:border-blue-400 focus:outline-none font-body text-gray-900 placeholder:text-gray-400 resize-none min-h-[60px] overflow-hidden transition-colors"
+                            />
+                          </div>
+                          <div className="flex items-start gap-2 text-gray-500 focus-within:text-blue-600 transition-colors">
+                            <MapPin className="w-4 h-4 shrink-0 mt-1" />
+                            <textarea 
+                              placeholder={pageT.planner.locationNotes}
+                              value={day.location}
+                              onChange={(e) => updateDay(day.id, 'location', e.target.value)}
+                              onInput={(e) => {
+                                const target = e.target as HTMLTextAreaElement;
+                                target.style.height = 'auto';
+                                target.style.height = `${target.scrollHeight}px`;
+                              }}
+                              className="w-full bg-transparent border-b border-gray-200 focus:border-blue-400 focus:outline-none font-body text-gray-900 placeholder:text-gray-400 resize-none min-h-[60px] overflow-hidden transition-colors"
+                            />
+                          </div>
+                        </motion.div>
+                      ) : (
+                        <motion.div 
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          className="text-gray-500 font-body text-sm truncate"
+                        >
+                          {day.activity || <span className="text-gray-400 italic">No activity planned...</span>}
+                        </motion.div>
+                      )}
+                    </motion.div>
+                  </motion.div>
+                ))}
+              </div>
+
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={addDay}
+                className="mt-8 w-full py-4 border-2 border-dashed border-gray-300 rounded-2xl text-gray-500 font-headline font-bold flex items-center justify-center gap-2 hover:border-blue-400 hover:text-blue-600 hover:bg-blue-50/50 transition-all"
+              >
+                <Plus className="w-5 h-5" />
+                {pageT.planner.addDay}
+              </motion.button>
+            </div>
+
+            {/* Budget Planner */}
+            <div className="max-w-2xl mx-auto w-full bg-white/40 backdrop-blur-3xl border border-white/60 rounded-[2.5rem] p-8 shadow-[0_20px_40px_rgb(0,0,0,0.08)] flex flex-col">
+              <div className="flex items-center justify-between mb-8">
+                <h3 className="font-headline text-2xl font-bold text-gray-900">{pageT.planner.budget}</h3>
+                <select 
+                  value={budgetCurrency}
+                  onChange={(e) => setBudgetCurrency(e.target.value)}
+                  className="bg-white/60 border border-gray-200 text-gray-900 font-headline font-bold text-sm rounded-xl px-3 py-1.5 focus:outline-none appearance-none cursor-pointer hover:bg-white transition-colors shadow-sm"
+                >
+                  {CURRENCIES.map(c => <option key={c} value={c}>{c}</option>)}
+                </select>
+              </div>
+
+              <div className="space-y-6 flex-grow">
+                {[
+                  { id: 'flights', label: pageT.planner.flights, icon: <Plane className="w-5 h-5" />, color: 'bg-blue-500' },
+                  { id: 'accommodation', label: pageT.planner.accommodation, icon: <Building className="w-5 h-5" />, color: 'bg-indigo-500' },
+                  { id: 'food', label: pageT.planner.food, icon: <Utensils className="w-5 h-5" />, color: 'bg-teal-500' },
+                  { id: 'visas', label: pageT.planner.visas, icon: <FileText className="w-5 h-5" />, color: 'bg-purple-500' }
+                ].map((item) => (
+                  <div key={item.id} className="group">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-3 text-gray-600">
+                        <div className={`p-2 rounded-lg text-white ${item.color} shadow-sm`}>
+                          {item.icon}
+                        </div>
+                        <span className="font-headline font-medium">{item.label}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-gray-400 font-body text-sm">{budgetCurrency}</span>
+                        <input 
+                          type="number" 
+                          value={budget[item.id as keyof typeof budget] || ''}
+                          onChange={(e) => updateBudget(item.id as keyof typeof budget, e.target.value)}
+                          placeholder="0"
+                          className="w-24 text-right bg-white/60 border border-gray-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 font-headline font-bold text-gray-900 transition-all"
+                        />
+                      </div>
+                    </div>
+                    {/* Progress Bar */}
+                    <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                      <motion.div 
+                        initial={{ width: 0 }}
+                        animate={{ width: `${getPercentage(budget[item.id as keyof typeof budget])}%` }}
+                        transition={{ duration: 0.5, ease: "easeOut" }}
+                        className={`h-full ${item.color}`}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Total Section */}
+              <div className="mt-8 pt-8 border-t border-gray-200/60">
+                <div className="flex items-end justify-between mb-2">
+                  <span className="font-headline font-bold text-gray-500 uppercase tracking-widest text-sm">{pageT.planner.totalBudget}</span>
+                  <div className="text-right">
+                    <span className="text-3xl font-headline font-black text-gray-900">
+                      <AnimatedNumber value={totalBudgetInBase} />
+                    </span>
+                    <span className="text-gray-500 font-headline font-bold ml-2">{budgetCurrency}</span>
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-between bg-blue-50/50 rounded-2xl p-4 border border-blue-100">
+                  <span className="font-body text-blue-600 font-medium flex items-center gap-2">
+                    <RefreshCw className="w-4 h-4" />
+                    {pageT.planner.estInEtb}
+                  </span>
+                  <span className="font-headline font-bold text-xl text-blue-700">
+                    <AnimatedNumber value={totalBudgetInETB} /> ETB
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
       </section>
     </div>
   );

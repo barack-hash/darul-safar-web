@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { CheckCircle, AlertCircle, Send, Globe2 } from 'lucide-react';
+import { CheckCircle, AlertCircle, Send, Globe2, FileText, Camera, Landmark, Files, MessageCircle } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 const translations = {
@@ -22,7 +22,48 @@ const translations = {
       months: ["Next 30 Days", "Within 3 Months", "Plan for Next Year"]
     },
     success: "Thank you! A Darul Safar specialist has received your inquiry and will contact you shortly.",
-    disclaimer: "Visa issuance is at the sole discretion of the respective Embassy/Consulate."
+    disclaimer: "Visa issuance is at the sole discretion of the respective Embassy/Consulate.",
+    requirements: {
+      title: "At a Glance: Standard Requirements",
+      passport: "Passport Validity",
+      photos: "Photos (Specific Size)",
+      financial: "Financial Proof",
+      docs: "Supporting Docs",
+      sets: {
+        saudiUmrah: {
+          passportDesc: "Minimum 6 months validity required.",
+          photosDesc: "2 recent photos with white background.",
+          financialDesc: "Not strictly required for Umrah.",
+          docsDesc: "Vaccination card (Meningitis/Yellow Fever)."
+        },
+        saudiWork: {
+          passportDesc: "Minimum 6 months validity required.",
+          photosDesc: "2 recent photos with white background.",
+          financialDesc: "Not required.",
+          docsDesc: "Medical report & Employment Contract."
+        },
+        dubaiTourist: {
+          passportDesc: "Minimum 6 months validity required.",
+          photosDesc: "1 passport size photograph.",
+          financialDesc: "Bank statement for the last 3 months.",
+          docsDesc: "Flight itinerary & Hotel booking."
+        },
+        schengen: {
+          passportDesc: "Minimum 6 months validity required.",
+          photosDesc: "Schengen standard (35x45mm).",
+          financialDesc: "Bank statement for the last 6 months.",
+          docsDesc: "Travel insurance & Itinerary."
+        },
+        default: {
+          passportDesc: "Minimum 6 months validity required.",
+          photosDesc: "Recent passport-sized photographs.",
+          financialDesc: "Bank statements for the last 3-6 months.",
+          docsDesc: "Flight itinerary, hotel booking, etc."
+        }
+      }
+    },
+    whatsappBtn: "Send My Checklist to WhatsApp",
+    whatsappMsg: "Hi Darul Safar, please send the {destination} {visaType} Visa checklist. I know I need: Passport ({passportDesc}), {photosDesc}, {financialDesc}, and {docsDesc}. What else?"
   },
   ar: {
     title: "مركز الاستعلام عن التأشيرات",
@@ -42,7 +83,48 @@ const translations = {
       months: ["خلال 30 يوماً", "خلال 3 أشهر", "خطة للعام القادم"]
     },
     success: "شكراً لك! لقد تلقى أخصائي دار السفر استفسارك وسيتصل بك قريباً.",
-    disclaimer: "إصدار التأشيرة يخضع لتقدير السفارة/القنصلية المعنية."
+    disclaimer: "إصدار التأشيرة يخضع لتقدير السفارة/القنصلية المعنية.",
+    requirements: {
+      title: "لمحة سريعة: المتطلبات الأساسية",
+      passport: "صلاحية الجواز",
+      photos: "صور (حجم محدد)",
+      financial: "إثبات مالي",
+      docs: "مستندات داعمة",
+      sets: {
+        saudiUmrah: {
+          passportDesc: "صلاحية لا تقل عن 6 أشهر.",
+          photosDesc: "صورتان حديثتان بخلفية بيضاء.",
+          financialDesc: "غير مطلوب بشكل صارم للعمرة.",
+          docsDesc: "بطاقة تطعيم (التهاب السحايا/الحمى الصفراء)."
+        },
+        saudiWork: {
+          passportDesc: "صلاحية لا تقل عن 6 أشهر.",
+          photosDesc: "صورتان حديثتان بخلفية بيضاء.",
+          financialDesc: "غير مطلوب.",
+          docsDesc: "تقرير طبي وعقد عمل."
+        },
+        dubaiTourist: {
+          passportDesc: "صلاحية لا تقل عن 6 أشهر.",
+          photosDesc: "صورة واحدة بحجم جواز السفر.",
+          financialDesc: "كشف حساب بنكي لآخر 3 أشهر.",
+          docsDesc: "مسار الرحلة وحجز الفندق."
+        },
+        schengen: {
+          passportDesc: "صلاحية لا تقل عن 6 أشهر.",
+          photosDesc: "معيار شنغن (35x45 مم).",
+          financialDesc: "كشف حساب بنكي لآخر 6 أشهر.",
+          docsDesc: "تأمين سفر ومسار الرحلة."
+        },
+        default: {
+          passportDesc: "صلاحية لا تقل عن 6 أشهر.",
+          photosDesc: "صور شخصية حديثة بحجم جواز السفر.",
+          financialDesc: "كشوفات حساب بنكية لآخر 3-6 أشهر.",
+          docsDesc: "مسار الرحلة، حجز الفندق، إلخ."
+        }
+      }
+    },
+    whatsappBtn: "إرسال قائمة المتطلبات إلى واتساب الخاص بي",
+    whatsappMsg: "مرحباً دار السفر، يرجى إرسال قائمة متطلبات تأشيرة {visaType} إلى {destination}. أعلم أنني بحاجة إلى: جواز سفر ({passportDesc})، {photosDesc}، {financialDesc}، و {docsDesc}. ماذا أيضاً؟"
   },
   am: {
     title: "የቪዛ መጠየቂያ ማዕከል",
@@ -62,7 +144,48 @@ const translations = {
       months: ["በቀጣይ 30 ቀናት", "በ3 ወራት ውስጥ", "ለሚቀጥለው ዓመት እቅድ"]
     },
     success: "እናመሰግናለን! የዳሩል ሰፈር ባለሙያ ጥያቄዎን ተቀብሏል እና በቅርቡ ያነጋግርዎታል።",
-    disclaimer: "ቪዛ መስጠት በሚመለከተው ኤምባሲ/ቆንስላ ውሳኔ ላይ የተመሰረተ ነው።"
+    disclaimer: "ቪዛ መስጠት በሚመለከተው ኤምባሲ/ቆንስላ ውሳኔ ላይ የተመሰረተ ነው።",
+    requirements: {
+      title: "በአጭሩ፡ መደበኛ መስፈርቶች",
+      passport: "የፓስፖርት ትክክለኛነት",
+      photos: "ፎቶዎች (ልዩ መጠን)",
+      financial: "የፋይናንስ ማስረጃ",
+      docs: "ደጋፊ ሰነዶች",
+      sets: {
+        saudiUmrah: {
+          passportDesc: "ቢያንስ የ6 ወራት ትክክለኛነት ያስፈልጋል።",
+          photosDesc: "2 የቅርብ ጊዜ ፎቶዎች ከነጭ ጀርባ ጋር።",
+          financialDesc: "ለዑምራ በጥብቅ አይጠየቅም።",
+          docsDesc: "የክትባት ካርድ (ማጅራት ገትር/ቢጫ ወባ)።"
+        },
+        saudiWork: {
+          passportDesc: "ቢያንስ የ6 ወራት ትክክለኛነት ያስፈልጋል።",
+          photosDesc: "2 የቅርብ ጊዜ ፎቶዎች ከነጭ ጀርባ ጋር።",
+          financialDesc: "አይጠየቅም።",
+          docsDesc: "የህክምና ሪፖርት እና የስራ ውል"
+        },
+        dubaiTourist: {
+          passportDesc: "ቢያንስ የ6 ወራት ትክክለኛነት ያስፈልጋል።",
+          photosDesc: "1 የፓስፖርት መጠን ፎቶግራፍ።",
+          financialDesc: "የባንክ መግለጫዎች ላለፉት 3 ወራት።",
+          docsDesc: "የበረራ ትኬት እና የሆቴል ቦታ ማስያዣ።"
+        },
+        schengen: {
+          passportDesc: "ቢያንስ የ6 ወራት ትክክለኛነት ያስፈልጋል።",
+          photosDesc: "የሼንገን መደበኛ (35x45mm)።",
+          financialDesc: "የባንክ መግለጫዎች ላለፉት 6 ወራት።",
+          docsDesc: "የጉዞ ኢንሹራንስ እና የበረራ ትኬት።"
+        },
+        default: {
+          passportDesc: "ቢያንስ የ6 ወራት ትክክለኛነት ያስፈልጋል።",
+          photosDesc: "የቅርብ ጊዜ የፓስፖርት መጠን ፎቶግራፎች።",
+          financialDesc: "የባንክ መግለጫዎች ላለፉት 3-6 ወራት።",
+          docsDesc: "የበረራ ትኬት፣ የሆቴል ቦታ ማስያዣ፣ ወዘተ።"
+        }
+      }
+    },
+    whatsappBtn: "የመስፈርቶች ዝርዝር ወደ ዋትስአፕ ይላኩልኝ",
+    whatsappMsg: "ሰላም ዳሩል ሰፈር፣ እባክዎ የ {destination} {visaType} ቪዛ መስፈርቶች ዝርዝር ይላኩልኝ። ፓስፖርት ({passportDesc})፣ {photosDesc}፣ {financialDesc} እና {docsDesc} እንደሚያስፈልገኝ አውቃለሁ። ሌላ ምን ያስፈልጋል?"
   },
   om: {
     title: "Wiirtuu Gaaffii Viizaa",
@@ -82,7 +205,48 @@ const translations = {
       months: ["Guyyoota 30 Itti Aanan", "Ji'oota 3 Keessatti", "Karoora Bara Itti Aanuu"]
     },
     success: "Galatoomaa! Ogeessi Darul Safar gaaffii keessan fudhateera, dhiyoottis isin quunnama.",
-    disclaimer: "Viizaa kennuun murtee Embaasii/Qoonsilaa dhimmi ilaallatu qofa irratti hundaa'a."
+    disclaimer: "Viizaa kennuun murtee Embaasii/Qoonsilaa dhimmi ilaallatu qofa irratti hundaa'a.",
+    requirements: {
+      title: "Ilaalcha Tokkoon: Ulaagaalee Idilee",
+      passport: "Yeroo Paaspoortii",
+      photos: "Suuraa (Hanga Murtaa'e)",
+      financial: "Ragaa Faayinaansii",
+      docs: "Sanadoota Deeggaran",
+      sets: {
+        saudiUmrah: {
+          passportDesc: "Yoo xiqqaate ji'oota 6f tajaajiluu qaba.",
+          photosDesc: "Suuraa 2 duuba adii qabu.",
+          financialDesc: "Umraaf dirqama miti.",
+          docsDesc: "Kaardii talaallii (Meningitis/Yellow Fever)."
+        },
+        saudiWork: {
+          passportDesc: "Yoo xiqqaate ji'oota 6f tajaajiluu qaba.",
+          photosDesc: "Suuraa 2 duuba adii qabu.",
+          financialDesc: "Hin barbaachisu.",
+          docsDesc: "Gabaasa yaalaa fi waliigaltee hojii."
+        },
+        dubaiTourist: {
+          passportDesc: "Yoo xiqqaate ji'oota 6f tajaajiluu qaba.",
+          photosDesc: "Suuraa 1 hanga paaspoortii.",
+          financialDesc: "Ibsa baankii ji'oota 3 darban.",
+          docsDesc: "Tikeetii balalii fi galmee hoteelaa."
+        },
+        schengen: {
+          passportDesc: "Yoo xiqqaate ji'oota 6f tajaajiluu qaba.",
+          photosDesc: "Sadarkaa Schengen (35x45mm).",
+          financialDesc: "Ibsa baankii ji'oota 6 darban.",
+          docsDesc: "Inshuraansii imalaa fi tikeetii balalii."
+        },
+        default: {
+          passportDesc: "Yoo xiqqaate ji'oota 6f tajaajiluu qaba.",
+          photosDesc: "Suuraa dhihootti kaafame hanga paaspoortii.",
+          financialDesc: "Ibsa baankii ji'oota 3-6 darban.",
+          docsDesc: "Tikeetii balalii, galmee hoteelaa, fi kkf."
+        }
+      }
+    },
+    whatsappBtn: "Tarree Ulaagaalee WhatsApp Kootti Ergi",
+    whatsappMsg: "Akkam Darul Safar, maaloo tarree ulaagaalee viizaa {destination} {visaType} naaf ergaa. Paaspoortii ({passportDesc}), {photosDesc}, {financialDesc}, fi {docsDesc} akkan barbaadu beeka. Maal biraatu barbaachisa?"
   }
 };
 
@@ -131,6 +295,36 @@ export default function VisaPage() {
     }
   };
 
+  const getActiveReqSet = () => {
+    const dest = formData.destination;
+    const type = formData.visaType;
+    
+    if (dest === t.options.destinations[0] && type === t.options.types[0]) return t.requirements.sets.saudiUmrah; // Saudi Arabia + Umrah/Hajj
+    if (dest === t.options.destinations[0] && type === t.options.types[1]) return t.requirements.sets.saudiWork; // Saudi Arabia + Work
+    if (dest === t.options.destinations[1] && type === t.options.types[4]) return t.requirements.sets.dubaiTourist; // Dubai/UAE + Tourist
+    if (dest === t.options.destinations[4]) return t.requirements.sets.schengen; // Schengen
+    
+    return t.requirements.sets.default;
+  };
+
+  const activeReqs = getActiveReqSet();
+
+  const handleWhatsApp = () => {
+    const dest = formData.destination || '[Destination]';
+    const type = formData.visaType || '[Visa Type]';
+    
+    let msg = t.whatsappMsg
+      .replace('{destination}', dest)
+      .replace('{visaType}', type)
+      .replace('{passportDesc}', activeReqs.passportDesc)
+      .replace('{photosDesc}', activeReqs.photosDesc)
+      .replace('{financialDesc}', activeReqs.financialDesc)
+      .replace('{docsDesc}', activeReqs.docsDesc);
+      
+    const encodedMsg = encodeURIComponent(msg);
+    window.open(`https://wa.me/251911000000?text=${encodedMsg}`, '_blank');
+  };
+
   return (
     <div className="w-full min-h-screen bg-transparent flex flex-col items-center justify-start pb-24">
       {/* Hero Section */}
@@ -169,7 +363,7 @@ export default function VisaPage() {
 
       {/* Interactive Form Section */}
       <section className="w-full px-4 md:px-8 max-w-4xl mx-auto -mt-12 relative z-20">
-        <div className="bg-white/70 backdrop-blur-2xl border border-white/60 hover:border-blue-200 transition-colors duration-500 rounded-[2.5rem] p-8 md:p-12 shadow-[0_20px_40px_rgb(0,0,0,0.08)] relative overflow-hidden">
+        <div className="bg-white/40 backdrop-blur-3xl border border-white/60 hover:border-blue-200 transition-colors duration-500 rounded-[2.5rem] p-8 md:p-12 shadow-[0_20px_40px_rgb(0,0,0,0.08)] relative overflow-hidden">
           {/* Decorative Background Elements */}
           <div className="absolute -top-24 -right-24 w-64 h-64 bg-blue-400/10 rounded-full blur-3xl pointer-events-none"></div>
           <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-teal-400/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -278,6 +472,56 @@ export default function VisaPage() {
               </motion.div>
             )}
           </AnimatePresence>
+        </div>
+      </section>
+
+      {/* Visual Requirement Grid */}
+      <section className="w-full px-4 md:px-8 max-w-7xl mx-auto mt-24 mb-32 md:mb-48 relative z-20">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-headline font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-600 tracking-tight">{t.requirements.title}</h2>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            { title: t.requirements.passport, desc: activeReqs.passportDesc, icon: <FileText className="w-8 h-8 text-blue-600" /> },
+            { title: t.requirements.photos, desc: activeReqs.photosDesc, icon: <Camera className="w-8 h-8 text-blue-600" /> },
+            { title: t.requirements.financial, desc: activeReqs.financialDesc, icon: <Landmark className="w-8 h-8 text-blue-600" /> },
+            { title: t.requirements.docs, desc: activeReqs.docsDesc, icon: <Files className="w-8 h-8 text-blue-600" /> }
+          ].map((req, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              whileHover={{ scale: 1.05 }}
+              transition={{ delay: index * 0.1, duration: 0.5, ease: "easeOut" }}
+              className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-3xl p-6 shadow-sm hover:shadow-xl hover:shadow-blue-500/10 transition-all cursor-pointer group flex flex-col items-center text-center"
+            >
+              <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform origin-center">
+                {req.icon}
+              </div>
+              <h3 className="text-xl font-headline font-bold text-gray-900 mb-2">{req.title}</h3>
+              <p className="text-sm text-gray-500 font-body leading-relaxed">{req.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="mt-16 flex justify-center">
+          <motion.button 
+            onClick={handleWhatsApp}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="w-full md:w-auto bg-green-500 text-white font-headline font-bold px-8 py-4 rounded-2xl hover:bg-green-600 transition-all flex items-center justify-center gap-3 shadow-lg shadow-green-500/30 text-lg"
+          >
+            <MessageCircle className="w-6 h-6" />
+            {t.whatsappBtn}
+          </motion.button>
         </div>
       </section>
     </div>
