@@ -63,7 +63,7 @@ export default function App() {
             className="flex items-center cursor-pointer"
             onClick={() => navigateTo('home')}
           >
-            <img src="/logo.png" alt="Darul Safar Logo" className="h-12 w-auto object-contain drop-shadow-md" />
+            <img src="/logo.png" alt="Darul Safar Logo" className="h-24 w-auto object-contain drop-shadow-md" />
           </div>
 
           {/* Desktop Nav */}
