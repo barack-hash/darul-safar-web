@@ -1,32 +1,34 @@
 import React, { useState } from 'react';
 import { Globe, ChevronDown, Send, Menu, X, Plane, FileText, Briefcase, Moon } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import PilgrimagePage from './components/PilgrimagePage';
 import VisaPage from './components/VisaPage';
 import ToolsPage from './components/ToolsPage';
+import TicketingPage from './components/TicketingPage';
 import { useLanguage, Lang } from './context/LanguageContext';
 
-type Page = 'home' | 'pilgrimage' | 'visas' | 'tools';
+type Page = 'home' | 'pilgrimage' | 'ticketing' | 'visas' | 'tools';
 
-const ServiceCard = ({ icon, title, description, tags, delay }: any) => {
+const ServiceCard = ({ icon, title, description, tags, delay, onClick }: any) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5, delay }}
-      className="group bg-white p-8 rounded-2xl border border-outline-variant/20 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col h-full"
+      transition={{ duration: 0.6, delay, ease: "easeOut" }}
+      onClick={onClick}
+      className="group bg-navy/80 backdrop-blur-md p-8 rounded-2xl border border-navy/50 shadow-sm hover:shadow-2xl hover:shadow-gold/10 hover:-translate-y-2 hover:scale-[1.02] hover:border-gold/50 transition-all duration-500 flex flex-col h-full cursor-pointer"
     >
-      <div className="w-14 h-14 bg-surface-container-low rounded-xl flex items-center justify-center text-navy mb-6 group-hover:bg-gold group-hover:text-white transition-colors duration-300">
+      <div className="w-14 h-14 bg-white/10 rounded-xl flex items-center justify-center text-white mb-6 group-hover:bg-gold group-hover:text-navy transition-colors duration-500">
         {icon}
       </div>
-      <h3 className="text-2xl font-headline font-bold text-navy mb-3">{title}</h3>
-      <p className="text-on-surface-variant font-body text-sm leading-relaxed mb-6 flex-grow">
+      <h3 className="text-2xl font-headline font-bold text-white mb-3">{title}</h3>
+      <p className="text-slate-300 font-body text-sm leading-relaxed mb-6 flex-grow">
         {description}
       </p>
       <div className="flex flex-wrap gap-2 mt-auto">
         {tags.map((tag: string, i: number) => (
-          <span key={i} className="px-2.5 py-1 bg-surface-container-low text-navy text-[10px] uppercase tracking-widest font-bold rounded-md">
+          <span key={i} className="px-2.5 py-1 bg-white/10 text-white text-[10px] uppercase tracking-widest font-bold rounded-md">
             {tag}
           </span>
         ))}
@@ -54,23 +56,21 @@ export default function App() {
   return (
     <div className="min-h-screen bg-surface text-on-surface font-body flex flex-col overflow-x-hidden">
       {/* Master Header */}
-      <header className="fixed top-0 w-full z-50 bg-navy text-white shadow-md">
+      <header className="sticky top-0 w-full z-50 bg-navy text-white shadow-md">
         <div className="flex justify-between items-center px-4 md:px-8 py-4 max-w-7xl mx-auto">
           {/* Logo */}
           <div 
-            className="flex items-center gap-3 cursor-pointer"
+            className="flex items-center cursor-pointer"
             onClick={() => navigateTo('home')}
           >
-            <div className="w-10 h-10 bg-gold rounded-full flex items-center justify-center text-navy font-bold">
-              DS
-            </div>
-            <span className="font-headline font-black text-2xl tracking-tighter">Darul Safar</span>
+            <img src="/logo.png" alt="Darul Safar Logo" className="h-12 w-auto object-contain drop-shadow-md" />
           </div>
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center space-x-8">
             <button onClick={() => navigateTo('home')} className={`font-headline tracking-tight font-bold text-lg transition-colors duration-300 ${currentPage === 'home' ? 'text-gold' : 'hover:text-gold'}`}>{t.nav.home}</button>
             <button onClick={() => navigateTo('pilgrimage')} className={`font-headline tracking-tight font-bold text-lg transition-colors duration-300 ${currentPage === 'pilgrimage' ? 'text-gold' : 'hover:text-gold'}`}>{t.nav.pilgrimage}</button>
+            <button onClick={() => navigateTo('ticketing')} className={`font-headline tracking-tight font-bold text-lg transition-colors duration-300 ${currentPage === 'ticketing' ? 'text-gold' : 'hover:text-gold'}`}>{t.nav.ticketing}</button>
             <button onClick={() => navigateTo('visas')} className={`font-headline tracking-tight font-bold text-lg transition-colors duration-300 ${currentPage === 'visas' ? 'text-gold' : 'hover:text-gold'}`}>{t.nav.visas}</button>
             <button onClick={() => navigateTo('tools')} className={`font-headline tracking-tight font-bold text-lg transition-colors duration-300 ${currentPage === 'tools' ? 'text-gold' : 'hover:text-gold'}`}>{t.nav.tools}</button>
           </nav>
@@ -88,26 +88,34 @@ export default function App() {
                 <ChevronDown className="w-4 h-4" />
               </button>
               
-              {isLangMenuOpen && (
-                <div className="absolute right-0 top-full mt-2 w-48 bg-white shadow-xl rounded-xl border border-outline-variant/20 overflow-hidden z-[60]">
-                  <button onClick={() => handleLangChange('en')} className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium hover:bg-surface-container-high transition-colors text-navy">
-                    <span>English</span>
-                    <span className="text-xs text-gold font-bold">EN</span>
-                  </button>
-                  <button onClick={() => handleLangChange('am')} className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium hover:bg-surface-container-high transition-colors text-navy border-t border-outline-variant/10">
-                    <span>አማርኛ</span>
-                    <span className="text-xs text-gold font-bold">AM</span>
-                  </button>
-                  <button onClick={() => handleLangChange('ar')} className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium hover:bg-surface-container-high transition-colors text-navy border-t border-outline-variant/10">
-                    <span>العربية</span>
-                    <span className="text-xs text-gold font-bold">AR</span>
-                  </button>
-                  <button onClick={() => handleLangChange('om')} className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium hover:bg-surface-container-high transition-colors text-navy border-t border-outline-variant/10">
-                    <span>Afaan Oromoo</span>
-                    <span className="text-xs text-gold font-bold">OM</span>
-                  </button>
-                </div>
-              )}
+              <AnimatePresence>
+                {isLangMenuOpen && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute right-0 top-full mt-2 w-48 bg-white shadow-xl rounded-xl border border-outline-variant/20 overflow-hidden z-[60]"
+                  >
+                    <button onClick={() => handleLangChange('en')} className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium hover:bg-surface-container-high transition-colors text-navy">
+                      <span>English</span>
+                      <span className="text-xs text-gold font-bold">EN</span>
+                    </button>
+                    <button onClick={() => handleLangChange('am')} className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium hover:bg-surface-container-high transition-colors text-navy border-t border-outline-variant/10">
+                      <span>አማርኛ</span>
+                      <span className="text-xs text-gold font-bold">AM</span>
+                    </button>
+                    <button onClick={() => handleLangChange('ar')} className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium hover:bg-surface-container-high transition-colors text-navy border-t border-outline-variant/10">
+                      <span>العربية</span>
+                      <span className="text-xs text-gold font-bold">AR</span>
+                    </button>
+                    <button onClick={() => handleLangChange('om')} className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium hover:bg-surface-container-high transition-colors text-navy border-t border-outline-variant/10">
+                      <span>Afaan Oromoo</span>
+                      <span className="text-xs text-gold font-bold">OM</span>
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
             <button className="bg-gold text-navy px-6 py-2 rounded-full font-headline font-bold hover:scale-105 active:scale-95 transition-all shadow-md">
@@ -130,6 +138,7 @@ export default function App() {
             <nav className="flex flex-col space-y-4">
               <button onClick={() => navigateTo('home')} className={`text-left font-headline font-bold text-lg ${currentPage === 'home' ? 'text-gold' : 'text-white hover:text-gold'}`}>{t.nav.home}</button>
               <button onClick={() => navigateTo('pilgrimage')} className={`text-left font-headline font-bold text-lg ${currentPage === 'pilgrimage' ? 'text-gold' : 'text-white hover:text-gold'}`}>{t.nav.pilgrimage}</button>
+              <button onClick={() => navigateTo('ticketing')} className={`text-left font-headline font-bold text-lg ${currentPage === 'ticketing' ? 'text-gold' : 'text-white hover:text-gold'}`}>{t.nav.ticketing}</button>
               <button onClick={() => navigateTo('visas')} className={`text-left font-headline font-bold text-lg ${currentPage === 'visas' ? 'text-gold' : 'text-white hover:text-gold'}`}>{t.nav.visas}</button>
               <button onClick={() => navigateTo('tools')} className={`text-left font-headline font-bold text-lg ${currentPage === 'tools' ? 'text-gold' : 'text-white hover:text-gold'}`}>{t.nav.tools}</button>
             </nav>
@@ -151,10 +160,11 @@ export default function App() {
 
       {/* Main Content Area */}
       {currentPage === 'home' ? (
-        <main className="flex-grow pt-20 w-full flex flex-col items-center justify-start">
+        <main className="flex-grow w-full flex flex-col items-center justify-start">
           {/* Hero Section */}
-          <section className="w-full px-4 md:px-8 max-w-7xl mx-auto py-20 md:py-32 flex flex-col items-center text-center overflow-hidden">
-            <motion.div
+          <div className="w-full px-4 md:px-8 max-w-7xl mx-auto mt-8 mb-12">
+            <section className="w-full py-20 md:py-32 flex flex-col items-center text-center overflow-hidden bg-white/60 backdrop-blur-md border border-white/50 hover:border-gold/50 transition-colors duration-500 rounded-3xl shadow-xl relative px-4">
+              <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
@@ -194,17 +204,25 @@ export default function App() {
               transition={{ duration: 0.6, delay: 0.8 }}
               className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
             >
-              <button 
+              <motion.button 
                 onClick={() => navigateTo('pilgrimage')}
+                animate={{ scale: [1, 1.02, 1] }}
+                transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
                 className="px-8 py-4 bg-navy text-white font-headline font-bold rounded-xl hover:bg-gold hover:text-navy hover:scale-105 active:scale-95 transition-all shadow-lg w-full sm:w-auto"
               >
                 {t.hero.bookUmrah}
-              </button>
-              <button className="px-8 py-4 bg-white border border-outline-variant/30 text-navy font-headline font-bold rounded-xl hover:border-gold hover:text-gold hover:scale-105 active:scale-95 transition-all shadow-sm w-full sm:w-auto">
+              </motion.button>
+              <motion.button 
+                onClick={() => navigateTo('ticketing')}
+                animate={{ scale: [1, 1.02, 1] }}
+                transition={{ repeat: Infinity, duration: 4, ease: "easeInOut", delay: 2 }}
+                className="px-8 py-4 bg-white/80 backdrop-blur-sm border border-navy/10 text-navy font-headline font-bold rounded-xl hover:border-gold hover:text-gold hover:bg-white hover:scale-105 active:scale-95 transition-all shadow-sm w-full sm:w-auto"
+              >
                 {t.hero.globalTicketing}
-              </button>
+              </motion.button>
             </motion.div>
-          </section>
+            </section>
+          </div>
 
           {/* Service Pillars Grid */}
           <section className="w-full bg-surface-container-low py-24">
@@ -232,13 +250,15 @@ export default function App() {
                   />
                 </div>
                 {/* Card 2 */}
-                <ServiceCard 
-                  icon={<Plane className="w-8 h-8" />}
-                  title="Global Air Ticketing"
-                  description="Seamless flight arrangements through our elite airline network. Best rates guaranteed."
-                  tags={["Ethiopian", "Qatar", "Saudia", "Emirates"]}
-                  delay={0.2}
-                />
+                <div onClick={() => navigateTo('ticketing')} className="cursor-pointer">
+                  <ServiceCard 
+                    icon={<Plane className="w-8 h-8" />}
+                    title="Global Air Ticketing"
+                    description="Seamless flight arrangements through our elite airline network. Best rates guaranteed."
+                    tags={["Ethiopian", "Qatar", "Saudia", "Emirates"]}
+                    delay={0.2}
+                  />
+                </div>
                 {/* Card 3 */}
                 <div onClick={() => navigateTo('visas')} className="cursor-pointer">
                   <ServiceCard 
@@ -264,15 +284,19 @@ export default function App() {
           </section>
         </main>
       ) : currentPage === 'pilgrimage' ? (
-        <main className="flex-grow pt-20 w-full">
+        <main className="flex-grow w-full">
           <PilgrimagePage />
         </main>
+      ) : currentPage === 'ticketing' ? (
+        <main className="flex-grow w-full">
+          <TicketingPage />
+        </main>
       ) : currentPage === 'visas' ? (
-        <main className="flex-grow pt-20 w-full">
+        <main className="flex-grow w-full">
           <VisaPage />
         </main>
       ) : (
-        <main className="flex-grow pt-20 w-full">
+        <main className="flex-grow w-full">
           <ToolsPage />
         </main>
       )}
