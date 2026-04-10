@@ -139,60 +139,67 @@ export default function ToolsPage() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-surface flex flex-col items-center justify-start pb-24">
+    <div className="w-full min-h-screen bg-transparent flex flex-col items-center justify-start pb-24">
       {/* Hero Section */}
-      <section className="w-full px-4 md:px-8 max-w-7xl mx-auto py-16 md:py-24 text-center">
-        <motion.h1 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="font-headline text-5xl md:text-7xl font-extrabold tracking-tighter text-navy mb-4"
-        >
-          Strategic <span className="text-gold">Utility</span> Hub
-        </motion.h1>
-        <motion.p 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="text-on-surface-variant max-w-2xl mx-auto text-lg font-body leading-relaxed"
-        >
-          {t.subtitle}
-        </motion.p>
-      </section>
+      <div className="w-full px-4 md:px-8 max-w-7xl mx-auto mt-8 mb-16">
+        <section className="w-full bg-white/40 backdrop-blur-3xl border border-white/60 hover:border-blue-200 transition-colors duration-500 py-32 md:py-48 rounded-[3rem] relative overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] text-center px-4">
+          <motion.h1 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="font-headline text-5xl md:text-7xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-gray-900 to-gray-600 mb-6"
+          >
+            Strategic <span className="text-blue-600">Utility</span> Hub
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="text-gray-500 max-w-2xl mx-auto text-xl font-body leading-relaxed"
+          >
+            {t.subtitle}
+          </motion.p>
+        </section>
+      </div>
 
       {/* Tools Grid */}
       <section className="w-full px-4 md:px-8 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
           {/* Smart Budget Estimator */}
-          <div className="lg:col-span-8 lg:col-start-3 bg-surface-container-low rounded-3xl p-8 md:p-12 border border-outline-variant/20 shadow-sm flex flex-col">
-            <div className="flex items-center gap-4 mb-10">
-              <div className="p-3 bg-gold/20 rounded-xl">
-                <Calculator className="w-8 h-8 text-gold" />
+          <div className="lg:col-span-8 lg:col-start-3 bg-white/70 backdrop-blur-2xl rounded-[2.5rem] p-8 md:p-12 border border-white/60 hover:border-blue-200 transition-colors duration-500 shadow-[0_20px_40px_rgb(0,0,0,0.08)] flex flex-col relative overflow-hidden">
+            {/* Decorative Background Elements */}
+            <div className="absolute -top-24 -right-24 w-64 h-64 bg-blue-400/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-teal-400/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div className="flex items-center gap-5 mb-10 relative z-10">
+              <div className="p-4 bg-blue-50 rounded-2xl shadow-sm border border-blue-100">
+                <Calculator className="w-8 h-8 text-blue-600" />
               </div>
-              <h2 className="font-headline text-3xl font-bold text-navy">{t.form.estimatorTitle}</h2>
+              <h2 className="font-headline text-3xl font-bold text-gray-900 tracking-tight">{t.form.estimatorTitle}</h2>
             </div>
 
-            <form onSubmit={handleCalculate} className="space-y-8 flex-grow">
+            <form onSubmit={handleCalculate} className="space-y-8 flex-grow relative z-10">
               {/* Inputs Section */}
               <div className="space-y-6">
                 <div className="space-y-2">
-                  <label className="text-xs font-label uppercase tracking-widest text-on-surface-variant font-bold">
+                  <label className="text-xs font-label uppercase tracking-[0.2em] text-blue-600 font-bold">
                     {t.form.destination}
                   </label>
                   <select 
                     value={destination}
                     onChange={(e) => setDestination(e.target.value)}
-                    className="w-full bg-white border border-outline-variant/30 rounded-xl p-4 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold font-body transition-all appearance-none"
+                    className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-2xl p-4 text-gray-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 font-body transition-all appearance-none shadow-sm"
                   >
                     {t.options.destinations.map((opt, i) => (
-                      <option key={i} value={opt}>{opt}</option>
+                      <option key={i} value={opt} className="bg-white text-gray-900">{opt}</option>
                     ))}
                   </select>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="text-xs font-label uppercase tracking-widest text-on-surface-variant font-bold">
+                    <label className="text-xs font-label uppercase tracking-[0.2em] text-blue-600 font-bold">
                       {t.form.travelers}
                     </label>
                     <input 
@@ -200,20 +207,20 @@ export default function ToolsPage() {
                       min="1" 
                       value={travelers}
                       onChange={(e) => setTravelers(parseInt(e.target.value) || 1)}
-                      className="w-full bg-white border border-outline-variant/30 rounded-xl p-4 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold font-body transition-all"
+                      className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-2xl p-4 text-gray-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 font-body transition-all shadow-sm"
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-label uppercase tracking-widest text-on-surface-variant font-bold">
+                    <label className="text-xs font-label uppercase tracking-[0.2em] text-blue-600 font-bold">
                       {t.form.tier}
                     </label>
                     <select 
                       value={tier}
                       onChange={(e) => setTier(e.target.value)}
-                      className="w-full bg-white border border-outline-variant/30 rounded-xl p-4 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold font-body transition-all appearance-none"
+                      className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-2xl p-4 text-gray-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 font-body transition-all appearance-none shadow-sm"
                     >
                       {t.options.tiers.map((opt, i) => (
-                        <option key={i} value={opt}>{opt}</option>
+                        <option key={i} value={opt} className="bg-white text-gray-900">{opt}</option>
                       ))}
                     </select>
                   </div>
@@ -221,10 +228,10 @@ export default function ToolsPage() {
 
                 <div className="space-y-4 pt-4">
                   <div className="flex justify-between items-center">
-                    <label className="text-xs font-label uppercase tracking-widest text-on-surface-variant font-bold">
+                    <label className="text-xs font-label uppercase tracking-[0.2em] text-blue-600 font-bold">
                       {t.form.duration}
                     </label>
-                    <span className="font-headline font-bold text-gold text-xl">{duration}</span>
+                    <span className="font-headline font-bold text-blue-600 text-xl">{duration}</span>
                   </div>
                   <input 
                     type="range" 
@@ -232,14 +239,14 @@ export default function ToolsPage() {
                     max="30" 
                     value={duration}
                     onChange={(e) => setDuration(parseInt(e.target.value))}
-                    className="w-full h-2 bg-surface-container-highest rounded-lg appearance-none cursor-pointer accent-gold"
+                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
                   />
                 </div>
               </div>
 
               <button 
                 type="submit"
-                className="w-full bg-navy text-white font-headline font-bold py-4 rounded-xl shadow-lg hover:bg-gold hover:text-navy hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2"
+                className="w-full bg-blue-600 text-white font-headline font-bold py-4 rounded-2xl shadow-lg shadow-blue-500/30 hover:bg-blue-700 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2"
               >
                 {t.form.calculate}
               </button>
@@ -250,45 +257,46 @@ export default function ToolsPage() {
                   <motion.div 
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
+                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                     className="overflow-hidden"
                   >
-                    <div className="bg-white border border-outline-variant/30 rounded-2xl p-6 space-y-6 mt-8 shadow-sm">
-                      <h3 className="font-label text-xs uppercase tracking-widest text-gold font-bold mb-4">
+                    <div className="bg-white border border-gray-200 rounded-[2rem] p-8 space-y-6 mt-8 shadow-sm">
+                      <h3 className="font-label text-xs uppercase tracking-[0.2em] text-blue-600 font-bold mb-4">
                         {t.results.breakdown}
                       </h3>
                       
                       <div className="space-y-4">
-                        <div className="flex justify-between items-center text-sm">
-                          <span className="text-on-surface-variant font-body flex items-center gap-2">
-                            <Plane className="w-4 h-4 text-navy/50" />
+                        <div className="flex justify-between items-center text-base">
+                          <span className="text-gray-600 font-body flex items-center gap-3">
+                            <Plane className="w-5 h-5 text-gray-400" />
                             {t.results.flights}
                           </span>
-                          <span className="font-headline font-bold text-navy">${results.flights.toLocaleString()}</span>
+                          <span className="font-headline font-bold text-gray-900">${results.flights.toLocaleString()}</span>
                         </div>
-                        <div className="flex justify-between items-center text-sm">
-                          <span className="text-on-surface-variant font-body flex items-center gap-2">
-                            <FileText className="w-4 h-4 text-navy/50" />
+                        <div className="flex justify-between items-center text-base">
+                          <span className="text-gray-600 font-body flex items-center gap-3">
+                            <FileText className="w-5 h-5 text-gray-400" />
                             {t.results.visa}
                           </span>
-                          <span className="font-headline font-bold text-navy">${results.visa.toLocaleString()}</span>
+                          <span className="font-headline font-bold text-gray-900">${results.visa.toLocaleString()}</span>
                         </div>
-                        <div className="flex justify-between items-center text-sm">
-                          <span className="text-on-surface-variant font-body flex items-center gap-2">
-                            <Building className="w-4 h-4 text-navy/50" />
+                        <div className="flex justify-between items-center text-base">
+                          <span className="text-gray-600 font-body flex items-center gap-3">
+                            <Building className="w-5 h-5 text-gray-400" />
                             {t.results.lodging}
                           </span>
-                          <span className="font-headline font-bold text-navy">${results.lodging.toLocaleString()}</span>
+                          <span className="font-headline font-bold text-gray-900">${results.lodging.toLocaleString()}</span>
                         </div>
                         
-                        <div className="pt-4 border-t border-outline-variant/20 flex justify-between items-center">
-                          <span className="font-headline font-bold text-navy uppercase tracking-widest text-sm">{t.results.total}</span>
-                          <span className="font-headline font-black text-3xl text-gold">${results.total.toLocaleString()}</span>
+                        <div className="pt-6 border-t border-gray-100 flex justify-between items-center">
+                          <span className="font-headline font-bold text-gray-900 uppercase tracking-widest text-sm">{t.results.total}</span>
+                          <span className="font-headline font-black text-4xl text-blue-600">${results.total.toLocaleString()}</span>
                         </div>
                       </div>
                     </div>
                     
-                    <div className="flex items-start gap-3 mt-6 text-on-surface-variant text-sm bg-surface p-4 rounded-xl border border-outline-variant/10">
-                      <Info className="w-5 h-5 text-gold shrink-0" />
+                    <div className="flex items-start gap-3 mt-6 text-gray-500 text-sm bg-gray-50 p-5 rounded-2xl border border-gray-200">
+                      <Info className="w-5 h-5 text-blue-600 shrink-0" />
                       <p className="italic leading-relaxed">{t.results.disclaimer}</p>
                     </div>
                   </motion.div>

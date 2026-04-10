@@ -132,44 +132,47 @@ export default function VisaPage() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-surface flex flex-col items-center justify-start pb-24">
+    <div className="w-full min-h-screen bg-transparent flex flex-col items-center justify-start pb-24">
       {/* Hero Section */}
-      <section className="w-full bg-navy text-white py-20 px-4 md:px-8 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
-        <div className="max-w-4xl mx-auto relative z-10 text-center">
+      <div className="w-full px-4 md:px-8 max-w-7xl mx-auto mt-8 mb-16">
+        <section className="w-full bg-white/40 backdrop-blur-3xl border border-white/60 hover:border-blue-200 transition-colors duration-500 text-gray-900 py-32 md:py-48 rounded-[3rem] relative overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+          <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] pointer-events-none"></div>
+          <div className="max-w-4xl mx-auto relative z-10 text-center px-4">
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 mb-6 border border-gold text-gold font-label text-xs tracking-[0.2em] rounded-full uppercase font-bold"
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 border border-blue-200 text-blue-600 font-label text-xs tracking-[0.2em] rounded-full uppercase font-bold bg-blue-50/50"
           >
             <Globe2 className="w-4 h-4" />
             Elite Travel Facilitation
           </motion.div>
           <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-4xl md:text-6xl font-headline font-extrabold mb-6 tracking-tighter"
+            transition={{ delay: 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="text-5xl md:text-7xl font-headline font-extrabold mb-6 tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-gray-900 to-gray-600"
           >
             {t.title}
           </motion.h1>
           <motion.p 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-lg text-slate-300 font-body leading-relaxed max-w-2xl mx-auto"
+            transition={{ delay: 0.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="text-xl text-gray-500 font-body leading-relaxed max-w-2xl mx-auto"
           >
             {t.subtitle}
           </motion.p>
-        </div>
-      </section>
+          </div>
+        </section>
+      </div>
 
       {/* Interactive Form Section */}
       <section className="w-full px-4 md:px-8 max-w-4xl mx-auto -mt-12 relative z-20">
-        <div className="bg-navy/95 backdrop-blur-xl border border-gold/30 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
+        <div className="bg-white/70 backdrop-blur-2xl border border-white/60 hover:border-blue-200 transition-colors duration-500 rounded-[2.5rem] p-8 md:p-12 shadow-[0_20px_40px_rgb(0,0,0,0.08)] relative overflow-hidden">
           {/* Decorative Background Elements */}
-          <div className="absolute -top-24 -right-24 w-64 h-64 bg-gold/10 rounded-full blur-3xl pointer-events-none"></div>
-          <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-gold/5 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="absolute -top-24 -right-24 w-64 h-64 bg-blue-400/10 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-teal-400/10 rounded-full blur-3xl pointer-events-none"></div>
 
           <AnimatePresence mode="wait">
             {!isSubmitted ? (
@@ -184,69 +187,69 @@ export default function VisaPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   {/* Visa Type */}
                   <div className="space-y-2">
-                    <label className="block text-xs font-label font-bold text-gold uppercase tracking-widest">
+                    <label className="block text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
                       {t.form.visaType}
                     </label>
-                    <select name="visaType" value={formData.visaType} onChange={handleChange} required className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all appearance-none">
-                      <option value="" disabled className="text-slate-500">Select...</option>
+                    <select name="visaType" value={formData.visaType} onChange={handleChange} required className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all appearance-none shadow-sm">
+                      <option value="" disabled className="text-gray-500">Select...</option>
                       {t.options.types.map((opt, i) => (
-                        <option key={i} value={opt} className="bg-navy text-white">{opt}</option>
+                        <option key={i} value={opt} className="bg-white text-gray-900">{opt}</option>
                       ))}
                     </select>
                   </div>
 
                   {/* Destination */}
                   <div className="space-y-2">
-                    <label className="block text-xs font-label font-bold text-gold uppercase tracking-widest">
+                    <label className="block text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
                       {t.form.destination}
                     </label>
-                    <select name="destination" value={formData.destination} onChange={handleChange} required className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all appearance-none">
-                      <option value="" disabled className="text-slate-500">Select...</option>
+                    <select name="destination" value={formData.destination} onChange={handleChange} required className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all appearance-none shadow-sm">
+                      <option value="" disabled className="text-gray-500">Select...</option>
                       {t.options.destinations.map((opt, i) => (
-                        <option key={i} value={opt} className="bg-navy text-white">{opt}</option>
+                        <option key={i} value={opt} className="bg-white text-gray-900">{opt}</option>
                       ))}
                     </select>
                   </div>
 
                   {/* Full Name */}
                   <div className="space-y-2">
-                    <label className="block text-xs font-label font-bold text-gold uppercase tracking-widest">
+                    <label className="block text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
                       {t.form.fullName}
                     </label>
-                    <input name="fullName" value={formData.fullName} onChange={handleChange} required type="text" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all" placeholder="John Doe" />
+                    <input name="fullName" value={formData.fullName} onChange={handleChange} required type="text" className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm" placeholder="John Doe" />
                   </div>
 
                   {/* Phone Number */}
                   <div className="space-y-2">
-                    <label className="block text-xs font-label font-bold text-gold uppercase tracking-widest">
+                    <label className="block text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
                       {t.form.phone}
                     </label>
-                    <input name="phone" value={formData.phone} onChange={handleChange} required type="tel" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all" placeholder="+251..." />
+                    <input name="phone" value={formData.phone} onChange={handleChange} required type="tel" className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm" placeholder="+251..." />
                   </div>
 
                   {/* Preferred Month */}
                   <div className="space-y-2 md:col-span-2">
-                    <label className="block text-xs font-label font-bold text-gold uppercase tracking-widest">
+                    <label className="block text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
                       {t.form.month}
                     </label>
-                    <select name="month" value={formData.month} onChange={handleChange} required className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all appearance-none">
-                      <option value="" disabled className="text-slate-500">Select...</option>
+                    <select name="month" value={formData.month} onChange={handleChange} required className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all appearance-none shadow-sm">
+                      <option value="" disabled className="text-gray-500">Select...</option>
                       {t.options.months.map((opt, i) => (
-                        <option key={i} value={opt} className="bg-navy text-white">{opt}</option>
+                        <option key={i} value={opt} className="bg-white text-gray-900">{opt}</option>
                       ))}
                     </select>
                   </div>
                 </div>
 
-                <div className="pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
-                  <div className="flex items-center gap-3 text-slate-400 text-sm">
-                    <AlertCircle className="w-5 h-5 text-gold shrink-0" />
+                <div className="pt-8 border-t border-gray-200 flex flex-col md:flex-row items-center justify-between gap-6">
+                  <div className="flex items-center gap-3 text-gray-500 text-sm">
+                    <AlertCircle className="w-5 h-5 text-blue-600 shrink-0" />
                     <p>{t.disclaimer}</p>
                   </div>
                   <button 
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full md:w-auto bg-gold text-navy px-8 py-4 rounded-xl font-headline font-bold uppercase tracking-widest hover:bg-white hover:scale-105 active:scale-95 transition-all shadow-lg flex items-center justify-center gap-2 shrink-0 disabled:opacity-70 disabled:hover:scale-100"
+                    className="w-full md:w-auto bg-blue-600 text-white px-8 py-4 rounded-2xl font-headline font-bold uppercase tracking-widest hover:bg-blue-700 hover:scale-105 active:scale-95 transition-all shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 shrink-0 disabled:opacity-70 disabled:hover:scale-100"
                   >
                     {isSubmitting ? t.form.sending : t.form.submit}
                     {!isSubmitting && <Send className="w-4 h-4" />}
@@ -260,15 +263,15 @@ export default function VisaPage() {
                 animate={{ opacity: 1, scale: 1 }}
                 className="relative z-10 flex flex-col items-center justify-center text-center py-16"
               >
-                <div className="w-20 h-20 bg-gold/20 rounded-full flex items-center justify-center mb-6">
-                  <CheckCircle className="w-10 h-10 text-gold" />
+                <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mb-6 shadow-sm border border-green-100">
+                  <CheckCircle className="w-10 h-10 text-green-500" />
                 </div>
-                <h3 className="text-2xl md:text-3xl font-headline font-bold text-white mb-4">
+                <h3 className="text-2xl md:text-3xl font-headline font-bold text-gray-900 mb-4">
                   {t.success}
                 </h3>
                 <button 
                   onClick={() => setIsSubmitted(false)}
-                  className="mt-8 px-6 py-2 border border-gold text-gold rounded-full font-label text-sm uppercase tracking-widest hover:bg-gold hover:text-navy transition-colors"
+                  className="mt-8 px-8 py-3 bg-white border border-gray-200 text-gray-900 rounded-2xl hover:bg-gray-50 hover:border-gray-300 transition-colors shadow-sm font-bold"
                 >
                   Submit Another Inquiry
                 </button>

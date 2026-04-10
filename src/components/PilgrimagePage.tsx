@@ -223,10 +223,21 @@ export default function PilgrimagePage() {
     }
   };
 
+  const getStepColor = (id: number) => {
+    switch(id) {
+      case 1: return { bg: 'bg-teal-600', text: 'text-teal-600', lightBg: 'bg-teal-50', border: 'border-teal-200', shadow: 'shadow-teal-500/30' };
+      case 2: return { bg: 'bg-blue-600', text: 'text-blue-600', lightBg: 'bg-blue-50', border: 'border-blue-200', shadow: 'shadow-blue-500/30' };
+      case 3: return { bg: 'bg-orange-500', text: 'text-orange-500', lightBg: 'bg-orange-50', border: 'border-orange-200', shadow: 'shadow-orange-500/30' };
+      case 4: return { bg: 'bg-red-500', text: 'text-red-500', lightBg: 'bg-red-50', border: 'border-red-200', shadow: 'shadow-red-500/30' };
+      default: return { bg: 'bg-blue-600', text: 'text-blue-600', lightBg: 'bg-blue-50', border: 'border-blue-200', shadow: 'shadow-blue-500/30' };
+    }
+  };
+
   const checklistData = [
     {
       category: t.categories.sacred,
       icon: <Heart className="w-5 h-5" />,
+      color: { bg: 'bg-red-500', text: 'text-red-500', lightBg: 'bg-red-50', border: 'border-red-200', shadow: 'shadow-red-500/20' },
       items: [
         { id: 'ihram', label: t.items.ihram },
         { id: 'soap', label: t.items.soap }
@@ -235,6 +246,7 @@ export default function PilgrimagePage() {
     {
       category: t.categories.docs,
       icon: <FileText className="w-5 h-5" />,
+      color: { bg: 'bg-blue-600', text: 'text-blue-600', lightBg: 'bg-blue-50', border: 'border-blue-200', shadow: 'shadow-blue-500/20' },
       items: [
         { id: 'passport', label: t.items.passport },
         { id: 'visa', label: t.items.visa },
@@ -244,6 +256,7 @@ export default function PilgrimagePage() {
     {
       category: t.categories.comfort,
       icon: <Briefcase className="w-5 h-5" />,
+      color: { bg: 'bg-teal-600', text: 'text-teal-600', lightBg: 'bg-teal-50', border: 'border-teal-200', shadow: 'shadow-teal-500/20' },
       items: [
         { id: 'sandals', label: t.items.sandals },
         { id: 'mat', label: t.items.mat },
@@ -253,90 +266,106 @@ export default function PilgrimagePage() {
   ];
 
   return (
-    <div className="w-full flex flex-col items-center justify-start min-h-screen bg-surface">
+    <div className="w-full flex flex-col items-center justify-start min-h-screen bg-transparent">
       {/* Hero Section */}
-      <section className="w-full bg-navy text-white py-20 md:py-32 px-4 md:px-8 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-gold via-navy to-navy"></div>
-        <div className="max-w-4xl mx-auto relative z-10 text-center">
+      <div className="w-full px-4 md:px-8 max-w-7xl mx-auto mt-8 mb-16">
+        <section className="w-full bg-white/40 backdrop-blur-3xl border border-white/60 hover:border-blue-200 transition-colors duration-500 text-gray-900 py-32 md:py-48 rounded-[3rem] relative overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+          <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-blue-400 via-gray-900 to-gray-900 pointer-events-none"></div>
+          <div className="max-w-4xl mx-auto relative z-10 text-center px-4">
           <motion.span 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-block px-4 py-1.5 mb-6 border border-gold text-gold font-label text-xs tracking-[0.2em] rounded-full uppercase font-bold"
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="inline-block px-4 py-1.5 mb-8 border border-blue-200 text-blue-600 font-label text-xs tracking-[0.2em] rounded-full uppercase font-bold bg-blue-50/50"
           >
             The Sacred Journey
           </motion.span>
           <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-5xl md:text-7xl font-headline font-extrabold mb-6 tracking-tighter"
+            transition={{ delay: 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="text-5xl md:text-7xl font-headline font-extrabold mb-6 tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-gray-900 to-gray-600"
           >
             {t.title}
           </motion.h1>
           <motion.p 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-lg md:text-xl text-slate-300 font-body leading-relaxed max-w-2xl mx-auto"
+            transition={{ delay: 0.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="text-xl text-gray-500 font-body leading-relaxed max-w-2xl mx-auto"
           >
             {t.subtitle}
           </motion.p>
-        </div>
-      </section>
+          </div>
+        </section>
+      </div>
 
       {/* Interactive Timeline */}
-      <section className="w-full py-24 px-4 md:px-8 max-w-7xl mx-auto">
+      <section className="w-full py-32 md:py-48 px-4 md:px-8 max-w-7xl mx-auto">
         <div className="mb-16 text-center md:text-left">
-          <h2 className="text-3xl md:text-4xl font-headline font-black text-navy mb-4">{t.ritualsTitle}</h2>
-          <div className="w-24 h-1 bg-gold mx-auto md:mx-0"></div>
+          <h2 className="text-3xl md:text-4xl font-headline font-black text-gray-900 mb-4 tracking-tight">{t.ritualsTitle}</h2>
         </div>
 
         <div className="flex flex-col md:flex-row gap-6 md:gap-4 relative">
           {/* Connecting Line (Desktop) */}
-          <div className="hidden md:block absolute top-1/2 left-0 w-full h-0.5 bg-outline-variant/30 -translate-y-1/2 z-0"></div>
+          <div className="hidden md:block absolute top-1/2 left-0 w-full h-px bg-gray-200 -translate-y-1/2 z-0"></div>
 
           {t.steps.map((step, index) => {
             const isActive = activeStep === step.id;
+            const colors = getStepColor(step.id);
             return (
               <motion.div 
                 key={step.id}
                 layout
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ 
+                  layout: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+                  opacity: { duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] },
+                  y: { duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }
+                }}
                 onClick={() => setActiveStep(isActive ? null : step.id)}
-                className={`relative z-10 cursor-pointer transition-all duration-500 ease-in-out flex-1 ${isActive ? 'md:flex-[2]' : ''}`}
+                className={`relative z-10 cursor-pointer flex-1 ${isActive ? 'md:flex-[2]' : ''}`}
               >
-                <div className={`h-full bg-white rounded-2xl p-6 border-2 transition-all duration-300 ${isActive ? 'border-gold shadow-xl shadow-gold/10' : 'border-outline-variant/20 shadow-sm hover:border-gold/50'}`}>
+                <motion.div layout className={`h-full bg-white/70 backdrop-blur-xl rounded-[2rem] p-8 border transition-all duration-500 ${isActive ? `${colors.border} shadow-[0_20px_40px_rgb(0,0,0,0.08)]` : `border-gray-200 shadow-sm hover:${colors.border} hover:shadow-md`}`}>
                   
-                  <div className="flex items-start justify-between mb-4">
-                    <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-300 ${isActive ? 'bg-gold text-navy' : 'bg-surface-container-low text-navy'}`}>
+                  <motion.div layout className="flex items-start justify-between mb-6">
+                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-colors duration-500 ${isActive ? `${colors.bg} text-white shadow-lg ${colors.shadow}` : 'bg-gray-50 text-gray-400 border border-gray-100'}`}>
                       {getIconForStep(step.id)}
                     </div>
-                    <span className="text-4xl font-black text-surface-container-high select-none">
+                    <span className="text-5xl font-black text-gray-100 select-none tracking-tighter">
                       0{step.id}
                     </span>
-                  </div>
+                  </motion.div>
 
-                  <h3 className="text-2xl font-headline font-bold text-navy mb-1">{step.title}</h3>
-                  <p className="text-xs font-label uppercase tracking-widest text-gold font-bold mb-4">
+                  <motion.h3 layout className="text-2xl font-headline font-bold text-gray-900 mb-2 tracking-tight">{step.title}</motion.h3>
+                  <motion.p layout className={`text-xs font-label uppercase tracking-[0.2em] ${colors.text} font-bold mb-4`}>
                     {step.shortDesc}
-                  </p>
+                  </motion.p>
 
-                  <AnimatePresence>
+                  <AnimatePresence initial={false}>
                     {isActive && (
                       <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3 }}
+                        key="content"
+                        initial="collapsed"
+                        animate="open"
+                        exit="collapsed"
+                        variants={{
+                          open: { opacity: 1, height: 'auto', marginTop: 24 },
+                          collapsed: { opacity: 0, height: 0, marginTop: 0 }
+                        }}
+                        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                         className="overflow-hidden"
                       >
-                        <p className="text-on-surface-variant font-body text-sm leading-relaxed pt-2 border-t border-outline-variant/20">
+                        <p className="text-gray-500 font-body text-base leading-relaxed pt-6 border-t border-gray-100">
                           {step.description}
                         </p>
                       </motion.div>
                     )}
                   </AnimatePresence>
 
-                </div>
+                </motion.div>
               </motion.div>
             );
           })}
@@ -344,39 +373,45 @@ export default function PilgrimagePage() {
       </section>
 
       {/* Packing Checklist */}
-      <section className="w-full bg-navy text-white py-24 px-4 md:px-8">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+      <section className="w-full bg-white text-gray-900 py-32 md:py-48 px-4 md:px-8 border-t border-gray-100">
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start"
+        >
           
           {/* Checklist Intro */}
           <div>
-            <span className="font-label uppercase tracking-widest text-gold mb-4 block text-sm font-bold">
+            <span className="font-label uppercase tracking-[0.2em] text-blue-600 mb-6 block text-sm font-bold">
               {t.checklistTitle}
             </span>
-            <h2 className="text-4xl md:text-5xl font-headline font-black mb-6 tracking-tighter">
+            <h2 className="text-4xl md:text-6xl font-headline font-black mb-6 tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-gray-900 to-gray-600">
               {t.checklistSubtitle}
             </h2>
-            <p className="text-slate-300 text-lg font-body leading-relaxed mb-10">
+            <p className="text-gray-500 text-xl font-body leading-relaxed mb-12">
               {t.checklistDesc}
             </p>
             
-            <div className="p-6 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-sm">
-               <div className="flex items-center gap-4 mb-2">
-                 <div className="w-10 h-10 bg-gold rounded-full flex items-center justify-center text-navy">
-                   <Check className="w-5 h-5" />
+            <div className="p-8 bg-gray-50 border border-gray-200 rounded-[2rem]">
+               <div className="flex items-center gap-5 mb-4">
+                 <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-blue-500/30">
+                   <Check className="w-6 h-6" />
                  </div>
                  <div>
-                   <h4 className="font-headline font-bold text-lg">Progress</h4>
-                   <p className="text-sm text-slate-400">
+                   <h4 className="font-headline font-bold text-xl text-gray-900">Progress</h4>
+                   <p className="text-base text-gray-500">
                      {Object.values(checkedItems).filter(Boolean).length} of 8 items packed
                    </p>
                  </div>
                </div>
-               <div className="w-full bg-white/10 h-2 rounded-full mt-4 overflow-hidden">
+               <div className="w-full bg-gray-200 h-3 rounded-full mt-6 overflow-hidden">
                  <motion.div 
-                   className="h-full bg-gold"
+                   className="h-full bg-blue-600"
                    initial={{ width: 0 }}
                    animate={{ width: `${(Object.values(checkedItems).filter(Boolean).length / 8) * 100}%` }}
-                   transition={{ duration: 0.5 }}
+                   transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                  />
                </div>
             </div>
@@ -385,9 +420,11 @@ export default function PilgrimagePage() {
           {/* Checklist Interactive UI */}
           <div className="space-y-8">
             {checklistData.map((category, idx) => (
-              <div key={idx} className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-sm">
-                <h3 className="text-xl font-headline font-bold text-gold mb-6 flex items-center gap-3 border-b border-white/10 pb-4">
-                  {category.icon}
+              <div key={idx} className={`bg-white border border-gray-200 rounded-[2rem] p-8 shadow-sm hover:shadow-md transition-shadow duration-500 hover:${category.color.border}`}>
+                <h3 className="text-2xl font-headline font-bold text-gray-900 mb-6 flex items-center gap-4 border-b border-gray-100 pb-6">
+                  <span className={`p-3 ${category.color.lightBg} ${category.color.text} rounded-xl`}>
+                    {category.icon}
+                  </span>
                   {category.category}
                 </h3>
                 <div className="space-y-3">
@@ -397,12 +434,12 @@ export default function PilgrimagePage() {
                       <div 
                         key={item.id}
                         onClick={() => toggleItem(item.id)}
-                        className={`flex items-center gap-4 p-4 rounded-xl cursor-pointer transition-all duration-200 border ${isChecked ? 'bg-gold/10 border-gold/30' : 'bg-white/5 border-transparent hover:bg-white/10'}`}
+                        className={`flex items-center gap-4 p-5 rounded-2xl cursor-pointer transition-all duration-300 border ${isChecked ? `${category.color.lightBg} ${category.color.border}` : 'bg-gray-50 border-transparent hover:bg-gray-100'}`}
                       >
-                        <div className={`w-6 h-6 rounded flex items-center justify-center transition-colors ${isChecked ? 'bg-gold text-navy' : 'border-2 border-white/30'}`}>
+                        <div className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors duration-300 ${isChecked ? `${category.color.bg} text-white shadow-md ${category.color.shadow}` : 'bg-white border border-gray-300'}`}>
                           {isChecked && <Check className="w-4 h-4" />}
                         </div>
-                        <span className={`font-body text-sm transition-all ${isChecked ? 'text-white line-through opacity-70' : 'text-slate-200'}`}>
+                        <span className={`font-body text-base transition-all duration-300 ${isChecked ? 'text-gray-400 line-through' : 'text-gray-700 font-medium'}`}>
                           {item.label}
                         </span>
                       </div>
@@ -413,7 +450,7 @@ export default function PilgrimagePage() {
             ))}
           </div>
 
-        </div>
+        </motion.div>
       </section>
     </div>
   );

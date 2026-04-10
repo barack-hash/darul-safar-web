@@ -156,36 +156,36 @@ export default function TicketingPage() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-surface flex flex-col items-center justify-start pb-24">
+    <div className="w-full min-h-screen bg-transparent flex flex-col items-center justify-start pb-24">
       {/* Hero Section */}
-      <div className="w-full px-4 md:px-8 max-w-7xl mx-auto mt-8 mb-8">
-        <section className="w-full bg-navy/80 backdrop-blur-md border border-navy/50 hover:border-gold/50 transition-colors duration-500 text-white py-20 rounded-3xl relative overflow-hidden shadow-xl">
-          <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
+      <div className="w-full px-4 md:px-8 max-w-7xl mx-auto mt-8 mb-16">
+        <section className="w-full bg-white/40 backdrop-blur-3xl border border-white/60 hover:border-blue-200 transition-colors duration-500 text-gray-900 py-32 md:py-48 rounded-[3rem] relative overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+          <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] pointer-events-none"></div>
           <div className="max-w-4xl mx-auto relative z-10 text-center px-4">
             <motion.div 
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="inline-flex items-center justify-center p-4 bg-gold/20 rounded-full mb-6"
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="inline-flex items-center justify-center p-4 bg-blue-50 rounded-2xl mb-8 shadow-sm border border-blue-100"
             >
-              <Plane className="w-10 h-10 text-gold" />
+              <Plane className="w-10 h-10 text-blue-600" />
             </motion.div>
             <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.1, duration: 0.6 }}
-              className="text-4xl md:text-6xl font-headline font-extrabold mb-6 tracking-tighter"
+              transition={{ delay: 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="text-5xl md:text-7xl font-headline font-extrabold mb-6 tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-gray-900 to-gray-600"
             >
               {t.title}
             </motion.h1>
             <motion.p 
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-              className="text-lg text-slate-300 font-body leading-relaxed max-w-2xl mx-auto"
+              transition={{ delay: 0.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="text-xl text-gray-500 font-body leading-relaxed max-w-2xl mx-auto"
             >
               {t.subtitle}
             </motion.p>
@@ -194,16 +194,15 @@ export default function TicketingPage() {
       </div>
 
       {/* Airline Partners */}
-      <section className="w-full px-4 md:px-8 max-w-7xl mx-auto mb-16">
+      <section className="w-full px-4 md:px-8 max-w-7xl mx-auto mb-32 md:mb-48">
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-8"
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center mb-10"
         >
-          <h2 className="text-xl font-label font-bold text-navy uppercase tracking-widest">{t.partners}</h2>
-          <div className="w-16 h-1 bg-gold mx-auto mt-4"></div>
+          <h2 className="text-sm font-label font-bold text-gray-400 uppercase tracking-[0.2em]">{t.partners}</h2>
         </motion.div>
         
         <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16">
@@ -216,8 +215,8 @@ export default function TicketingPage() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
-              className="group w-32 h-16 md:w-40 md:h-20 bg-white rounded-xl shadow-sm border border-outline-variant/20 flex items-center justify-center p-4 hover:shadow-xl hover:shadow-gold/20 hover:border-gold/50 hover:-translate-y-2 hover:scale-105 transition-all duration-500 grayscale hover:grayscale-0 cursor-pointer"
+              transition={{ delay: index * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="group w-32 h-16 md:w-40 md:h-20 bg-white/70 backdrop-blur-md rounded-2xl shadow-sm border border-white/60 flex items-center justify-center p-4 hover:shadow-xl hover:shadow-blue-500/10 hover:border-blue-200 hover:-translate-y-2 hover:scale-105 transition-all duration-500 grayscale hover:grayscale-0 cursor-pointer"
             >
               <img src={partner.logo} alt={partner.name} className="h-16 w-full object-contain transition-transform duration-500 group-hover:scale-110" />
             </motion.a>
@@ -226,17 +225,17 @@ export default function TicketingPage() {
       </section>
 
       {/* Interactive Form Section */}
-      <section className="w-full px-4 md:px-8 max-w-4xl mx-auto relative z-20">
+      <section className="w-full px-4 md:px-8 max-w-4xl mx-auto relative z-20 mb-32 md:mb-48">
         <motion.div 
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="bg-navy/60 backdrop-blur-xl border border-white/20 hover:border-gold/50 transition-colors duration-500 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden"
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="bg-white/70 backdrop-blur-2xl border border-white/60 hover:border-blue-200 transition-colors duration-500 rounded-[2.5rem] p-8 md:p-12 shadow-[0_20px_40px_rgb(0,0,0,0.08)] relative overflow-hidden"
         >
           {/* Decorative Background Elements */}
-          <div className="absolute -top-24 -right-24 w-64 h-64 bg-gold/10 rounded-full blur-3xl pointer-events-none"></div>
-          <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-gold/5 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="absolute -top-24 -right-24 w-64 h-64 bg-blue-400/10 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-teal-400/10 rounded-full blur-3xl pointer-events-none"></div>
 
           <AnimatePresence mode="wait">
             {!isSubmitted ? (
@@ -251,88 +250,88 @@ export default function TicketingPage() {
                 {/* Flight Details */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="space-y-2">
-                    <label className="flex items-center gap-2 text-xs font-label font-bold text-gold uppercase tracking-widest">
+                    <label className="flex items-center gap-2 text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
                       <PlaneTakeoff className="w-4 h-4" /> {t.form.departure}
                     </label>
-                    <input name="departure" value={formData.departure} onChange={handleChange} required type="text" className="w-full bg-white/10 backdrop-blur-md border border-white/20 rounded-xl px-4 py-3 text-white placeholder:text-slate-400 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all" placeholder="City or Airport Code" />
+                    <input name="departure" value={formData.departure} onChange={handleChange} required type="text" className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm" placeholder="City or Airport Code" />
                   </div>
 
                   <div className="space-y-2">
-                    <label className="flex items-center gap-2 text-xs font-label font-bold text-gold uppercase tracking-widest">
+                    <label className="flex items-center gap-2 text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
                       <PlaneLanding className="w-4 h-4" /> {t.form.destination}
                     </label>
-                    <input name="destination" value={formData.destination} onChange={handleChange} required type="text" className="w-full bg-white/10 backdrop-blur-md border border-white/20 rounded-xl px-4 py-3 text-white placeholder:text-slate-400 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all" placeholder="City or Airport Code" />
+                    <input name="destination" value={formData.destination} onChange={handleChange} required type="text" className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm" placeholder="City or Airport Code" />
                   </div>
 
                   <div className="space-y-2">
-                    <label className="flex items-center gap-2 text-xs font-label font-bold text-gold uppercase tracking-widest">
+                    <label className="flex items-center gap-2 text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
                       <Calendar className="w-4 h-4" /> {t.form.departDate}
                     </label>
-                    <input name="departDate" value={formData.departDate} onChange={handleChange} required type="date" className="w-full bg-white/10 backdrop-blur-md border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all [color-scheme:dark]" />
+                    <input name="departDate" value={formData.departDate} onChange={handleChange} required type="date" className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm" />
                   </div>
 
                   <div className="space-y-2">
-                    <label className="flex items-center gap-2 text-xs font-label font-bold text-gold uppercase tracking-widest">
+                    <label className="flex items-center gap-2 text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
                       <Calendar className="w-4 h-4" /> {t.form.returnDate}
                     </label>
-                    <input name="returnDate" value={formData.returnDate} onChange={handleChange} type="date" className="w-full bg-white/10 backdrop-blur-md border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all [color-scheme:dark]" />
+                    <input name="returnDate" value={formData.returnDate} onChange={handleChange} type="date" className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm" />
                   </div>
 
                   <div className="space-y-2">
-                    <label className="flex items-center gap-2 text-xs font-label font-bold text-gold uppercase tracking-widest">
+                    <label className="flex items-center gap-2 text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
                       <Users className="w-4 h-4" /> {t.form.passengers}
                     </label>
-                    <input name="passengers" value={formData.passengers} onChange={handleChange} required type="number" min="1" className="w-full bg-white/10 backdrop-blur-md border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all" />
+                    <input name="passengers" value={formData.passengers} onChange={handleChange} required type="number" min="1" className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm" />
                   </div>
 
                   <div className="space-y-2">
-                    <label className="block text-xs font-label font-bold text-gold uppercase tracking-widest">
+                    <label className="block text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
                       {t.form.cabin}
                     </label>
-                    <select name="cabin" value={formData.cabin} onChange={handleChange} required className="w-full bg-white/10 backdrop-blur-md border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all appearance-none">
-                      <option value="" disabled className="text-slate-500">Select...</option>
+                    <select name="cabin" value={formData.cabin} onChange={handleChange} required className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all appearance-none shadow-sm">
+                      <option value="" disabled className="text-gray-500">Select...</option>
                       {t.options.cabins.map((opt, i) => (
-                        <option key={i} value={opt} className="bg-navy text-white">{opt}</option>
+                        <option key={i} value={opt} className="bg-white text-gray-900">{opt}</option>
                       ))}
                     </select>
                   </div>
                 </div>
 
-                <div className="w-full h-px bg-white/10 my-8"></div>
+                <div className="w-full h-px bg-gray-200 my-8"></div>
 
                 {/* Contact Details */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="space-y-2">
-                    <label className="block text-xs font-label font-bold text-gold uppercase tracking-widest">
+                    <label className="block text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
                       {t.form.fullName}
                     </label>
-                    <input name="fullName" value={formData.fullName} onChange={handleChange} required type="text" className="w-full bg-white/10 backdrop-blur-md border border-white/20 rounded-xl px-4 py-3 text-white placeholder:text-slate-400 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all" placeholder="John Doe" />
+                    <input name="fullName" value={formData.fullName} onChange={handleChange} required type="text" className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm" placeholder="John Doe" />
                   </div>
 
                   <div className="space-y-2">
-                    <label className="block text-xs font-label font-bold text-gold uppercase tracking-widest">
+                    <label className="block text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
                       {t.form.phone}
                     </label>
-                    <input name="phone" value={formData.phone} onChange={handleChange} required type="tel" className="w-full bg-white/10 backdrop-blur-md border border-white/20 rounded-xl px-4 py-3 text-white placeholder:text-slate-400 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all" placeholder="+251..." />
+                    <input name="phone" value={formData.phone} onChange={handleChange} required type="tel" className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm" placeholder="+251..." />
                   </div>
 
                   <div className="space-y-2 md:col-span-2">
-                    <label className="block text-xs font-label font-bold text-gold uppercase tracking-widest">
+                    <label className="block text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
                       {t.form.email}
                     </label>
-                    <input name="email" value={formData.email} onChange={handleChange} required type="email" className="w-full bg-white/10 backdrop-blur-md border border-white/20 rounded-xl px-4 py-3 text-white placeholder:text-slate-400 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all" placeholder="john@example.com" />
+                    <input name="email" value={formData.email} onChange={handleChange} required type="email" className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm" placeholder="john@example.com" />
                   </div>
                 </div>
 
-                <div className="pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
-                  <div className="flex items-center gap-3 text-slate-400 text-sm">
-                    <AlertCircle className="w-5 h-5 text-gold shrink-0" />
+                <div className="pt-8 border-t border-gray-200 flex flex-col md:flex-row items-center justify-between gap-6">
+                  <div className="flex items-center gap-3 text-gray-500 text-sm">
+                    <AlertCircle className="w-5 h-5 text-blue-600 shrink-0" />
                     <p>{t.disclaimer}</p>
                   </div>
                   <button 
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full md:w-auto bg-gold text-navy font-headline font-bold px-8 py-4 rounded-xl hover:bg-white hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:hover:scale-100"
+                    className="w-full md:w-auto bg-blue-600 text-white font-headline font-bold px-8 py-4 rounded-2xl hover:bg-blue-700 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:hover:scale-100 shadow-lg shadow-blue-500/30"
                   >
                     {isSubmitting ? t.form.sending : (
                       <>
@@ -350,11 +349,11 @@ export default function TicketingPage() {
                 animate={{ opacity: 1, scale: 1 }}
                 className="relative z-10 flex flex-col items-center justify-center text-center py-16"
               >
-                <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mb-6">
-                  <CheckCircle className="w-10 h-10 text-green-400" />
+                <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mb-6 shadow-sm border border-green-100">
+                  <CheckCircle className="w-10 h-10 text-green-500" />
                 </div>
-                <h3 className="text-3xl font-headline font-bold text-white mb-4">Request Received</h3>
-                <p className="text-slate-300 font-body max-w-md">
+                <h3 className="text-3xl font-headline font-bold text-gray-900 mb-4">Request Received</h3>
+                <p className="text-gray-500 font-body max-w-md">
                   {t.success}
                 </p>
                 <button 
@@ -364,7 +363,7 @@ export default function TicketingPage() {
                       departure: '', destination: '', departDate: '', returnDate: '', passengers: '1', cabin: '', fullName: '', phone: '', email: ''
                     });
                   }}
-                  className="mt-8 px-6 py-2 border border-white/20 text-white rounded-full hover:bg-white/10 transition-colors"
+                  className="mt-8 px-8 py-3 bg-white border border-gray-200 text-gray-900 rounded-2xl hover:bg-gray-50 hover:border-gray-300 transition-colors shadow-sm font-bold"
                 >
                   Submit Another Request
                 </button>
