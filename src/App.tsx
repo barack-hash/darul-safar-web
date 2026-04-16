@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Globe, ChevronDown, Send, Menu, X, Plane, FileText, Briefcase, Moon } from 'lucide-react';
+import { Globe, ChevronDown, Send, Menu, X, Plane, FileText, Briefcase, Moon, AlertCircle, CheckCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import PilgrimagePage from './components/PilgrimagePage';
 import VisaPage from './components/VisaPage';
@@ -63,6 +63,9 @@ export default function App() {
   const { lang, setLang, t } = useLanguage();
   const [currentPage, setCurrentPage] = useState<Page>('home');
   const [scrolled, setScrolled] = useState(false);
+  const [newsletterEmail, setNewsletterEmail] = useState('');
+  const [newsletterState, setNewsletterState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [newsletterMessage, setNewsletterMessage] = useState('');
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -81,6 +84,51 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const newsletterStatusText = {
+    en: {
+      invalid: 'Please enter a valid email address.',
+      success: 'Thanks for subscribing. We will keep you updated.',
+      error: 'Could not complete subscription. Please try again.'
+    },
+    ar: {
+      invalid: 'يرجى إدخال بريد إلكتروني صالح.',
+      success: 'شكراً لاشتراكك. سنبقيك على اطلاع.',
+      error: 'تعذر إكمال الاشتراك. يرجى المحاولة مرة أخرى.'
+    },
+    am: {
+      invalid: 'እባክዎ ትክክለኛ ኢሜይል ያስገቡ።',
+      success: 'ስለተመዘገቡ እናመሰግናለን። ዜናዎችን እናዘምናለን።',
+      error: 'ምዝገባውን ማጠናቀቅ አልተቻለም። እባክዎ ዳግም ይሞክሩ።'
+    },
+    om: {
+      invalid: 'Maaloo email sirrii galchi.',
+      success: 'Galatoomi subscribe goote. Odeeffannoo siif ni erra.',
+      error: 'Galmeen xumuramuu hin dandeenye. Maaloo irra deebi aa yaali.'
+    }
+  }[lang];
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setNewsletterMessage('');
+
+    const normalizedEmail = newsletterEmail.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail)) {
+      setNewsletterState('error');
+      setNewsletterMessage(newsletterStatusText.invalid);
+      return;
+    }
+
+    setNewsletterState('submitting');
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 700));
+      setNewsletterState('success');
+      setNewsletterMessage(newsletterStatusText.success);
+      setNewsletterEmail('');
+    } catch {
+      setNewsletterState('error');
+      setNewsletterMessage(newsletterStatusText.error);
+    }
+  };
   return (
     <div className="min-h-screen bg-[#F5F5F7] text-gray-900 font-body flex flex-col overflow-x-hidden">
       {/* Master Header */}
@@ -436,18 +484,35 @@ export default function App() {
             <p className="font-body text-sm text-gray-500 mb-4">
               {t.footer.newsletterDesc}
             </p>
-            <form className="relative" onSubmit={(e) => e.preventDefault()}>
+            <form className="relative space-y-3" onSubmit={handleNewsletterSubmit}>
+              {newsletterState !== 'idle' && newsletterState !== 'submitting' && newsletterMessage && (
+                <div className={`rounded-xl border px-3 py-2 text-xs font-body flex items-start gap-2 ${newsletterState === 'success' ? 'border-blue-200 bg-blue-50/80 text-blue-700' : 'border-red-200 bg-red-50/80 text-red-700'}`}>
+                  {newsletterState === 'success' ? <CheckCircle className="w-4 h-4 mt-0.5 shrink-0" /> : <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />}
+                  <span>{newsletterMessage}</span>
+                </div>
+              )}
+              <div className="relative">
               <input 
                 type="email" 
+                value={newsletterEmail}
+                onChange={(e) => {
+                  setNewsletterEmail(e.target.value);
+                  if (newsletterState !== 'idle') {
+                    setNewsletterState('idle');
+                    setNewsletterMessage('');
+                  }
+                }}
                 placeholder={t.footer.emailPlaceholder} 
                 className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
               />
               <button 
                 type="submit"
-                className="absolute right-2 top-1.5 bottom-1.5 px-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center"
+                disabled={newsletterState === 'submitting'}
+                className="absolute right-2 top-1.5 bottom-1.5 px-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 <Send className="w-4 h-4" />
               </button>
+              </div>
             </form>
           </div>
         </div>

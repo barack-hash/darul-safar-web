@@ -80,6 +80,30 @@ interface Translations {
       locationNotes: string;
     };
   };
+  pilgrimagePage: {
+    title: string;
+    subtitle: string;
+    packagesTitle: string;
+    economyUmrah: {
+      title: string;
+      desc: string;
+      inclusions: string[];
+    };
+    premiumHajj: {
+      title: string;
+      desc: string;
+      inclusions: string[];
+    };
+    discussWhatsApp: string;
+    guideTitle: string;
+    guideSubtitle: string;
+    steps: {
+      ihram: { title: string; desc: string; };
+      tawaf: { title: string; desc: string; };
+      sai: { title: string; desc: string; };
+      halq: { title: string; desc: string; };
+    };
+  };
 }
 
 const translations: Record<Lang, Translations> = {
@@ -152,6 +176,30 @@ const translations: Record<Lang, Translations> = {
         activityDetails: "Activity Details",
         locationNotes: "Location Notes"
       }
+    },
+    pilgrimagePage: {
+      title: "The Sacred Journey",
+      subtitle: "Embark on a spiritually enriching experience with our meticulously planned Umrah and Hajj packages.",
+      packagesTitle: "Our Packages",
+      economyUmrah: {
+        title: "Economy Umrah",
+        desc: "A comfortable and affordable journey to the holy cities.",
+        inclusions: ["Visa Processing", "Round-trip Flights", "3-Star Hotel (1km from Haram)", "Ground Transportation", "5L Zamzam Water"]
+      },
+      premiumHajj: {
+        title: "Premium Hajj",
+        desc: "An exceptional, fully-guided Hajj experience with premium amenities.",
+        inclusions: ["Hajj Visa Processing", "Direct Flights", "5-Star Hotel (Facing Haram)", "VIP Tents in Mina & Arafat", "Dedicated Scholar Guidance"]
+      },
+      discussWhatsApp: "Discuss on WhatsApp",
+      guideTitle: "Pilgrim's Guide",
+      guideSubtitle: "The simplified steps of Umrah.",
+      steps: {
+        ihram: { title: "1. Ihram", desc: "The sacred state of purity and intention. Pilgrims bathe, wear the Ihram garments, and recite the Talbiyah before crossing the Miqat." },
+        tawaf: { title: "2. Tawaf", desc: "Circling the Kaaba seven times counter-clockwise, expressing devotion and unity with believers worldwide." },
+        sai: { title: "3. Sa'i", desc: "Walking seven times between the hills of Safa and Marwah, honoring the faith and perseverance of Hajar." },
+        halq: { title: "4. Halq / Taqsir", desc: "Shaving or trimming the hair, symbolizing humility, spiritual rebirth, and the completion of the Umrah rituals." }
+      }
     }
   },
   ar: {
@@ -222,6 +270,30 @@ const translations: Record<Lang, Translations> = {
         clearAll: "مسح الكل",
         activityDetails: "تفاصيل النشاط",
         locationNotes: "ملاحظات الموقع"
+      }
+    },
+    pilgrimagePage: {
+      title: "الرحلة المقدسة",
+      subtitle: "انطلق في تجربة روحانية غنية مع باقات العمرة والحج المخطط لها بعناية.",
+      packagesTitle: "باقاتنا",
+      economyUmrah: {
+        title: "عمرة اقتصادية",
+        desc: "رحلة مريحة وبأسعار معقولة إلى المدن المقدسة.",
+        inclusions: ["استخراج التأشيرة", "رحلات طيران ذهاب وعودة", "فندق 3 نجوم (1 كم من الحرم)", "المواصلات البرية", "5 لتر ماء زمزم"]
+      },
+      premiumHajj: {
+        title: "حج مميز",
+        desc: "تجربة حج استثنائية وموجهة بالكامل مع وسائل راحة فاخرة.",
+        inclusions: ["استخراج تأشيرة الحج", "رحلات طيران مباشرة", "فندق 5 نجوم (مواجه للحرم)", "خيام كبار الشخصيات في منى وعرفات", "إرشاد ديني متخصص"]
+      },
+      discussWhatsApp: "تواصل عبر واتساب",
+      guideTitle: "دليل الحاج والمعتمر",
+      guideSubtitle: "خطوات العمرة المبسطة.",
+      steps: {
+        ihram: { title: "1. الإحرام", desc: "حالة النقاء والنية المقدسة. يغتسل الحجاج، ويرتدون ملابس الإحرام، ويلبون قبل تجاوز الميقات." },
+        tawaf: { title: "2. الطواف", desc: "الدوران حول الكعبة سبعة أشواط عكس عقارب الساعة، تعبيراً عن التفاني والوحدة مع المؤمنين في جميع أنحاء العالم." },
+        sai: { title: "3. السعي", desc: "المشي سبعة أشواط بين تلي الصفا والمروة، تكريماً لإيمان وصبر السيدة هاجر." },
+        halq: { title: "4. الحلق / التقصير", desc: "حلق الشعر أو تقصيره، يرمز إلى التواضع، والولادة الروحية الجديدة، وإتمام مناسك العمرة." }
       }
     }
   },
@@ -294,6 +366,30 @@ const translations: Record<Lang, Translations> = {
         activityDetails: "የእንቅስቃሴ ዝርዝሮች",
         locationNotes: "የቦታ ማስታወሻዎች"
       }
+    },
+    pilgrimagePage: {
+      title: "ቅዱስ ጉዞ",
+      subtitle: "በጥንቃቄ ከተዘጋጁት የዑምራ እና የሐጅ ፓኬጆቻችን ጋር በመንፈሳዊ የበለጸገ ተሞክሮ ይጀምሩ።",
+      packagesTitle: "የእኛ ፓኬጆች",
+      economyUmrah: {
+        title: "ኢኮኖሚ ዑምራ",
+        desc: "ወደ ቅዱሳን ከተሞች ምቹ እና ተመጣጣኝ ጉዞ።",
+        inclusions: ["የቪዛ ሂደት", "የደርሶ መልስ በረራዎች", "ባለ 3-ኮከብ ሆቴል (ከሐረም 1 ኪ.ሜ)", "የየብስ ትራንስፖርት", "5 ሊትር የዘምዘም ውሃ"]
+      },
+      premiumHajj: {
+        title: "ፕሪሚየም ሐጅ",
+        desc: "ልዩ እና ሙሉ በሙሉ የተመራ የሐጅ ተሞክሮ ከፕሪሚየም አገልግሎቶች ጋር።",
+        inclusions: ["የሐጅ ቪዛ ሂደት", "ቀጥታ በረራዎች", "ባለ 5-ኮከብ ሆቴል (ሐረምን የሚመለከት)", "በሚና እና አረፋት የቪአይፒ ድንኳኖች", "የተሰጠ የሊቃውንት መመሪያ"]
+      },
+      discussWhatsApp: "በዋትስአፕ ያነጋግሩን",
+      guideTitle: "የተጓዥ መመሪያ",
+      guideSubtitle: "ቀላል የዑምራ ደረጃዎች።",
+      steps: {
+        ihram: { title: "1. ኢህራም", desc: "የንጽህና እና የኒያ (ዓላማ) ቅዱስ ሁኔታ። ተጓዦች ይታጠባሉ፣ የኢህራም ልብሶችን ይለብሳሉ፣ እና ሚቃትን ከማለፋቸው በፊት ተልቢያን ይላሉ።" },
+        tawaf: { title: "2. ጠዋፍ", desc: "በካዕባ ዙሪያ ሰባት ጊዜ በተቃራኒ ሰዓት አቅጣጫ መዞር፣ በዓለም ዙሪያ ካሉ አማኞች ጋር ያለውን ፍቅር እና አንድነት መግለጽ።" },
+        sai: { title: "3. ሰዕይ", desc: "በሶፋ እና መርዋ ኮረብታዎች መካከል ሰባት ጊዜ መመላለስ፣ የሀጀርን እምነት እና ጽናት ማክበር።" },
+        halq: { title: "4. ሐልቅ / ተቅሲር", desc: "ፀጉርን መላጨት ወይም ማሳጠር፣ ትህትናን፣ መንፈሳዊ ዳግም ልደትን እና የዑምራ ስነ-ስርዓቶችን ማጠናቀቅን ያመለክታል።" }
+      }
     }
   },
   om: {
@@ -364,6 +460,30 @@ const translations: Record<Lang, Translations> = {
         clearAll: "Hunda Haqi",
         activityDetails: "Ibsa Hojii",
         locationNotes: "Yaada Bakka"
+      }
+    },
+    pilgrimagePage: {
+      title: "Imala Qulqulluu",
+      subtitle: "Paakeejiiwwan Umrah fi Hajjii keenya of eeggannoon karoorfaman waliin muuxannoo hafuuraan badhaadhe eegalaa.",
+      packagesTitle: "Paakeejiiwwan Keenya",
+      economyUmrah: {
+        title: "Umrah Ikoonomii",
+        desc: "Imala mijataa fi gatii madaalawaan gara magaalota qulqulluutti.",
+        inclusions: ["Adeemsa Viizaa", "Balali'aa Deddeebii", "Hoteela Urjii 3 (Haram irraa kiilomeetira 1)", "Geejjiba Lafa Irraa", "Bishaan Zamzam Liitira 5"]
+      },
+      premiumHajj: {
+        title: "Hajjii Piriimiyemii",
+        desc: "Muuxannoo Hajjii adda ta'ee fi guutuun qajeelfamu, tajaajiloota piriimiyemii waliin.",
+        inclusions: ["Adeemsa Viizaa Hajjii", "Balali'aa Kallattii", "Hoteela Urjii 5 (Haram kan ilaalu)", "Dunkaana VIP Minaa fi Arafaa keessatti", "Qajeelfama Hayyootaa Addaa"]
+      },
+      discussWhatsApp: "WhatsApp irratti Mari'adhaa",
+      guideTitle: "Qajeelfama Imalaa",
+      guideSubtitle: "Sadarkaalee Umrah salphifaman.",
+      steps: {
+        ihram: { title: "1. Ihraam", desc: "Haala qulqullummaa fi niyyaa qulqulluu. Imaltoonni ni dhiqatu, uffata Ihraam ni uffatu, fi Miqaat osoo hin qaxxaamurin dura Talbiyah ni jedhu." },
+        tawaf: { title: "2. Xawaaf", desc: "Ka'abaa marsaa torba faallaa lakkooftuu sa'aatiin naanna'uu, jaalalaa fi tokkummaa amantoota addunyaa waliin agarsiisuu." },
+        sai: { title: "3. Sa'iy", desc: "Gaarren Safaa fi Marwaa gidduu si'a torba deemuun, amantaa fi obsa Hajar kabajuu." },
+        halq: { title: "4. Halq / Taqsir", desc: "Rifeensa haaddachuu ykn gabaabsuu, gad of qabuu, dhaloota hafuuraa haaraa, fi xumura sirnoota Umrah agarsiisa." }
       }
     }
   }

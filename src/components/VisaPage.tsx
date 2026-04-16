@@ -255,6 +255,8 @@ export default function VisaPage() {
   const t = translations[lang];
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   
   const [formData, setFormData] = useState({
     visaType: '',
@@ -265,11 +267,63 @@ export default function VisaPage() {
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    if (fieldErrors[e.target.name]) {
+      setFieldErrors((prev) => ({ ...prev, [e.target.name]: '' }));
+    }
+    if (submitError) setSubmitError('');
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const statusText = {
+    en: {
+      fillAllFields: 'Please complete all fields before submitting.',
+      invalidPhone: 'Please enter a valid phone number.',
+      submitError: 'We could not submit your inquiry right now. Please try again.',
+      submitAnother: 'Submit Another Inquiry'
+    },
+    ar: {
+      fillAllFields: 'يرجى إكمال جميع الحقول قبل الإرسال.',
+      invalidPhone: 'يرجى إدخال رقم هاتف صحيح.',
+      submitError: 'تعذر إرسال طلبك الآن. يرجى المحاولة مرة أخرى.',
+      submitAnother: 'إرسال طلب آخر'
+    },
+    am: {
+      fillAllFields: 'እባክዎ ከመላክዎ በፊት ሁሉንም መስኮች ይሙሉ።',
+      invalidPhone: 'እባክዎ ትክክለኛ የስልክ ቁጥር ያስገቡ።',
+      submitError: 'ጥያቄዎን አሁን መላክ አልተቻለም። እባክዎ ዳግም ይሞክሩ።',
+      submitAnother: 'ሌላ ጥያቄ ያስገቡ'
+    },
+    om: {
+      fillAllFields: 'Maaloo osoo hin erginiin dura dirreewwan hunda guutaa.',
+      invalidPhone: 'Maaloo lakkoofsa bilbilaa sirrii galchi.',
+      submitError: 'Gaaffiin keessan amma ergamuu hin dandeenye. Maaloo irra deebi aa yaali.',
+      submitAnother: 'Gaaffii Biroo Galchi'
+    }
+  }[lang];
+
+  const validateForm = () => {
+    const errors: Record<string, string> = {};
+    if (!formData.visaType || !formData.destination || !formData.fullName || !formData.phone || !formData.month) {
+      setSubmitError(statusText.fillAllFields);
+    }
+
+    if (!formData.fullName.trim()) {
+      errors.fullName = statusText.fillAllFields;
+    }
+
+    const normalizedPhone = formData.phone.replace(/\s+/g, '');
+    if (!/^\+?[0-9]{8,15}$/.test(normalizedPhone)) {
+      errors.phone = statusText.invalidPhone;
+    }
+
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0 && !(!formData.visaType || !formData.destination || !formData.fullName || !formData.phone || !formData.month);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitError('');
+    if (!validateForm()) return;
     setIsSubmitting(true);
     
     try {
@@ -284,12 +338,15 @@ export default function VisaPage() {
       
       if (response.ok) {
         setIsSubmitted(true);
+        setSubmitError('');
+        setFieldErrors({});
         setFormData({ visaType: '', destination: '', fullName: '', phone: '', month: '' });
       } else {
-        console.error("Form submission failed");
+        setSubmitError(statusText.submitError);
       }
     } catch (error) {
       console.error("Error submitting form", error);
+      setSubmitError(statusText.submitError);
     } finally {
       setIsSubmitting(false);
     }
@@ -378,6 +435,12 @@ export default function VisaPage() {
                 onSubmit={handleSubmit}
                 className="relative z-10 space-y-8"
               >
+                {submitError && (
+                  <div className="rounded-2xl border border-red-200 bg-red-50/80 px-4 py-3 text-sm text-red-700 font-body flex items-start gap-2">
+                    <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
+                    <span>{submitError}</span>
+                  </div>
+                )}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   {/* Visa Type */}
                   <div className="space-y-2">
@@ -411,6 +474,7 @@ export default function VisaPage() {
                       {t.form.fullName}
                     </label>
                     <input name="fullName" value={formData.fullName} onChange={handleChange} required type="text" className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm" placeholder="John Doe" />
+                    {fieldErrors.fullName && <p className="text-xs text-red-600 font-body">{fieldErrors.fullName}</p>}
                   </div>
 
                   {/* Phone Number */}
@@ -419,6 +483,7 @@ export default function VisaPage() {
                       {t.form.phone}
                     </label>
                     <input name="phone" value={formData.phone} onChange={handleChange} required type="tel" className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm" placeholder="+251..." />
+                    {fieldErrors.phone && <p className="text-xs text-red-600 font-body">{fieldErrors.phone}</p>}
                   </div>
 
                   {/* Preferred Month */}
@@ -457,8 +522,8 @@ export default function VisaPage() {
                 animate={{ opacity: 1, scale: 1 }}
                 className="relative z-10 flex flex-col items-center justify-center text-center py-16"
               >
-                <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mb-6 shadow-sm border border-green-100">
-                  <CheckCircle className="w-10 h-10 text-green-500" />
+                <div className="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mb-6 shadow-sm border border-blue-100">
+                  <CheckCircle className="w-10 h-10 text-blue-600" />
                 </div>
                 <h3 className="text-2xl md:text-3xl font-headline font-bold text-gray-900 mb-4">
                   {t.success}
@@ -467,7 +532,7 @@ export default function VisaPage() {
                   onClick={() => setIsSubmitted(false)}
                   className="mt-8 px-8 py-3 bg-white border border-gray-200 text-gray-900 rounded-2xl hover:bg-gray-50 hover:border-gray-300 transition-colors shadow-sm font-bold"
                 >
-                  Submit Another Inquiry
+                  {statusText.submitAnother}
                 </button>
               </motion.div>
             )}

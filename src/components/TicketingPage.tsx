@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Plane, PlaneTakeoff, PlaneLanding, Users, Calendar, MessageCircle, MapPin, Briefcase } from 'lucide-react';
+import { Plane, PlaneTakeoff, PlaneLanding, Users, Calendar, MessageCircle, MapPin, Briefcase, AlertCircle, CheckCircle } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 const translations = {
@@ -144,8 +144,10 @@ const airlinePartners = [
 export default function TicketingPage() {
   const { lang } = useLanguage();
   const t = translations[lang];
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitState, setSubmitState] = useState<'idle' | 'success' | 'error'>('idle');
+  const [submitMessage, setSubmitMessage] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   
   const [formData, setFormData] = useState({
     departure: 'Addis Ababa',
@@ -155,19 +157,99 @@ export default function TicketingPage() {
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    if (fieldErrors[e.target.name]) {
+      setFieldErrors((prev) => ({ ...prev, [e.target.name]: '' }));
+    }
+    if (submitState !== 'idle') {
+      setSubmitState('idle');
+      setSubmitMessage('');
+    }
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const statusText = {
+    en: {
+      fillAllFields: 'Please complete all fields before continuing.',
+      invalidPassengers: 'Passengers must be at least 1.',
+      invalidDate: 'Please choose today or a future date.',
+      success: 'Your request is ready. WhatsApp has been opened with your flight details.',
+      error: 'Unable to open WhatsApp right now. Please try again.'
+    },
+    ar: {
+      fillAllFields: 'يرجى إكمال جميع الحقول قبل المتابعة.',
+      invalidPassengers: 'يجب أن يكون عدد الركاب 1 على الأقل.',
+      invalidDate: 'يرجى اختيار تاريخ اليوم أو تاريخ مستقبلي.',
+      success: 'طلبك جاهز. تم فتح واتساب مع تفاصيل الرحلة.',
+      error: 'تعذر فتح واتساب الآن. يرجى المحاولة مرة أخرى.'
+    },
+    am: {
+      fillAllFields: 'እባክዎ ከመቀጠልዎ በፊት ሁሉንም መስኮች ይሙሉ።',
+      invalidPassengers: 'የተሳፋሪ ብዛት ቢያንስ 1 መሆን አለበት።',
+      invalidDate: 'እባክዎ የዛሬን ወይም የወደፊት ቀን ይምረጡ።',
+      success: 'ጥያቄዎ ዝግጁ ነው። ዋትስአፕ ከየበረራ ዝርዝሮች ጋር ተከፍቷል።',
+      error: 'ዋትስአፕን አሁን መክፈት አልተቻለም። እባክዎ ዳግም ይሞክሩ።'
+    },
+    om: {
+      fillAllFields: 'Maaloo osoo hin itti fufiin dura dirreewwan hunda guutaa.',
+      invalidPassengers: 'Baay inni imaltootaa yoo xiqqaate 1 ta uu qaba.',
+      invalidDate: 'Maaloo guyyaa har aa yookaan gara fuulduraa fili.',
+      success: 'Gaaffiin kee qophaa eera. WhatsApp odeeffannoo balalii keetiin banameera.',
+      error: 'WhatsApp amma banuu hin dandeenye. Maaloo irra deebi aa yaali.'
+    }
+  }[lang];
+
+  const validateForm = () => {
+    const errors: Record<string, string> = {};
+    if (!formData.departure.trim() || !formData.destination.trim() || !formData.date || !formData.passengers) {
+      setSubmitState('error');
+      setSubmitMessage(statusText.fillAllFields);
+    }
+
+    if (Number(formData.passengers) < 1) {
+      errors.passengers = statusText.invalidPassengers;
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const selectedDate = new Date(formData.date);
+    if (!formData.date || Number.isNaN(selectedDate.getTime()) || selectedDate < today) {
+      errors.date = statusText.invalidDate;
+    }
+
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0 && !!formData.departure.trim() && !!formData.destination.trim() && !!formData.date && !!formData.passengers;
   };
 
   const handleWhatsApp = (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitMessage('');
+    setSubmitState('idle');
+    if (!validateForm()) return;
+
+    setIsSubmitting(true);
     const msg = t.whatsappMsg
       .replace('{departure}', formData.departure || 'Addis Ababa')
       .replace('{destination}', formData.destination || '[Destination]')
       .replace('{date}', formData.date || '[Date]')
       .replace('{passengers}', formData.passengers || '1');
     
-    const encodedMsg = encodeURIComponent(msg);
-    window.open(`https://wa.me/251911000000?text=${encodedMsg}`, '_blank');
+    try {
+      const encodedMsg = encodeURIComponent(msg);
+      const win = window.open(`https://wa.me/251911000000?text=${encodedMsg}`, '_blank');
+      if (win) {
+        setSubmitState('success');
+        setSubmitMessage(statusText.success);
+      } else {
+        setSubmitState('error');
+        setSubmitMessage(statusText.error);
+      }
+    } catch (error) {
+      console.error('Error opening WhatsApp', error);
+      setSubmitState('error');
+      setSubmitMessage(statusText.error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -260,6 +342,12 @@ export default function TicketingPage() {
             onSubmit={handleWhatsApp}
             className="relative z-10 space-y-8"
           >
+            {submitState !== 'idle' && submitMessage && (
+              <div className={`rounded-2xl px-4 py-3 text-sm font-body flex items-start gap-2 border ${submitState === 'success' ? 'bg-blue-50/80 border-blue-200 text-blue-700' : 'bg-red-50/80 border-red-200 text-red-700'}`}>
+                {submitState === 'success' ? <CheckCircle className="w-4 h-4 mt-0.5 shrink-0" /> : <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />}
+                <span>{submitMessage}</span>
+              </div>
+            )}
             {/* Flight Details */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="space-y-2">
@@ -281,6 +369,7 @@ export default function TicketingPage() {
                   <Calendar className="w-4 h-4" /> {t.form.date}
                 </label>
                 <input name="date" value={formData.date} onChange={handleChange} required type="date" className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm" />
+                {fieldErrors.date && <p className="text-xs text-red-600 font-body">{fieldErrors.date}</p>}
               </div>
 
               <div className="space-y-2">
@@ -288,6 +377,7 @@ export default function TicketingPage() {
                   <Users className="w-4 h-4" /> {t.form.passengers}
                 </label>
                 <input name="passengers" value={formData.passengers} onChange={handleChange} required type="number" min="1" className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm" />
+                {fieldErrors.passengers && <p className="text-xs text-red-600 font-body">{fieldErrors.passengers}</p>}
               </div>
             </div>
 
@@ -296,10 +386,11 @@ export default function TicketingPage() {
                 type="submit"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-full md:w-auto bg-green-500 text-white font-headline font-bold px-8 py-4 rounded-2xl hover:bg-green-600 transition-all flex items-center justify-center gap-3 shadow-lg shadow-green-500/30 text-lg"
+                disabled={isSubmitting}
+                className="w-full md:w-auto bg-blue-600 text-white font-headline font-bold px-8 py-4 rounded-2xl hover:bg-blue-700 transition-all flex items-center justify-center gap-3 shadow-lg shadow-blue-500/30 text-lg disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 <MessageCircle className="w-6 h-6" />
-                {t.form.whatsappBtn}
+                {isSubmitting ? 'Loading...' : t.form.whatsappBtn}
               </motion.button>
             </div>
           </form>
