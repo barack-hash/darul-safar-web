@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { X, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 
@@ -12,33 +12,46 @@ interface BookNowModalProps {
 
 type SubmitState = 'idle' | 'loading' | 'success' | 'error';
 
-const serviceOptions: BookNowService[] = ['Visa', 'Flight', 'Pilgrimage'];
+const VISA_SERVICE: BookNowService = 'Visa';
+const FLIGHT_SERVICE: BookNowService = 'Flight';
+const PILGRIMAGE_SERVICE: BookNowService = 'Pilgrimage';
+
+const serviceOptions: BookNowService[] = [VISA_SERVICE, FLIGHT_SERVICE, PILGRIMAGE_SERVICE];
 
 const normalizeService = (value: string): BookNowService => {
   const normalized = value.trim().toLowerCase();
-  if (normalized === 'visa' || normalized === 'visas') return 'Visa';
-  if (normalized === 'pilgrimage') return 'Pilgrimage';
-  return 'Flight';
+  if (normalized === 'visa' || normalized === 'visas') return VISA_SERVICE;
+  if (normalized === 'pilgrimage') return PILGRIMAGE_SERVICE;
+  return FLIGHT_SERVICE;
 };
 
-export default function BookNowModal({ isOpen, onClose, initialService = 'Flight' }: BookNowModalProps) {
+export default function BookNowModal({ isOpen, onClose, initialService = FLIGHT_SERVICE }: BookNowModalProps) {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [service, setService] = useState<BookNowService>(initialService);
   const [submitState, setSubmitState] = useState<SubmitState>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
+  const initialServiceRef = useRef(initialService);
+  initialServiceRef.current = initialService;
+
+  const hasResetForOpenRef = useRef(false);
+
   useEffect(() => {
     if (!isOpen) {
+      hasResetForOpenRef.current = false;
       return;
     }
-
+    if (hasResetForOpenRef.current) {
+      return;
+    }
+    hasResetForOpenRef.current = true;
     setName('');
     setPhone('');
-    setService(normalizeService(initialService));
+    setService(normalizeService(initialServiceRef.current));
     setSubmitState('idle');
     setErrorMessage('');
-  }, [isOpen, initialService]);
+  }, [isOpen]);
 
   useEffect(() => {
     if (!isOpen) {
@@ -66,17 +79,19 @@ export default function BookNowModal({ isOpen, onClose, initialService = 'Flight
     setSubmitState('loading');
     setErrorMessage('');
 
+    const formData = {
+      name: name.trim(),
+      phone: phone.trim(),
+      service: normalizeService(service),
+    };
+
     try {
       const response = await fetch('https://dar-al-safar-portal.com/api/leads/receive', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          name: name.trim(),
-          phone: phone.trim(),
-          service: normalizeService(service),
-        }),
+        body: JSON.stringify(formData),
       });
 
       if (!response.ok) {

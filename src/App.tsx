@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Globe, ChevronDown, Send, Menu, X, Plane, FileText, Briefcase, Moon, AlertCircle, CheckCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { BrowserRouter, Link, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
@@ -106,8 +106,9 @@ function AppContent() {
   };
 
   const inferBookNowService = (): BookNowService => {
-    if (currentPage === 'visas') return 'Visa';
-    if (currentPage === 'pilgrimage') return 'Pilgrimage';
+    const normalized = location.pathname.replace(/\/+$/, '') || '/';
+    if (normalized === '/visa' || normalized === '/visas') return 'Visa';
+    if (normalized === '/pilgrimage') return 'Pilgrimage';
     return 'Flight';
   };
 
@@ -116,6 +117,10 @@ function AppContent() {
     setBookNowInitialService(explicit ?? inferBookNowService());
     setIsBookNowModalOpen(true);
   };
+
+  const closeBookNowModal = useCallback(() => {
+    setIsBookNowModalOpen(false);
+  }, []);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -521,7 +526,7 @@ function AppContent() {
       </footer>
       <BookNowModal
         isOpen={isBookNowModalOpen}
-        onClose={() => setIsBookNowModalOpen(false)}
+        onClose={closeBookNowModal}
         initialService={bookNowInitialService}
       />
     </div>
