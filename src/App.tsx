@@ -1,13 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { Globe, ChevronDown, Send, Menu, X, Plane, FileText, Briefcase, Moon, AlertCircle, CheckCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { BrowserRouter, Link, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import PilgrimagePage from './components/PilgrimagePage';
 import VisaPage from './components/VisaPage';
 import ToolsPage from './components/ToolsPage';
 import TicketingPage from './components/TicketingPage';
+import BookNowModal, { type BookNowService } from './components/BookNowModal';
 import { useLanguage, Lang } from './context/LanguageContext';
-
 type Page = 'home' | 'pilgrimage' | 'ticketing' | 'visas' | 'tools';
+
+const pageToPath: Record<Page, string> = {
+  home: '/',
+  pilgrimage: '/pilgrimage',
+  ticketing: '/ticketing',
+  visas: '/visa',
+  tools: '/tools',
+};
+
+const pathToPage = (pathname: string): Page => {
+  const normalized = pathname.replace(/\/+$/, '') || '/';
+  if (normalized === '/pilgrimage') return 'pilgrimage';
+  if (normalized === '/ticketing') return 'ticketing';
+  if (normalized === '/visa' || normalized === '/visas') return 'visas';
+  if (normalized === '/tools') return 'tools';
+  return 'home';
+};
 
 const ServiceCard = ({ icon, title, description, tags, delay, onClick, color = 'blue', image }: any) => {
   const colorMap: Record<string, { border: string, iconBg: string, tagBg: string, tagText: string }> = {
@@ -57,11 +75,15 @@ const ServiceCard = ({ icon, title, description, tags, delay, onClick, color = '
   );
 };
 
-export default function App() {
+function AppContent() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
+  const [isBookNowModalOpen, setIsBookNowModalOpen] = useState(false);
+  const [bookNowInitialService, setBookNowInitialService] = useState<BookNowService>('Flight');
   const { lang, setLang, t } = useLanguage();
-  const [currentPage, setCurrentPage] = useState<Page>('home');
+  const location = useLocation();
+  const navigate = useNavigate();
+  const currentPage = pathToPage(location.pathname);
   const [scrolled, setScrolled] = useState(false);
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [newsletterState, setNewsletterState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
@@ -79,10 +101,25 @@ export default function App() {
   };
 
   const navigateTo = (page: Page) => {
-    setCurrentPage(page);
     setIsMobileMenuOpen(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    navigate(pageToPath[page]);
   };
+
+  const inferBookNowService = (): BookNowService => {
+    if (currentPage === 'visas') return 'Visa';
+    if (currentPage === 'pilgrimage') return 'Pilgrimage';
+    return 'Flight';
+  };
+
+  const openBookNowModal = (explicit?: BookNowService) => {
+    setIsMobileMenuOpen(false);
+    setBookNowInitialService(explicit ?? inferBookNowService());
+    setIsBookNowModalOpen(true);
+  };
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [location.pathname]);
 
   const newsletterStatusText = {
     en: {
@@ -135,17 +172,17 @@ export default function App() {
       <header className={`fixed z-50 transition-all duration-500 ${scrolled ? 'top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl rounded-full bg-white/70 backdrop-blur-xl shadow-sm py-3 px-6 border border-white/40' : 'top-0 left-0 w-full bg-white/80 backdrop-blur-md py-5 px-4 md:px-8 border-b border-gray-200/50'}`}>
         <div className="flex justify-between items-center max-w-7xl mx-auto">
           {/* Logo */}
-          <div className="text-2xl font-headline font-extrabold tracking-widest cursor-pointer" onClick={() => setCurrentPage('home')}>
+          <div className="text-2xl font-headline font-extrabold tracking-widest cursor-pointer" onClick={() => navigateTo('home')}>
             <span className="text-gray-900">DARUL</span><span className="text-blue-600">SAFAR</span>
           </div>
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center space-x-8">
-            <button onClick={() => navigateTo('home')} className={`font-headline tracking-tight font-bold text-sm transition-colors duration-300 ${currentPage === 'home' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-900'}`}>{t.nav.home}</button>
-            <button onClick={() => navigateTo('pilgrimage')} className={`font-headline tracking-tight font-bold text-sm transition-colors duration-300 ${currentPage === 'pilgrimage' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-900'}`}>{t.nav.pilgrimage}</button>
-            <button onClick={() => navigateTo('ticketing')} className={`font-headline tracking-tight font-bold text-sm transition-colors duration-300 ${currentPage === 'ticketing' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-900'}`}>{t.nav.ticketing}</button>
-            <button onClick={() => navigateTo('visas')} className={`font-headline tracking-tight font-bold text-sm transition-colors duration-300 ${currentPage === 'visas' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-900'}`}>{t.nav.visas}</button>
-            <button onClick={() => navigateTo('tools')} className={`font-headline tracking-tight font-bold text-sm transition-colors duration-300 ${currentPage === 'tools' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-900'}`}>{t.nav.tools}</button>
+            <Link to={pageToPath.home} className={`font-headline tracking-tight font-bold text-sm transition-colors duration-300 ${currentPage === 'home' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-900'}`}>{t.nav.home}</Link>
+            <Link to={pageToPath.pilgrimage} className={`font-headline tracking-tight font-bold text-sm transition-colors duration-300 ${currentPage === 'pilgrimage' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-900'}`}>{t.nav.pilgrimage}</Link>
+            <Link to={pageToPath.ticketing} className={`font-headline tracking-tight font-bold text-sm transition-colors duration-300 ${currentPage === 'ticketing' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-900'}`}>{t.nav.ticketing}</Link>
+            <Link to={pageToPath.visas} className={`font-headline tracking-tight font-bold text-sm transition-colors duration-300 ${currentPage === 'visas' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-900'}`}>{t.nav.visas}</Link>
+            <Link to={pageToPath.tools} className={`font-headline tracking-tight font-bold text-sm transition-colors duration-300 ${currentPage === 'tools' ? 'text-blue-600' : 'text-gray-500 hover:text-gray-900'}`}>{t.nav.tools}</Link>
           </nav>
 
           {/* Actions */}
@@ -191,7 +228,7 @@ export default function App() {
               </AnimatePresence>
             </div>
 
-            <button className="bg-blue-600 text-white px-6 py-2 rounded-full font-headline font-bold hover:bg-blue-700 hover:scale-105 active:scale-95 transition-all shadow-sm">
+            <button onClick={openBookNowModal} className="bg-blue-600 text-white px-6 py-2 rounded-full font-headline font-bold hover:bg-blue-700 hover:scale-105 active:scale-95 transition-all shadow-sm">
               {t.hero.cta}
             </button>
           </div>
@@ -209,11 +246,11 @@ export default function App() {
         {isMobileMenuOpen && (
           <div className="md:hidden bg-white/95 backdrop-blur-xl border-t border-gray-200 px-4 py-4 space-y-4 rounded-b-3xl absolute top-full left-0 w-full shadow-lg">
             <nav className="flex flex-col space-y-4">
-              <button onClick={() => navigateTo('home')} className={`text-left font-headline font-bold text-lg ${currentPage === 'home' ? 'text-blue-600' : 'text-gray-600 hover:text-gray-900'}`}>{t.nav.home}</button>
-              <button onClick={() => navigateTo('pilgrimage')} className={`text-left font-headline font-bold text-lg ${currentPage === 'pilgrimage' ? 'text-blue-600' : 'text-gray-600 hover:text-gray-900'}`}>{t.nav.pilgrimage}</button>
-              <button onClick={() => navigateTo('ticketing')} className={`text-left font-headline font-bold text-lg ${currentPage === 'ticketing' ? 'text-blue-600' : 'text-gray-600 hover:text-gray-900'}`}>{t.nav.ticketing}</button>
-              <button onClick={() => navigateTo('visas')} className={`text-left font-headline font-bold text-lg ${currentPage === 'visas' ? 'text-blue-600' : 'text-gray-600 hover:text-gray-900'}`}>{t.nav.visas}</button>
-              <button onClick={() => navigateTo('tools')} className={`text-left font-headline font-bold text-lg ${currentPage === 'tools' ? 'text-blue-600' : 'text-gray-600 hover:text-gray-900'}`}>{t.nav.tools}</button>
+              <Link to={pageToPath.home} onClick={() => setIsMobileMenuOpen(false)} className={`text-left font-headline font-bold text-lg ${currentPage === 'home' ? 'text-blue-600' : 'text-gray-600 hover:text-gray-900'}`}>{t.nav.home}</Link>
+              <Link to={pageToPath.pilgrimage} onClick={() => setIsMobileMenuOpen(false)} className={`text-left font-headline font-bold text-lg ${currentPage === 'pilgrimage' ? 'text-blue-600' : 'text-gray-600 hover:text-gray-900'}`}>{t.nav.pilgrimage}</Link>
+              <Link to={pageToPath.ticketing} onClick={() => setIsMobileMenuOpen(false)} className={`text-left font-headline font-bold text-lg ${currentPage === 'ticketing' ? 'text-blue-600' : 'text-gray-600 hover:text-gray-900'}`}>{t.nav.ticketing}</Link>
+              <Link to={pageToPath.visas} onClick={() => setIsMobileMenuOpen(false)} className={`text-left font-headline font-bold text-lg ${currentPage === 'visas' ? 'text-blue-600' : 'text-gray-600 hover:text-gray-900'}`}>{t.nav.visas}</Link>
+              <Link to={pageToPath.tools} onClick={() => setIsMobileMenuOpen(false)} className={`text-left font-headline font-bold text-lg ${currentPage === 'tools' ? 'text-blue-600' : 'text-gray-600 hover:text-gray-900'}`}>{t.nav.tools}</Link>
             </nav>
             <div className="pt-4 border-t border-gray-100 flex flex-col gap-4">
               <div className="flex gap-2">
@@ -222,7 +259,7 @@ export default function App() {
                 <button onClick={() => handleLangChange('ar')} className={`px-3 py-1 rounded-full text-sm font-bold border ${lang === 'ar' ? 'border-blue-600 text-blue-600 bg-blue-50' : 'border-gray-200 text-gray-600'}`}>AR</button>
                 <button onClick={() => handleLangChange('om')} className={`px-3 py-1 rounded-full text-sm font-bold border ${lang === 'om' ? 'border-blue-600 text-blue-600 bg-blue-50' : 'border-gray-200 text-gray-600'}`}>OM</button>
               </div>
-              <button className="bg-blue-600 text-white px-6 py-3 rounded-full font-headline font-bold w-full text-center shadow-sm">
+              <button onClick={openBookNowModal} className="bg-blue-600 text-white px-6 py-3 rounded-full font-headline font-bold w-full text-center shadow-sm">
                 {t.hero.cta}
               </button>
             </div>
@@ -233,16 +270,17 @@ export default function App() {
 
       {/* Main Content Area */}
       <div className="pt-24 md:pt-32 flex-grow w-full">
-        <AnimatePresence mode="wait">
-          {currentPage === 'home' && (
-            <motion.main
-              key="home"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              className="w-full flex flex-col items-center justify-start"
-            >
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <motion.main
+                key="home"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className="w-full flex flex-col items-center justify-start"
+              >
               {/* Hero Section */}
               <div className="w-full px-4 md:px-8 max-w-7xl mx-auto mb-12">
                 <section className="w-full py-32 md:py-48 flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
@@ -289,7 +327,7 @@ export default function App() {
                       className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center lg:justify-start"
                     >
                       <motion.button 
-                        onClick={() => navigateTo('pilgrimage')}
+                        onClick={() => openBookNowModal('Flight')}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         className="px-8 py-4 bg-blue-600 text-white font-headline font-bold rounded-2xl hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/30 w-full sm:w-auto text-lg"
@@ -388,57 +426,15 @@ export default function App() {
                   </div>
                 </div>
               </section>
-            </motion.main>
-          )}
-          {currentPage === 'pilgrimage' && (
-            <motion.main
-              key="pilgrimage"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              className="w-full"
-            >
-              <PilgrimagePage />
-            </motion.main>
-          )}
-          {currentPage === 'ticketing' && (
-            <motion.main
-              key="ticketing"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              className="w-full"
-            >
-              <TicketingPage />
-            </motion.main>
-          )}
-          {currentPage === 'visas' && (
-            <motion.main
-              key="visas"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              className="w-full"
-            >
-              <VisaPage />
-            </motion.main>
-          )}
-          {currentPage === 'tools' && (
-            <motion.main
-              key="tools"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              className="w-full"
-            >
-              <ToolsPage />
-            </motion.main>
-          )}
-        </AnimatePresence>
+              </motion.main>
+            }
+          />
+          <Route path="/pilgrimage" element={<PilgrimagePage />} />
+          <Route path="/ticketing" element={<TicketingPage />} />
+          <Route path="/visa" element={<VisaPage />} />
+          <Route path="/visas" element={<VisaPage />} />
+          <Route path="/tools" element={<ToolsPage />} />
+        </Routes>
       </div>
 
       {/* Master Footer */}
@@ -523,6 +519,19 @@ export default function App() {
           </span>
         </div>
       </footer>
+      <BookNowModal
+        isOpen={isBookNowModalOpen}
+        onClose={() => setIsBookNowModalOpen(false)}
+        initialService={bookNowInitialService}
+      />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
   );
 }
