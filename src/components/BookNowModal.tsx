@@ -14,6 +14,13 @@ type SubmitState = 'idle' | 'loading' | 'success' | 'error';
 
 const serviceOptions: BookNowService[] = ['Visa', 'Flight', 'Pilgrimage'];
 
+const normalizeService = (value: string): BookNowService => {
+  const normalized = value.trim().toLowerCase();
+  if (normalized === 'visa' || normalized === 'visas') return 'Visa';
+  if (normalized === 'pilgrimage') return 'Pilgrimage';
+  return 'Flight';
+};
+
 export default function BookNowModal({ isOpen, onClose, initialService = 'Flight' }: BookNowModalProps) {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -28,7 +35,7 @@ export default function BookNowModal({ isOpen, onClose, initialService = 'Flight
 
     setName('');
     setPhone('');
-    setService(initialService);
+    setService(normalizeService(initialService));
     setSubmitState('idle');
     setErrorMessage('');
   }, [isOpen, initialService]);
@@ -68,7 +75,7 @@ export default function BookNowModal({ isOpen, onClose, initialService = 'Flight
         body: JSON.stringify({
           name: name.trim(),
           phone: phone.trim(),
-          service,
+          service: normalizeService(service),
         }),
       });
 
@@ -173,7 +180,7 @@ export default function BookNowModal({ isOpen, onClose, initialService = 'Flight
                     <select
                       id="lead-service"
                       value={service}
-                      onChange={(event) => setService(event.target.value as BookNowService)}
+                      onChange={(event) => setService(normalizeService(event.target.value))}
                       className="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
                     >
                       {serviceOptions.map((option) => (
