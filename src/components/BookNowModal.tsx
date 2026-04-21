@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { X, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 
@@ -32,25 +32,10 @@ export default function BookNowModal({ isOpen, onClose, initialService = FLIGHT_
   const [submitState, setSubmitState] = useState<SubmitState>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const initialServiceRef = useRef(initialService);
-  initialServiceRef.current = initialService;
-
-  const hasResetForOpenRef = useRef(false);
-
   useEffect(() => {
-    if (!isOpen) {
-      hasResetForOpenRef.current = false;
-      return;
+    if (isOpen) {
+      setService(initialService || 'Flight');
     }
-    if (hasResetForOpenRef.current) {
-      return;
-    }
-    hasResetForOpenRef.current = true;
-    setName('');
-    setPhone('');
-    setService(normalizeService(initialServiceRef.current));
-    setSubmitState('idle');
-    setErrorMessage('');
   }, [isOpen]);
 
   useEffect(() => {
@@ -79,19 +64,17 @@ export default function BookNowModal({ isOpen, onClose, initialService = FLIGHT_
     setSubmitState('loading');
     setErrorMessage('');
 
-    const formData = {
-      name: name.trim(),
-      phone: phone.trim(),
-      service: normalizeService(service),
-    };
-
     try {
       const response = await fetch('https://dar-al-safar-portal.com/api/leads/receive', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          name: name.trim(),
+          phone: phone.trim(),
+          service,
+        }),
       });
 
       if (!response.ok) {

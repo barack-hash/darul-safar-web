@@ -105,17 +105,21 @@ function AppContent() {
     navigate(pageToPath[page]);
   };
 
-  const inferBookNowService = (): BookNowService => {
-    const normalized = location.pathname.replace(/\/+$/, '') || '/';
-    if (normalized === '/visa' || normalized === '/visas') return 'Visa';
-    if (normalized === '/pilgrimage') return 'Pilgrimage';
-    return 'Flight';
+  const openBookNowModal = (service: BookNowService) => {
+    setIsMobileMenuOpen(false);
+    setBookNowInitialService(service);
+    setIsBookNowModalOpen(true);
   };
 
-  const openBookNowModal = (explicit?: BookNowService) => {
-    setIsMobileMenuOpen(false);
-    setBookNowInitialService(explicit ?? inferBookNowService());
-    setIsBookNowModalOpen(true);
+  const handleHeaderBookNowClick = () => {
+    const normalized = location.pathname.replace(/\/+$/, '') || '/';
+    if (normalized === '/visa' || normalized === '/visas') {
+      openBookNowModal('Visa');
+    } else if (normalized === '/pilgrimage') {
+      openBookNowModal('Pilgrimage');
+    } else {
+      openBookNowModal('Flight');
+    }
   };
 
   const closeBookNowModal = useCallback(() => {
@@ -233,7 +237,7 @@ function AppContent() {
               </AnimatePresence>
             </div>
 
-            <button onClick={openBookNowModal} className="bg-blue-600 text-white px-6 py-2 rounded-full font-headline font-bold hover:bg-blue-700 hover:scale-105 active:scale-95 transition-all shadow-sm">
+            <button onClick={handleHeaderBookNowClick} className="bg-blue-600 text-white px-6 py-2 rounded-full font-headline font-bold hover:bg-blue-700 hover:scale-105 active:scale-95 transition-all shadow-sm">
               {t.hero.cta}
             </button>
           </div>
@@ -264,7 +268,7 @@ function AppContent() {
                 <button onClick={() => handleLangChange('ar')} className={`px-3 py-1 rounded-full text-sm font-bold border ${lang === 'ar' ? 'border-blue-600 text-blue-600 bg-blue-50' : 'border-gray-200 text-gray-600'}`}>AR</button>
                 <button onClick={() => handleLangChange('om')} className={`px-3 py-1 rounded-full text-sm font-bold border ${lang === 'om' ? 'border-blue-600 text-blue-600 bg-blue-50' : 'border-gray-200 text-gray-600'}`}>OM</button>
               </div>
-              <button onClick={openBookNowModal} className="bg-blue-600 text-white px-6 py-3 rounded-full font-headline font-bold w-full text-center shadow-sm">
+              <button onClick={handleHeaderBookNowClick} className="bg-blue-600 text-white px-6 py-3 rounded-full font-headline font-bold w-full text-center shadow-sm">
                 {t.hero.cta}
               </button>
             </div>
