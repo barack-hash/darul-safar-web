@@ -7,6 +7,7 @@ import VisaPage from './components/VisaPage';
 import ToolsPage from './components/ToolsPage';
 import TicketingPage from './components/TicketingPage';
 import BookNowModal, { type BookNowService } from './components/BookNowModal';
+import { getRandomCategoryImage } from './utils/imageRandomizer';
 import { useLanguage, Lang } from './context/LanguageContext';
 type Page = 'home' | 'pilgrimage' | 'ticketing' | 'visas' | 'tools';
 
@@ -65,7 +66,7 @@ const ServiceCard = ({ icon, title, description, tags, delay, onClick, color = '
         </div>
         <div className="hidden md:block w-32 lg:w-40 rounded-2xl bg-gradient-to-br from-gray-100/50 to-transparent border border-white/50 flex-shrink-0 relative overflow-hidden">
            {image ? (
-             <img src={image} alt={title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" referrerPolicy="no-referrer" />
+             <img src={image} alt={title} className="absolute inset-0 w-full h-full object-cover rounded-2xl shadow-[0_10px_24px_rgba(15,23,42,0.18)] transition-transform duration-700 group-hover:scale-110" referrerPolicy="no-referrer" />
            ) : (
              <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent mix-blend-overlay"></div>
            )}
@@ -393,7 +394,7 @@ function AppContent() {
                         tags={["Umrah", "Hajj", "Ziyarah"]}
                         delay={0.1}
                         color="teal"
-                        image="/pilgrimage.png"
+                        image={getRandomCategoryImage('RP')}
                       />
                     </div>
                     {/* Card 2 */}
@@ -405,7 +406,7 @@ function AppContent() {
                         tags={["Ethiopian", "Qatar", "Saudia", "Emirates"]}
                         delay={0.2}
                         color="blue"
-                        image="/ticketing.png"
+                        image={getRandomCategoryImage('GAT')}
                       />
                     </div>
                     {/* Card 3 */}
@@ -417,7 +418,7 @@ function AppContent() {
                         tags={["Work", "Tourist", "Medical", "Education"]}
                         delay={0.3}
                         color="orange"
-                        image="/visa-services.png"
+                        image={getRandomCategoryImage('VDS')}
                       />
                     </div>
                     {/* Card 4 */}
@@ -429,7 +430,7 @@ function AppContent() {
                         tags={["B2B Corporate", "C2C Vacation"]}
                         delay={0.4}
                         color="red"
-                        image="/specialized-travel.png"
+                        image={getRandomCategoryImage('ST')}
                       />
                     </div>
                   </div>
