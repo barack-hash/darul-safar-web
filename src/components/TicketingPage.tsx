@@ -256,24 +256,27 @@ export default function TicketingPage() {
     <div className="w-full min-h-screen bg-transparent flex flex-col items-center justify-start pb-24">
       {/* Hero Section */}
       <div className="w-full px-4 md:px-8 max-w-7xl mx-auto mt-8 mb-16">
-        <section className="w-full bg-white/40 backdrop-blur-3xl border border-white/60 hover:border-blue-200 transition-colors duration-500 text-gray-900 py-32 md:py-48 rounded-[3rem] relative overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-          <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] pointer-events-none"></div>
-          <div className="max-w-4xl mx-auto relative z-10 text-center px-4">
+        <section
+          className="w-full bg-cover bg-center bg-no-repeat border border-white/20 transition-colors duration-500 py-32 md:py-48 rounded-[3rem] relative overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)]"
+          style={{ backgroundImage: "url('/services/GAT05.png')" }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-900/95 via-slate-900/70 to-transparent z-0"></div>
+          <div className="max-w-4xl mx-auto relative z-10 text-center px-4 text-white">
             <motion.div 
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="inline-flex items-center justify-center p-4 bg-blue-50 rounded-2xl mb-8 shadow-sm border border-blue-100"
+              className="inline-flex items-center justify-center p-4 bg-white/10 backdrop-blur-md rounded-2xl mb-8 shadow-sm border border-white/20"
             >
-              <Plane className="w-10 h-10 text-blue-600" />
+              <Plane className="w-10 h-10 text-white" />
             </motion.div>
             <motion.h1 
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="text-5xl md:text-7xl font-headline font-extrabold mb-6 tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-gray-900 to-gray-600"
+              className="text-5xl md:text-7xl font-headline font-extrabold mb-6 tracking-tight text-white"
             >
               {t.title}
             </motion.h1>
@@ -282,7 +285,7 @@ export default function TicketingPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="text-xl text-gray-500 font-body leading-relaxed max-w-2xl mx-auto"
+              className="text-xl text-slate-100 font-body leading-relaxed max-w-2xl mx-auto"
             >
               {t.subtitle}
             </motion.p>
