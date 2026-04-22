@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Plane, PlaneTakeoff, PlaneLanding, Users, Calendar, MessageCircle, MapPin, Briefcase, AlertCircle, CheckCircle } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import AirportAutocomplete from './AirportAutocomplete';
 
 const translations = {
   en: {
@@ -354,17 +355,39 @@ export default function TicketingPage() {
             {/* Flight Details */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="space-y-2">
-                <label className="flex items-center gap-2 text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
-                  <PlaneTakeoff className="w-4 h-4" /> {t.form.departure}
-                </label>
-                <input name="departure" value={formData.departure} onChange={handleChange} required type="text" className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm" placeholder="Addis Ababa" />
+                <AirportAutocomplete
+                  value={formData.departure}
+                  onChange={(value) => {
+                    if (fieldErrors.departure) {
+                      setFieldErrors((prev) => ({ ...prev, departure: '' }));
+                    }
+                    if (submitState !== 'idle') {
+                      setSubmitState('idle');
+                      setSubmitMessage('');
+                    }
+                    setFormData((prev) => ({ ...prev, departure: value }));
+                  }}
+                  placeholder="Addis Ababa"
+                  label={<><PlaneTakeoff className="w-4 h-4" /> {t.form.departure}</>}
+                />
               </div>
 
               <div className="space-y-2">
-                <label className="flex items-center gap-2 text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
-                  <PlaneLanding className="w-4 h-4" /> {t.form.destination}
-                </label>
-                <input name="destination" value={formData.destination} onChange={handleChange} required type="text" className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm" placeholder="City or Airport Code" />
+                <AirportAutocomplete
+                  value={formData.destination}
+                  onChange={(value) => {
+                    if (fieldErrors.destination) {
+                      setFieldErrors((prev) => ({ ...prev, destination: '' }));
+                    }
+                    if (submitState !== 'idle') {
+                      setSubmitState('idle');
+                      setSubmitMessage('');
+                    }
+                    setFormData((prev) => ({ ...prev, destination: value }));
+                  }}
+                  placeholder="City or Airport Code"
+                  label={<><PlaneLanding className="w-4 h-4" /> {t.form.destination}</>}
+                />
               </div>
 
               <div className="space-y-2">

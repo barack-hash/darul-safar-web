@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { CheckCircle, AlertCircle, Send, Globe2, FileText, Camera, Landmark, Files, MessageCircle } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import DestinationAutocomplete from './DestinationAutocomplete';
 
 const translations = {
   en: {
@@ -354,12 +355,17 @@ export default function VisaPage() {
 
   const getActiveReqSet = () => {
     const dest = formData.destination;
+    const normalizedDest = dest.toLowerCase();
     const type = formData.visaType;
     
-    if (dest === t.options.destinations[0] && type === t.options.types[0]) return t.requirements.sets.saudiUmrah; // Saudi Arabia + Umrah/Hajj
-    if (dest === t.options.destinations[0] && type === t.options.types[1]) return t.requirements.sets.saudiWork; // Saudi Arabia + Work
-    if (dest === t.options.destinations[1] && type === t.options.types[4]) return t.requirements.sets.dubaiTourist; // Dubai/UAE + Tourist
-    if (dest === t.options.destinations[4]) return t.requirements.sets.schengen; // Schengen
+    const isSaudi = normalizedDest.includes('saudi') || dest === t.options.destinations[0];
+    const isDubai = normalizedDest.includes('dubai') || normalizedDest.includes('united arab emirates') || dest === t.options.destinations[1];
+    const isSchengen = normalizedDest.includes('schengen') || dest === t.options.destinations[4];
+
+    if (isSaudi && type === t.options.types[0]) return t.requirements.sets.saudiUmrah; // Saudi Arabia + Umrah/Hajj
+    if (isSaudi && type === t.options.types[1]) return t.requirements.sets.saudiWork; // Saudi Arabia + Work
+    if (isDubai && type === t.options.types[4]) return t.requirements.sets.dubaiTourist; // Dubai/UAE + Tourist
+    if (isSchengen) return t.requirements.sets.schengen; // Schengen
     
     return t.requirements.sets.default;
   };
@@ -460,15 +466,18 @@ export default function VisaPage() {
 
                   {/* Destination */}
                   <div className="space-y-2">
-                    <label className="block text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
-                      {t.form.destination}
-                    </label>
-                    <select name="destination" value={formData.destination} onChange={handleChange} required className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all appearance-none shadow-sm">
-                      <option value="" disabled className="text-gray-500">Select...</option>
-                      {t.options.destinations.map((opt, i) => (
-                        <option key={i} value={opt} className="bg-white text-gray-900">{opt}</option>
-                      ))}
-                    </select>
+                    <DestinationAutocomplete
+                      value={formData.destination}
+                      onChange={(value) => {
+                        if (fieldErrors.destination) {
+                          setFieldErrors((prev) => ({ ...prev, destination: '' }));
+                        }
+                        if (submitError) setSubmitError('');
+                        setFormData((prev) => ({ ...prev, destination: value }));
+                      }}
+                      placeholder="Select destination country or region"
+                      label={t.form.destination}
+                    />
                   </div>
 
                   {/* Full Name */}
