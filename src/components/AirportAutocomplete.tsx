@@ -10,15 +10,38 @@ const AIRPORT_OPTIONS: AirportOption[] = [
   { code: 'ADD', name: 'Addis Ababa', country: 'Ethiopia' },
   { code: 'DIR', name: 'Dire Dawa', country: 'Ethiopia' },
   { code: 'IAD', name: 'Washington Dulles', country: 'United States' },
+  { code: 'JFK', name: 'New York', country: 'United States' },
+  { code: 'LAX', name: 'Los Angeles', country: 'United States' },
+  { code: 'ORD', name: 'Chicago', country: 'United States' },
+  { code: 'YYZ', name: 'Toronto', country: 'Canada' },
   { code: 'DXB', name: 'Dubai', country: 'United Arab Emirates' },
+  { code: 'AUH', name: 'Abu Dhabi', country: 'United Arab Emirates' },
   { code: 'JED', name: 'Jeddah', country: 'Saudi Arabia' },
   { code: 'RUH', name: 'Riyadh', country: 'Saudi Arabia' },
   { code: 'MED', name: 'Medina', country: 'Saudi Arabia' },
+  { code: 'MCT', name: 'Muscat', country: 'Oman' },
+  { code: 'BAH', name: 'Bahrain', country: 'Bahrain' },
+  { code: 'CAI', name: 'Cairo', country: 'Egypt' },
+  { code: 'CPT', name: 'Cape Town', country: 'South Africa' },
+  { code: 'JNB', name: 'Johannesburg', country: 'South Africa' },
   { code: 'IST', name: 'Istanbul', country: 'Turkey' },
   { code: 'DOH', name: 'Doha', country: 'Qatar' },
+  { code: 'BOM', name: 'Mumbai', country: 'India' },
+  { code: 'DEL', name: 'Delhi', country: 'India' },
+  { code: 'DAC', name: 'Dhaka', country: 'Bangladesh' },
+  { code: 'KHI', name: 'Karachi', country: 'Pakistan' },
   { code: 'LHR', name: 'London Heathrow', country: 'United Kingdom' },
   { code: 'FRA', name: 'Frankfurt', country: 'Germany' },
+  { code: 'CDG', name: 'Paris', country: 'France' },
+  { code: 'AMS', name: 'Amsterdam', country: 'Netherlands' },
+  { code: 'FCO', name: 'Rome', country: 'Italy' },
+  { code: 'MAD', name: 'Madrid', country: 'Spain' },
   { code: 'NBO', name: 'Nairobi', country: 'Kenya' },
+  { code: 'SIN', name: 'Singapore', country: 'Singapore' },
+  { code: 'KUL', name: 'Kuala Lumpur', country: 'Malaysia' },
+  { code: 'BKK', name: 'Bangkok', country: 'Thailand' },
+  { code: 'NRT', name: 'Tokyo', country: 'Japan' },
+  { code: 'SYD', name: 'Sydney', country: 'Australia' },
 ];
 
 interface AirportAutocompleteProps {
@@ -93,7 +116,7 @@ export default function AirportAutocomplete({ value, onChange, placeholder, labe
                 key={airport.code}
                 type="button"
                 onClick={() => handleSelect(airport)}
-                className="w-full px-4 py-3 text-left hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-b-0"
+                className="w-full px-4 py-3 text-left hover:bg-slate-50 active:scale-[0.99] transition-all duration-150 border-b border-slate-100 last:border-b-0"
               >
                 <div className="flex items-center justify-between gap-4">
                   <div>

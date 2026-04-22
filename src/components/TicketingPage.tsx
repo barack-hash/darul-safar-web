@@ -317,7 +317,7 @@ export default function TicketingPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="group w-32 h-16 md:w-40 md:h-20 bg-white/70 backdrop-blur-md rounded-2xl shadow-sm border border-white/60 flex items-center justify-center p-4 hover:shadow-xl hover:shadow-blue-500/10 hover:border-blue-200 hover:-translate-y-2 hover:scale-105 transition-all duration-500 grayscale hover:grayscale-0 cursor-pointer"
+              className="group w-32 h-16 md:w-40 md:h-20 bg-white/70 backdrop-blur-md rounded-2xl shadow-sm border border-white/60 flex items-center justify-center p-4 hover:shadow-xl hover:shadow-blue-500/10 hover:border-blue-200 hover:-translate-y-2 hover:scale-105 active:scale-95 transition-all duration-500 grayscale-0 md:grayscale md:hover:grayscale-0 cursor-pointer"
             >
               <img src={partner.logo} alt={partner.name} className="h-16 w-full object-contain transition-transform duration-500 group-hover:scale-110" />
             </motion.a>
@@ -413,7 +413,7 @@ export default function TicketingPage() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 disabled={isSubmitting}
-                className="w-full md:w-auto bg-blue-600 text-white font-headline font-bold px-8 py-4 rounded-2xl hover:bg-blue-700 transition-all flex items-center justify-center gap-3 shadow-lg shadow-blue-500/30 text-lg disabled:opacity-70 disabled:cursor-not-allowed"
+                className="w-full md:w-auto bg-blue-600 text-white font-headline font-bold px-8 py-4 rounded-2xl hover:bg-blue-700 active:scale-95 transition-all flex items-center justify-center gap-3 shadow-lg shadow-blue-500/30 text-lg disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 <MessageCircle className="w-6 h-6" />
                 {isSubmitting ? 'Loading...' : t.form.whatsappBtn}

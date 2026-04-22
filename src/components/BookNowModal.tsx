@@ -125,7 +125,7 @@ export default function BookNowModal({ isOpen, onClose, initialService = FLIGHT_
                 <button
                   type="button"
                   onClick={onClose}
-                  className="w-10 h-10 rounded-full border border-gray-200 hover:border-gray-300 text-gray-500 hover:text-gray-800 transition-colors flex items-center justify-center shrink-0"
+                  className="w-10 h-10 rounded-full border border-gray-200 hover:border-gray-300 text-gray-500 hover:text-gray-800 active:scale-95 transition-all duration-200 flex items-center justify-center shrink-0"
                   aria-label="Close modal"
                 >
                   <X className="w-5 h-5" />
@@ -199,7 +199,7 @@ export default function BookNowModal({ isOpen, onClose, initialService = FLIGHT_
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full mt-1 bg-blue-600 text-white px-6 py-3.5 rounded-2xl font-headline font-bold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/20 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="w-full mt-1 bg-blue-600 text-white px-6 py-3.5 rounded-2xl font-headline font-bold hover:bg-blue-700 active:scale-95 transition-all duration-200 shadow-lg shadow-blue-500/20 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
                     {isLoading ? (
                       <>

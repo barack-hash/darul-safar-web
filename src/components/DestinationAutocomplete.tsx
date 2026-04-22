@@ -18,6 +18,18 @@ const DESTINATION_OPTIONS: DestinationOption[] = [
   { name: 'South Africa', type: 'Country' },
   { name: 'Kenya', type: 'Country' },
   { name: 'Qatar', type: 'Country' },
+  { name: 'Canada', type: 'Country' },
+  { name: 'Australia', type: 'Country' },
+  { name: 'Japan', type: 'Country' },
+  { name: 'South Korea', type: 'Country' },
+  { name: 'Malaysia', type: 'Country' },
+  { name: 'Singapore', type: 'Country' },
+  { name: 'Egypt', type: 'Country' },
+  { name: 'Morocco', type: 'Country' },
+  { name: 'Brazil', type: 'Country' },
+  { name: 'Argentina', type: 'Country' },
+  { name: 'Switzerland', type: 'Country' },
+  { name: 'New Zealand', type: 'Country' },
 ];
 
 interface DestinationAutocompleteProps {
@@ -92,7 +104,7 @@ export default function DestinationAutocomplete({
                 key={destination.name}
                 type="button"
                 onClick={() => handleSelect(destination)}
-                className="w-full px-4 py-3 text-left hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-b-0"
+                className="w-full px-4 py-3 text-left hover:bg-slate-50 active:scale-[0.99] transition-all duration-150 border-b border-slate-100 last:border-b-0"
               >
                 <div className="flex items-center justify-between gap-4">
                   <p className="text-sm font-bold text-gray-900">{destination.name}</p>

@@ -44,9 +44,9 @@ const ServiceCard = ({ icon, title, description, tags, delay, onClick, color = '
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] }}
       onClick={onClick}
-      className={`group bg-white/70 backdrop-blur-xl p-8 rounded-3xl border border-white/40 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] hover:-translate-y-2 hover:scale-[1.02] ${colors.border} transition-all duration-500 flex flex-col h-full cursor-pointer relative overflow-hidden`}
+      className={`group bg-white/70 backdrop-blur-xl p-8 rounded-3xl border border-white/40 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] hover:-translate-y-2 hover:scale-[1.02] active:scale-[0.98] ${colors.border} transition-all duration-200 md:duration-500 flex flex-col h-full cursor-pointer relative overflow-hidden`}
     >
-      <div className="flex flex-col md:flex-row gap-6 h-full">
+      <div className="flex flex-col md:flex-row overflow-hidden gap-6 h-full">
         <div className="flex-1 flex flex-col">
           <div className={`w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center text-gray-700 mb-6 ${colors.iconBg} transition-colors duration-500 shadow-sm`}>
             {icon}
@@ -63,7 +63,7 @@ const ServiceCard = ({ icon, title, description, tags, delay, onClick, color = '
             ))}
           </div>
         </div>
-        <div className="hidden md:block w-32 lg:w-40 rounded-2xl bg-gradient-to-br from-gray-100/50 to-transparent border border-white/50 flex-shrink-0 relative overflow-hidden">
+        <div className="w-full h-56 md:w-5/12 md:h-auto rounded-2xl bg-gradient-to-br from-gray-100/50 to-transparent border border-white/50 flex-shrink-0 relative overflow-hidden">
            {image ? (
              <img src={image} alt={title} className="absolute inset-0 w-full h-full object-cover rounded-2xl shadow-[0_10px_24px_rgba(15,23,42,0.18)] transition-transform duration-700 group-hover:scale-110" referrerPolicy="no-referrer" />
            ) : (
@@ -268,7 +268,7 @@ function AppContent() {
                 <button onClick={() => handleLangChange('ar')} className={`px-3 py-1 rounded-full text-sm font-bold border ${lang === 'ar' ? 'border-blue-600 text-blue-600 bg-blue-50' : 'border-gray-200 text-gray-600'}`}>AR</button>
                 <button onClick={() => handleLangChange('om')} className={`px-3 py-1 rounded-full text-sm font-bold border ${lang === 'om' ? 'border-blue-600 text-blue-600 bg-blue-50' : 'border-gray-200 text-gray-600'}`}>OM</button>
               </div>
-              <button onClick={handleHeaderBookNowClick} className="bg-blue-600 text-white px-6 py-3 rounded-full font-headline font-bold w-full text-center shadow-sm">
+              <button onClick={handleHeaderBookNowClick} className="bg-blue-600 text-white px-6 py-3 rounded-full font-headline font-bold w-full text-center shadow-sm active:scale-95 transition-all duration-200">
                 {t.hero.cta}
               </button>
             </div>
@@ -339,7 +339,7 @@ function AppContent() {
                         onClick={() => openBookNowModal('Flight')}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className="px-8 py-4 bg-blue-600 text-white font-headline font-bold rounded-2xl hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/30 w-full sm:w-auto text-lg"
+                        className="px-8 py-4 bg-blue-600 text-white font-headline font-bold rounded-2xl hover:bg-blue-700 active:scale-95 transition-all duration-200 shadow-lg shadow-blue-500/30 w-full sm:w-auto text-lg"
                       >
                         {t.hero.bookUmrah}
                       </motion.button>
@@ -347,7 +347,7 @@ function AppContent() {
                         onClick={() => navigateTo('ticketing')}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className="px-8 py-4 bg-white/80 backdrop-blur-md border border-gray-200 text-gray-900 font-headline font-bold rounded-2xl hover:border-blue-500 hover:text-blue-600 transition-colors shadow-sm w-full sm:w-auto text-lg"
+                        className="px-8 py-4 bg-white/80 backdrop-blur-md border border-gray-200 text-gray-900 font-headline font-bold rounded-2xl hover:border-blue-500 hover:text-blue-600 active:scale-95 transition-all duration-200 shadow-sm w-full sm:w-auto text-lg"
                       >
                         {t.hero.globalTicketing}
                       </motion.button>
@@ -514,7 +514,7 @@ function AppContent() {
               <button 
                 type="submit"
                 disabled={newsletterState === 'submitting'}
-                className="absolute right-2 top-1.5 bottom-1.5 px-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed"
+                className="absolute right-2 top-1.5 bottom-1.5 px-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 active:scale-95 transition-all duration-200 flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 <Send className="w-4 h-4" />
               </button>

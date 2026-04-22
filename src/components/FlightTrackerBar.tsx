@@ -143,7 +143,7 @@ export default function FlightTrackerBar() {
             <button
               type="submit"
               disabled={!flightNumber.trim() || isLoading}
-              className="h-10 min-w-10 px-3 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="h-10 min-w-10 px-3 rounded-xl bg-blue-600 text-white hover:bg-blue-700 active:scale-95 transition-all duration-200 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               aria-label="Search flight status"
             >
               {isLoading ? (

@@ -594,7 +594,7 @@ export default function VisaPage() {
             onClick={handleWhatsApp}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="w-full md:w-auto bg-green-500 text-white font-headline font-bold px-8 py-4 rounded-2xl hover:bg-green-600 transition-all flex items-center justify-center gap-3 shadow-lg shadow-green-500/30 text-lg"
+            className="w-full md:w-auto bg-green-500 text-white font-headline font-bold px-8 py-4 rounded-2xl hover:bg-green-600 active:scale-95 transition-all flex items-center justify-center gap-3 shadow-lg shadow-green-500/30 text-lg"
           >
             <MessageCircle className="w-6 h-6" />
             {t.whatsappBtn}
