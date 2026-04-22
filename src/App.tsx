@@ -7,7 +7,6 @@ import VisaPage from './components/VisaPage';
 import ToolsPage from './components/ToolsPage';
 import TicketingPage from './components/TicketingPage';
 import BookNowModal, { type BookNowService } from './components/BookNowModal';
-import FlightTrackerBar from './components/FlightTrackerBar';
 import { useLanguage, Lang } from './context/LanguageContext';
 type Page = 'home' | 'pilgrimage' | 'ticketing' | 'visas' | 'tools';
 
@@ -369,10 +368,6 @@ function AppContent() {
                     </div>
                   </motion.div>
                 </section>
-              </div>
-
-              <div className="max-w-5xl mx-auto w-full px-4 -mt-10 relative z-20 mb-16">
-                <FlightTrackerBar />
               </div>
 
               {/* Service Pillars Grid */}

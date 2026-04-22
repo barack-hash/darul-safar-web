@@ -15,10 +15,18 @@ const toTitleCase = (value: string) => {
 
 type FlightDashboardData = {
   status: string;
-  terminal: string;
-  gate: string;
-  departureIata: string;
-  arrivalIata: string;
+  departure: {
+    iata: string;
+    time: string;
+    terminal: string;
+    gate: string;
+  };
+  arrival: {
+    iata: string;
+    time: string;
+    terminal: string;
+    gate: string;
+  };
 };
 
 const statusBadgeClass = (status: string) => {
@@ -33,6 +41,13 @@ const statusBadgeClass = (status: string) => {
     return 'bg-gray-100 text-gray-700 border border-gray-200';
   }
   return 'bg-blue-100 text-blue-700 border border-blue-200';
+};
+
+const formatFlightTime = (isoTime?: string) => {
+  if (!isoTime) return 'TBD';
+  const date = new Date(isoTime);
+  if (Number.isNaN(date.getTime())) return 'TBD';
+  return date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true });
 };
 
 export default function FlightTrackerBar() {
@@ -68,17 +83,29 @@ export default function FlightTrackerBar() {
       }
 
       const status = toTitleCase(flightData.flight_status || '');
-      const terminal = flightData.departure?.terminal || 'TBD';
-      const gate = flightData.departure?.gate || 'TBD';
       const departureIata = (flightData.departure?.iata || '---').toUpperCase();
       const arrivalIata = (flightData.arrival?.iata || '---').toUpperCase();
+      const departureTime = formatFlightTime(flightData.departure?.scheduled || flightData.departure?.estimated);
+      const arrivalTime = formatFlightTime(flightData.arrival?.scheduled || flightData.arrival?.estimated);
+      const departureTerminal = flightData.departure?.terminal || 'TBD';
+      const departureGate = flightData.departure?.gate || 'TBD';
+      const arrivalTerminal = flightData.arrival?.terminal || 'TBD';
+      const arrivalGate = flightData.arrival?.gate || 'TBD';
 
       setDashboardData({
         status: status || 'TBD',
-        terminal,
-        gate,
-        departureIata,
-        arrivalIata,
+        departure: {
+          iata: departureIata,
+          time: departureTime,
+          terminal: departureTerminal,
+          gate: departureGate,
+        },
+        arrival: {
+          iata: arrivalIata,
+          time: arrivalTime,
+          terminal: arrivalTerminal,
+          gate: arrivalGate,
+        },
       });
     } catch {
       setResultText(NOT_FOUND_TEXT);
@@ -152,10 +179,13 @@ export default function FlightTrackerBar() {
               <div className="grid grid-cols-1 md:grid-cols-[1fr_1.5fr_1fr] items-center gap-4">
                 <div className="text-center md:text-left">
                   <p className="text-3xl md:text-4xl font-headline font-extrabold text-gray-900 tracking-tight">
-                    {dashboardData.departureIata}
+                    {dashboardData.departure.iata}
                   </p>
-                  <p className="mt-1 text-xs md:text-sm font-body text-gray-600">
-                    Terminal {dashboardData.terminal} | Gate {dashboardData.gate}
+                  <p className="mt-1 text-sm font-body text-gray-300">
+                    {dashboardData.departure.time}
+                  </p>
+                  <p className="mt-0.5 text-sm font-body text-gray-300">
+                    Terminal {dashboardData.departure.terminal} | Gate {dashboardData.departure.gate}
                   </p>
                 </div>
 
@@ -169,9 +199,14 @@ export default function FlightTrackerBar() {
 
                 <div className="text-center md:text-right">
                   <p className="text-3xl md:text-4xl font-headline font-extrabold text-gray-900 tracking-tight">
-                    {dashboardData.arrivalIata}
+                    {dashboardData.arrival.iata}
                   </p>
-                  <p className="mt-1 text-xs md:text-sm font-body text-gray-600">Arrival Airport</p>
+                  <p className="mt-1 text-sm font-body text-gray-300">
+                    {dashboardData.arrival.time}
+                  </p>
+                  <p className="mt-0.5 text-sm font-body text-gray-300">
+                    Terminal {dashboardData.arrival.terminal} | Gate {dashboardData.arrival.gate}
+                  </p>
                 </div>
               </div>
             </motion.div>

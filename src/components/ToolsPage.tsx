@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, animate } from 'motion/react';
 import { RefreshCw, ArrowRightLeft, Clock, Plus, MapPin, Activity, Plane, Building, Utensils, FileText, ChevronDown, Trash2 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import FlightTrackerBar from './FlightTrackerBar';
 
 const CURRENCIES = ["USD", "ETB", "SAR", "AED", "EUR"];
 
@@ -150,6 +151,18 @@ export default function ToolsPage() {
 
   return (
     <div className="w-full min-h-screen bg-transparent flex flex-col items-center justify-start pb-24">
+      <section className="w-full px-4 md:px-8 max-w-7xl mx-auto mt-8 mb-10">
+        <div className="mb-4">
+          <h2 className="font-headline text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+            Live Flight Tracker
+          </h2>
+          <p className="mt-2 text-base md:text-lg text-gray-500 font-body">
+            Real-time departure, arrival, and gate information.
+          </p>
+        </div>
+        <FlightTrackerBar />
+      </section>
+
       {/* Hero Section */}
       <div className="w-full px-4 md:px-8 max-w-7xl mx-auto mt-8 mb-16">
         <section className="w-full bg-white/40 backdrop-blur-3xl border border-white/60 hover:border-blue-200 transition-colors duration-500 py-32 md:py-48 rounded-[3rem] relative overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] text-center px-4">
