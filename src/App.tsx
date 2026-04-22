@@ -46,7 +46,7 @@ const ServiceCard = ({ icon, title, description, tags, delay, onClick, color = '
       onClick={onClick}
       className={`group bg-white/70 backdrop-blur-xl p-8 rounded-3xl border border-white/40 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] hover:-translate-y-2 hover:scale-[1.02] active:scale-[0.98] ${colors.border} transition-all duration-200 md:duration-500 flex flex-col h-full cursor-pointer relative overflow-hidden`}
     >
-      <div className="flex flex-col md:flex-row overflow-hidden gap-6 h-full">
+      <div className="flex flex-col md:flex-row overflow-hidden">
         <div className="flex-1 flex flex-col">
           <div className={`w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center text-gray-700 mb-6 ${colors.iconBg} transition-colors duration-500 shadow-sm`}>
             {icon}
@@ -63,9 +63,9 @@ const ServiceCard = ({ icon, title, description, tags, delay, onClick, color = '
             ))}
           </div>
         </div>
-        <div className="w-full h-56 md:w-5/12 md:h-auto rounded-2xl bg-gradient-to-br from-gray-100/50 to-transparent border border-white/50 flex-shrink-0 relative overflow-hidden">
+        <div className="relative w-full h-56 md:w-5/12 shrink-0 block">
            {image ? (
-             <img src={image} alt={title} className="absolute inset-0 w-full h-full object-cover rounded-2xl shadow-[0_10px_24px_rgba(15,23,42,0.18)] transition-transform duration-700 group-hover:scale-110" referrerPolicy="no-referrer" />
+             <img src={image} alt={title} className="absolute inset-0 w-full h-full object-cover" referrerPolicy="no-referrer" />
            ) : (
              <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent mix-blend-overlay"></div>
            )}
