@@ -7,6 +7,7 @@ import VisaPage from './components/VisaPage';
 import ToolsPage from './components/ToolsPage';
 import TicketingPage from './components/TicketingPage';
 import BookNowModal, { type BookNowService } from './components/BookNowModal';
+import FlightTrackerBar from './components/FlightTrackerBar';
 import { useLanguage, Lang } from './context/LanguageContext';
 type Page = 'home' | 'pilgrimage' | 'ticketing' | 'visas' | 'tools';
 
@@ -351,6 +352,15 @@ function AppContent() {
                       >
                         {t.hero.globalTicketing}
                       </motion.button>
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.8, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
+                      className="mt-8 w-full flex justify-center lg:justify-start"
+                    >
+                      <FlightTrackerBar />
                     </motion.div>
                   </div>
 
