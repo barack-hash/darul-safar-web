@@ -354,14 +354,6 @@ function AppContent() {
                       </motion.button>
                     </motion.div>
 
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.8, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
-                      className="mt-8 w-full flex justify-center lg:justify-start"
-                    >
-                      <FlightTrackerBar />
-                    </motion.div>
                   </div>
 
                   {/* Right: Image Slot */}
@@ -377,6 +369,10 @@ function AppContent() {
                     </div>
                   </motion.div>
                 </section>
+              </div>
+
+              <div className="max-w-5xl mx-auto w-full px-4 -mt-10 relative z-20 mb-16">
+                <FlightTrackerBar />
               </div>
 
               {/* Service Pillars Grid */}
