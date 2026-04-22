@@ -1,19 +1,56 @@
 import React, { useState } from 'react';
-import { Search, Plane } from 'lucide-react';
+import { Search, Plane, Loader2 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 
-const MOCK_RESULT = 'Status: On Time | Terminal: 2 | Gate: B4';
+const NOT_FOUND_TEXT = 'Flight not found or data unavailable.';
+
+const toTitleCase = (value: string) => {
+  if (!value) return '';
+  return value
+    .split(/[_\s]+/)
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
+    .join(' ');
+};
 
 export default function FlightTrackerBar() {
   const [flightNumber, setFlightNumber] = useState('');
   const [resultText, setResultText] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSearch = () => {
-    if (!flightNumber.trim()) {
+  const handleSearch = async () => {
+    const formattedFlightNumber = flightNumber.replace(/\s+/g, '').toUpperCase();
+    if (!formattedFlightNumber) {
       setResultText('');
       return;
     }
-    setResultText(MOCK_RESULT);
+
+    setIsLoading(true);
+    try {
+      const response = await fetch(`/api/track-flight?flight=${encodeURIComponent(formattedFlightNumber)}`);
+      if (!response.ok) {
+        setResultText(NOT_FOUND_TEXT);
+        return;
+      }
+
+      const responseData = await response.json();
+      const flightData = responseData?.data?.[0];
+
+      if (!flightData) {
+        setResultText(NOT_FOUND_TEXT);
+        return;
+      }
+
+      const status = toTitleCase(flightData.flight_status || '');
+      const terminal = flightData.departure?.terminal || 'TBD';
+      const gate = flightData.departure?.gate || 'TBD';
+
+      setResultText(`Status: ${status || 'TBD'} | Terminal: ${terminal} | Gate: ${gate}`);
+    } catch {
+      setResultText(NOT_FOUND_TEXT);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleSubmit = (event: React.FormEvent) => {
@@ -44,11 +81,11 @@ export default function FlightTrackerBar() {
             />
             <button
               type="submit"
-              disabled={!flightNumber.trim()}
+              disabled={!flightNumber.trim() || isLoading}
               className="h-10 min-w-10 px-3 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
               aria-label="Search flight status"
             >
-              <Search className="w-4 h-4" />
+              {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
             </button>
           </div>
         </div>
