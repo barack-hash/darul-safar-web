@@ -7,7 +7,6 @@ import VisaPage from './components/VisaPage';
 import ToolsPage from './components/ToolsPage';
 import TicketingPage from './components/TicketingPage';
 import BookNowModal, { type BookNowService } from './components/BookNowModal';
-import { getRandomCategoryImage } from './utils/imageRandomizer';
 import { useLanguage, Lang } from './context/LanguageContext';
 type Page = 'home' | 'pilgrimage' | 'ticketing' | 'visas' | 'tools';
 
@@ -394,7 +393,7 @@ function AppContent() {
                         tags={["Umrah", "Hajj", "Ziyarah"]}
                         delay={0.1}
                         color="teal"
-                        image={getRandomCategoryImage('RP')}
+                        image="/pilgrimage.png"
                       />
                     </div>
                     {/* Card 2 */}
@@ -406,7 +405,7 @@ function AppContent() {
                         tags={["Ethiopian", "Qatar", "Saudia", "Emirates"]}
                         delay={0.2}
                         color="blue"
-                        image={getRandomCategoryImage('GAT')}
+                        image="/ticketing.png"
                       />
                     </div>
                     {/* Card 3 */}
@@ -418,7 +417,7 @@ function AppContent() {
                         tags={["Work", "Tourist", "Medical", "Education"]}
                         delay={0.3}
                         color="orange"
-                        image={getRandomCategoryImage('VDS')}
+                        image="/visa-services.png"
                       />
                     </div>
                     {/* Card 4 */}
@@ -430,7 +429,7 @@ function AppContent() {
                         tags={["B2B Corporate", "C2C Vacation"]}
                         delay={0.4}
                         color="red"
-                        image={getRandomCategoryImage('ST')}
+                        image="/specialized-travel.png"
                       />
                     </div>
                   </div>
