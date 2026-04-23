@@ -1,12 +1,19 @@
 "use client";
 
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import React, { useState, useRef } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
 import { Check, Droplets, RefreshCw, Footprints, Scissors, Plane, ChevronDown, FileText, Briefcase, Heart, Landmark } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import SectionHeader from './ui/SectionHeader';
 import PackageCard from './pilgrimage/PackageCard';
 import Image from 'next/image';
+
+/** Tiny emerald→gold gradient for `placeholder="blur"` (matches brand, low LCP overhead). */
+const PILGRIMAGE_HERO_BLUR_DATA_URL =
+  'data:image/svg+xml;charset=utf-8,' +
+  encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 8"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#047857"/><stop offset="1" stop-color="#d4af37"/></linearGradient></defs><rect width="12" height="8" fill="url(#g)"/></svg>'
+  );
 
 const translations = {
   en: {
@@ -97,6 +104,14 @@ export default function PilgrimagePage() {
   const t = translations[lang as keyof typeof translations] || translations.en;
   const [activeStep, setActiveStep] = useState<number | null>(1);
   const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
+  const [heroImageLoaded, setHeroImageLoaded] = useState(false);
+  const heroSectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: heroSectionRef,
+    offset: ['start start', 'end start']
+  });
+  /** Photo lags scroll (moves slower than headline/cards) for subtle depth. */
+  const heroPhotoY = useTransform(scrollYProgress, [0, 1], [0, 42]);
 
   const toggleItem = (id: string) => {
     setCheckedItems(prev => ({ ...prev, [id]: !prev[id] }));
@@ -170,7 +185,7 @@ export default function PilgrimagePage() {
     <div className="w-full min-h-screen bg-transparent flex flex-col items-center justify-start pb-24">
       
       {/* Hero Section */}
-      <section className="w-full max-w-7xl mx-auto px-4 md:px-8 pt-32 pb-16">
+      <section ref={heroSectionRef} className="w-full max-w-7xl mx-auto px-4 md:px-8 pt-32 pb-8 md:pb-10">
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -189,44 +204,79 @@ export default function PilgrimagePage() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-full max-w-6xl mx-auto aspect-[16/7] md:aspect-[21/9] rounded-3xl shadow-2xl shadow-slate-200 overflow-hidden"
+          className="relative w-full max-w-6xl mx-auto aspect-[16/7] md:aspect-[21/9] overflow-hidden rounded-3xl shadow-2xl shadow-slate-200"
         >
-          <Image
-            src="/pilgrimage.png"
-            alt="Pilgrimage"
-            fill
-            priority
-            className="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-105"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-emerald-950/35 via-transparent to-amber-700/20" />
+          <div
+            className="absolute inset-0 rounded-3xl relative"
+            style={{
+              WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
+              maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)'
+            }}
+          >
+            <motion.div
+              className="absolute left-0 right-0 top-0 h-[118%] w-full will-change-transform"
+              style={{ y: heroPhotoY }}
+            >
+              <Image
+                src="/pilgrimage.png"
+                alt="Pilgrimage"
+                fill
+                priority
+                placeholder="blur"
+                blurDataURL={PILGRIMAGE_HERO_BLUR_DATA_URL}
+                sizes="(min-width: 768px) 72rem, 100vw"
+                className="object-cover object-top transition-transform duration-700 hover:scale-105"
+                onLoadingComplete={() => setHeroImageLoaded(true)}
+                onError={() => setHeroImageLoaded(true)}
+              />
+            </motion.div>
+            {!heroImageLoaded && (
+              <div
+                className="pilgrimage-image-shimmer pointer-events-none absolute inset-0 z-10 rounded-3xl"
+                aria-hidden
+              />
+            )}
+            <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-r from-emerald-950/35 via-transparent to-amber-700/20 z-[1]" />
+          </div>
         </motion.div>
       </section>
 
-      {/* Packages Section */}
-      <section className="w-full max-w-7xl mx-auto px-4 md:px-8 py-24">
-        <SectionHeader title={pageT.packagesTitle} eyebrow="Curated Journeys" className="mb-16" />
+      {/* Packages Section — pulled up into hero fade via negative margin */}
+      <section className="relative w-full max-w-7xl mx-auto px-4 md:px-8 -mt-16 md:-mt-24 pt-4 md:pt-6 pb-24 overflow-visible">
+        <div
+          className="pointer-events-none absolute -top-28 md:-top-36 -left-16 md:-left-24 h-[min(22rem,70vw)] w-[min(22rem,70vw)] md:h-96 md:w-96 rounded-full bg-emerald-500/10 blur-3xl"
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute -top-16 md:-top-24 right-[-3rem] md:right-4 h-[min(20rem,65vw)] w-[min(20rem,65vw)] md:h-80 md:w-80 rounded-full bg-[color-mix(in_srgb,var(--color-gold)_10%,transparent)] blur-3xl"
+          aria-hidden
+        />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-stretch">
-          <PackageCard
-            title={pageT.economyUmrah.title}
-            description={pageT.economyUmrah.desc}
-            inclusions={pageT.economyUmrah.inclusions}
-            icon={Plane}
-            tone="emerald"
-            indexLabel="01"
-            ctaLabel={pageT.discussWhatsApp}
-            onCtaClick={() => handleWhatsApp(pageT.economyUmrah.title)}
-          />
-          <PackageCard
-            title={pageT.premiumHajj.title}
-            description={pageT.premiumHajj.desc}
-            inclusions={pageT.premiumHajj.inclusions}
-            icon={Landmark}
-            tone="amber"
-            indexLabel="02"
-            ctaLabel={pageT.discussWhatsApp}
-            onCtaClick={() => handleWhatsApp(pageT.premiumHajj.title)}
-          />
+        <div className="relative z-10">
+          <SectionHeader title={pageT.packagesTitle} eyebrow="Curated Journeys" className="mb-16" />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-stretch">
+            <PackageCard
+              title={pageT.economyUmrah.title}
+              description={pageT.economyUmrah.desc}
+              inclusions={pageT.economyUmrah.inclusions}
+              icon={Plane}
+              tone="emerald"
+              indexLabel="01"
+              ctaLabel={pageT.discussWhatsApp}
+              onCtaClick={() => handleWhatsApp(pageT.economyUmrah.title)}
+            />
+            <PackageCard
+              title={pageT.premiumHajj.title}
+              description={pageT.premiumHajj.desc}
+              inclusions={pageT.premiumHajj.inclusions}
+              icon={Landmark}
+              tone="amber"
+              indexLabel="02"
+              ctaLabel={pageT.discussWhatsApp}
+              onCtaClick={() => handleWhatsApp(pageT.premiumHajj.title)}
+            />
+          </div>
         </div>
       </section>
 

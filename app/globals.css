@@ -8,6 +8,7 @@
 @theme {
   --color-navy: #001f3f;
   --color-gold: #d4af37;
+  --color-emerald-brand: #047857;
   --color-surface: #f7fafc;
   --color-surface-container-low: #f1f4f6;
   --color-surface-container-high: #e5e9eb;
@@ -18,4 +19,34 @@
   --font-headline: 'Manrope', sans-serif;
   --font-body: 'Inter', sans-serif;
   --font-label: 'Inter', sans-serif;
+}
+
+/* Pilgrimage hero: premium loading shimmer (gold + emerald) over blur placeholder */
+@keyframes pilgrimage-image-shimmer {
+  0% {
+    background-position: 180% 0;
+  }
+  100% {
+    background-position: -180% 0;
+  }
+}
+
+.pilgrimage-image-shimmer {
+  background-image: linear-gradient(
+      105deg,
+      rgb(4 120 87 / 0%) 0%,
+      rgb(4 120 87 / 22%) 18%,
+      rgb(212 175 55 / 38%) 42%,
+      rgb(4 120 87 / 28%) 62%,
+      rgb(212 175 55 / 18%) 82%,
+      rgb(4 120 87 / 0%) 100%
+    ),
+    linear-gradient(
+      165deg,
+      var(--color-emerald-brand),
+      color-mix(in srgb, var(--color-gold) 55%, var(--color-emerald-brand))
+    );
+  background-size: 240% 100%, 100% 100%;
+  background-position: 180% 0, 0 0;
+  animation: pilgrimage-image-shimmer 2.2s ease-in-out infinite;
 }
