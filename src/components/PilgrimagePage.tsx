@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Check, Droplets, RefreshCw, Footprints, Scissors, MessageCircle, Star, Plane, ChevronDown, FileText, Briefcase, Heart } from 'lucide-react';
+import { Check, Droplets, RefreshCw, Footprints, Scissors, MessageCircle, Plane, ChevronDown, FileText, Briefcase, Heart, Landmark } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 const translations = {
@@ -184,15 +184,14 @@ export default function PilgrimagePage() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-full aspect-[21/9] rounded-3xl overflow-hidden shadow-lg border border-white/60 bg-white/20 backdrop-blur-sm"
+          className="relative w-full max-w-6xl mx-auto aspect-[16/7] md:aspect-[21/9] rounded-3xl shadow-2xl shadow-slate-200 overflow-hidden"
         >
           <img 
             src="/pilgrimage.png" 
             alt="Pilgrimage" 
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-105"
             referrerPolicy="no-referrer"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
         </motion.div>
       </section>
 
@@ -204,22 +203,23 @@ export default function PilgrimagePage() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-stretch">
           {/* Economy Umrah */}
           <motion.div 
             whileHover={{ y: -10 }}
-            className="bg-white/40 backdrop-blur-3xl border border-white/60 rounded-[2.5rem] p-10 shadow-[0_20px_40px_rgb(0,0,0,0.08)] flex flex-col hover:shadow-blue-500/10 hover:border-blue-200 transition-all duration-500 group"
+            className="relative overflow-hidden h-full rounded-[2rem] border border-slate-100 bg-white p-8 shadow-xl shadow-slate-100 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 flex flex-col group"
           >
-            <div className="w-16 h-16 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
+            <span className="absolute bottom-4 right-6 text-7xl font-black text-slate-900/5 pointer-events-none select-none">01</span>
+            <div className="w-16 h-16 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mb-8 group-hover:scale-105 transition-transform duration-500">
               <Plane className="w-8 h-8" />
             </div>
-            <h3 className="font-headline text-3xl font-bold text-gray-900 mb-4">{pageT.economyUmrah.title}</h3>
-            <p className="text-gray-500 font-body text-lg mb-8 flex-grow">{pageT.economyUmrah.desc}</p>
+            <h3 className="text-3xl font-bold tracking-tight text-slate-900 mb-4">{pageT.economyUmrah.title}</h3>
+            <p className="text-slate-600 font-body text-lg mb-8 flex-grow">{pageT.economyUmrah.desc}</p>
             
             <ul className="space-y-4 mb-10">
               {pageT.economyUmrah.inclusions.map((item, idx) => (
-                <li key={idx} className="flex items-start gap-3 text-gray-700 font-body">
-                  <Check className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" />
+                <li key={idx} className="flex items-start gap-3 text-slate-600 font-body">
+                  <Check className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
                   <span>{item}</span>
                 </li>
               ))}
@@ -227,8 +227,9 @@ export default function PilgrimagePage() {
 
             <button 
               onClick={() => handleWhatsApp(pageT.economyUmrah.title)}
-              className="w-full py-4 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white rounded-2xl font-headline font-bold flex items-center justify-center gap-2 transition-all duration-200 shadow-lg shadow-blue-600/20"
+              className="relative overflow-hidden w-full py-4 border border-blue-200 bg-blue-50/80 hover:bg-blue-100 text-blue-700 rounded-2xl font-headline font-bold flex items-center justify-center gap-2 transition-all duration-300 shadow-lg shadow-blue-100/60 hover:shadow-xl hover:shadow-blue-200/70 active:scale-95"
             >
+              <span className="absolute inset-0 bg-gradient-to-r from-white/10 via-white/50 to-white/10 -translate-x-full hover:translate-x-full transition-transform duration-700 pointer-events-none"></span>
               <MessageCircle className="w-5 h-5" />
               {pageT.discussWhatsApp}
             </button>
@@ -237,19 +238,19 @@ export default function PilgrimagePage() {
           {/* Premium Hajj */}
           <motion.div 
             whileHover={{ y: -10 }}
-            className="bg-white/40 backdrop-blur-3xl border border-white/60 rounded-[2.5rem] p-10 shadow-[0_20px_40px_rgb(0,0,0,0.08)] flex flex-col hover:shadow-amber-500/10 hover:border-amber-200 transition-all duration-500 group relative overflow-hidden"
+            className="relative overflow-hidden h-full rounded-[2rem] border border-slate-100 bg-white p-8 shadow-xl shadow-slate-100 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 flex flex-col group"
           >
-            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-amber-200/40 to-transparent rounded-bl-full -z-10"></div>
-            <div className="w-16 h-16 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
-              <Star className="w-8 h-8" />
+            <span className="absolute bottom-4 right-6 text-7xl font-black text-slate-900/5 pointer-events-none select-none">02</span>
+            <div className="w-16 h-16 bg-amber-50 text-amber-600 rounded-full flex items-center justify-center mb-8 group-hover:scale-105 transition-transform duration-500">
+              <Landmark className="w-8 h-8" />
             </div>
-            <h3 className="font-headline text-3xl font-bold text-gray-900 mb-4">{pageT.premiumHajj.title}</h3>
-            <p className="text-gray-500 font-body text-lg mb-8 flex-grow">{pageT.premiumHajj.desc}</p>
+            <h3 className="text-3xl font-bold tracking-tight text-slate-900 mb-4">{pageT.premiumHajj.title}</h3>
+            <p className="text-slate-600 font-body text-lg mb-8 flex-grow">{pageT.premiumHajj.desc}</p>
             
             <ul className="space-y-4 mb-10">
               {pageT.premiumHajj.inclusions.map((item, idx) => (
-                <li key={idx} className="flex items-start gap-3 text-gray-700 font-body">
-                  <Check className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
+                <li key={idx} className="flex items-start gap-3 text-slate-600 font-body">
+                  <Check className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
                   <span>{item}</span>
                 </li>
               ))}
@@ -257,8 +258,9 @@ export default function PilgrimagePage() {
 
             <button 
               onClick={() => handleWhatsApp(pageT.premiumHajj.title)}
-              className="w-full py-4 bg-amber-500 hover:bg-amber-600 active:scale-95 text-white rounded-2xl font-headline font-bold flex items-center justify-center gap-2 transition-all duration-200 shadow-lg shadow-amber-500/20"
+              className="relative overflow-hidden w-full py-4 bg-amber-600 hover:bg-amber-700 active:scale-95 text-white rounded-2xl font-headline font-bold flex items-center justify-center gap-2 transition-all duration-300 shadow-lg shadow-amber-600/30 hover:shadow-xl hover:shadow-amber-500/40"
             >
+              <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/30 to-white/0 -translate-x-full hover:translate-x-full transition-transform duration-700 pointer-events-none"></span>
               <MessageCircle className="w-5 h-5" />
               {pageT.discussWhatsApp}
             </button>

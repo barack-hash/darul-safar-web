@@ -28,11 +28,11 @@ const pathToPage = (pathname: string): Page => {
 };
 
 const ServiceCard = ({ icon, title, description, tags, delay, onClick, color = 'blue', image }: any) => {
-  const colorMap: Record<string, { border: string, iconBg: string, tagBg: string, tagText: string }> = {
-    blue: { border: 'hover:border-blue-500/30', iconBg: 'group-hover:bg-blue-600 group-hover:text-white', tagBg: 'group-hover:bg-blue-50', tagText: 'group-hover:text-blue-600' },
-    red: { border: 'hover:border-red-500/30', iconBg: 'group-hover:bg-red-500 group-hover:text-white', tagBg: 'group-hover:bg-red-50', tagText: 'group-hover:text-red-600' },
-    teal: { border: 'hover:border-teal-500/30', iconBg: 'group-hover:bg-teal-600 group-hover:text-white', tagBg: 'group-hover:bg-teal-50', tagText: 'group-hover:text-teal-600' },
-    orange: { border: 'hover:border-orange-500/30', iconBg: 'group-hover:bg-orange-500 group-hover:text-white', tagBg: 'group-hover:bg-orange-50', tagText: 'group-hover:text-orange-600' }
+  const colorMap: Record<string, { border: string, iconTint: string, iconText: string, learnMore: string }> = {
+    blue: { border: 'hover:border-blue-200', iconTint: 'bg-blue-50', iconText: 'text-blue-600', learnMore: 'group-hover:text-blue-600' },
+    red: { border: 'hover:border-red-200', iconTint: 'bg-rose-50', iconText: 'text-rose-600', learnMore: 'group-hover:text-rose-600' },
+    teal: { border: 'hover:border-teal-200', iconTint: 'bg-teal-50', iconText: 'text-teal-600', learnMore: 'group-hover:text-teal-600' },
+    orange: { border: 'hover:border-orange-200', iconTint: 'bg-amber-50', iconText: 'text-amber-600', learnMore: 'group-hover:text-amber-600' }
   };
 
   const colors = colorMap[color] || colorMap.blue;
@@ -44,30 +44,34 @@ const ServiceCard = ({ icon, title, description, tags, delay, onClick, color = '
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] }}
       onClick={onClick}
-      className={`group bg-white/70 backdrop-blur-xl p-8 rounded-3xl border border-white/40 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] hover:-translate-y-2 hover:scale-[1.02] active:scale-[0.98] ${colors.border} transition-all duration-200 md:duration-500 flex flex-col h-full cursor-pointer relative overflow-hidden`}
+      className={`group bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-200/60 hover:-translate-y-3 hover:shadow-2xl hover:shadow-blue-900/5 active:scale-[0.99] ${colors.border} transition-all duration-500 flex flex-col h-full cursor-pointer relative overflow-hidden`}
     >
       <div className="flex flex-col md:flex-row overflow-hidden">
         <div className="flex-1 flex flex-col">
-          <div className={`w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center text-gray-700 mb-6 ${colors.iconBg} transition-colors duration-500 shadow-sm`}>
+          <div className={`w-14 h-14 p-3 rounded-2xl flex items-center justify-center mb-6 ${colors.iconTint} ${colors.iconText} transition-all duration-500 shadow-sm group-hover:scale-105`}>
             {icon}
           </div>
-          <h3 className="text-2xl font-headline font-bold text-gray-900 mb-3 tracking-tight">{title}</h3>
+          <h3 className="text-3xl font-bold tracking-tight text-slate-900 mb-4">{title}</h3>
           <p className="text-gray-500 font-body text-sm leading-relaxed mb-6 flex-grow">
             {description}
           </p>
           <div className="flex flex-wrap gap-2 mt-auto">
             {tags.map((tag: string, i: number) => (
-              <span key={i} className={`px-3 py-1 bg-gray-100 text-gray-600 text-[10px] uppercase tracking-widest font-bold rounded-full ${colors.tagBg} ${colors.tagText} transition-colors duration-300`}>
+              <span key={i} className="bg-white/80 backdrop-blur-md border border-white/20 text-slate-900 font-semibold px-4 py-1.5 rounded-full text-xs tracking-widest uppercase">
                 {tag}
               </span>
             ))}
           </div>
+          <div className={`mt-6 inline-flex items-center gap-2 text-sm font-semibold text-slate-500 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 ${colors.learnMore}`}>
+            <span>Learn More</span>
+            <span aria-hidden="true">→</span>
+          </div>
         </div>
-        <div className="relative w-full h-56 md:w-5/12 shrink-0 block">
+        <div className="relative w-full h-56 md:w-5/12 shrink-0 block md:ml-6 mt-6 md:mt-0">
            {image ? (
-             <img src={image} alt={title} className="absolute inset-0 w-full h-full object-cover" referrerPolicy="no-referrer" />
+             <img src={image} alt={title} className="absolute inset-0 w-full h-full object-cover rounded-2xl" referrerPolicy="no-referrer" />
            ) : (
-             <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent mix-blend-overlay"></div>
+             <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent mix-blend-overlay rounded-2xl"></div>
            )}
         </div>
       </div>

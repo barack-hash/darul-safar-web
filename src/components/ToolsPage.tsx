@@ -151,42 +151,26 @@ export default function ToolsPage() {
 
   return (
     <div className="w-full min-h-screen bg-transparent flex flex-col items-center justify-start pb-24">
-      <section className="w-full px-4 md:px-8 max-w-7xl mx-auto mt-8 mb-10">
-        <div className="mb-4">
-          <h2 className="font-headline text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
-            Live Flight Tracker
-          </h2>
-          <p className="mt-2 text-base md:text-lg text-gray-500 font-body">
-            Real-time departure, arrival, and gate information.
-          </p>
-        </div>
-        <FlightTrackerBar />
-      </section>
-
       {/* Hero Section */}
       <div className="w-full px-4 md:px-8 max-w-7xl mx-auto mt-8 mb-16">
-        <section className="w-full bg-white/40 backdrop-blur-3xl border border-white/60 hover:border-blue-200 transition-colors duration-500 py-32 md:py-48 rounded-[3rem] relative overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] text-center px-4">
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="font-headline text-5xl md:text-7xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-gray-900 to-gray-600 mb-6"
-          >
-            {pageT.title.split(' ')[0]} <span className="text-blue-600">{pageT.title.split(' ').slice(1).join(' ')}</span>
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="text-gray-500 max-w-2xl mx-auto text-xl font-body leading-relaxed"
-          >
-            {pageT.subtitle}
-          </motion.p>
-        </section>
+        <div
+          className="relative bg-cover bg-center min-h-[400px] rounded-3xl overflow-hidden mb-12 shadow-2xl shadow-slate-200"
+          style={{ backgroundImage: "url('/services/TOOLS11.png')" }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-900/95 via-slate-900/70 to-transparent z-0"></div>
+          <div className="relative z-10 max-w-7xl mx-auto px-8 h-full flex items-center pt-20 pb-16">
+            <div className="text-white max-w-2xl">
+              <h1 className="text-5xl font-bold mb-4">Travel &amp; Trading Tools</h1>
+              <p className="text-xl text-slate-200 leading-relaxed">
+                Your digital concierge. Access real-time currency exchange rates, live flight tracking, and smart budget planning designed exclusively for the global traveler.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Converter Section */}
-      <section className="w-full px-4 md:px-8 max-w-3xl mx-auto relative z-20">
+      <section className="w-full px-4 md:px-8 max-w-3xl mx-auto relative z-20 mb-16">
         <motion.div 
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
@@ -557,6 +541,18 @@ export default function ToolsPage() {
           </div>
         </motion.div>
 
+      </section>
+
+      <section className="w-full px-4 md:px-8 max-w-7xl mx-auto">
+        <div className="mb-4">
+          <h2 className="font-headline text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+            Live Flight Tracker
+          </h2>
+          <p className="mt-2 text-base md:text-lg text-gray-500 font-body">
+            Real-time departure, arrival, and gate information.
+          </p>
+        </div>
+        <FlightTrackerBar />
       </section>
     </div>
   );
