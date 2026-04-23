@@ -1,0 +1,10 @@
+{
+  "/api/track-flight/route": "app/api/track-flight/route.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/visa/page": "app/visa/page.js",
+  "/page": "app/page.js",
+  "/visas/page": "app/visas/page.js",
+  "/tools/page": "app/tools/page.js",
+  "/ticketing/page": "app/ticketing/page.js",
+  "/pilgrimage/page": "app/pilgrimage/page.js"
+}
