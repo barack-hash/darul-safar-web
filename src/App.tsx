@@ -241,7 +241,7 @@ function AppContent() {
               </AnimatePresence>
             </div>
 
-            <button onClick={handleHeaderBookNowClick} className="bg-blue-600 text-white px-6 py-2 rounded-full font-headline font-bold hover:bg-blue-700 hover:scale-105 active:scale-95 transition-all shadow-sm">
+          <button onClick={handleHeaderBookNowClick} className="bg-emerald-700 text-white px-6 py-2 rounded-full font-headline font-bold hover:bg-emerald-800 hover:scale-105 active:scale-95 transition-all shadow-sm shadow-emerald-700/20">
               {t.hero.cta}
             </button>
           </div>
@@ -272,7 +272,7 @@ function AppContent() {
                 <button onClick={() => handleLangChange('ar')} className={`px-3 py-1 rounded-full text-sm font-bold border ${lang === 'ar' ? 'border-blue-600 text-blue-600 bg-blue-50' : 'border-gray-200 text-gray-600'}`}>AR</button>
                 <button onClick={() => handleLangChange('om')} className={`px-3 py-1 rounded-full text-sm font-bold border ${lang === 'om' ? 'border-blue-600 text-blue-600 bg-blue-50' : 'border-gray-200 text-gray-600'}`}>OM</button>
               </div>
-              <button onClick={handleHeaderBookNowClick} className="bg-blue-600 text-white px-6 py-3 rounded-full font-headline font-bold w-full text-center shadow-sm active:scale-95 transition-all duration-200">
+              <button onClick={handleHeaderBookNowClick} className="bg-emerald-700 text-white px-6 py-3 rounded-full font-headline font-bold w-full text-center shadow-sm shadow-emerald-700/20 hover:bg-emerald-800 active:scale-95 transition-all duration-200">
                 {t.hero.cta}
               </button>
             </div>
@@ -309,7 +309,7 @@ function AppContent() {
                       </span>
                     </motion.div>
                     
-                    <h1 className="text-5xl md:text-7xl lg:text-[5.5rem] font-headline font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-gray-900 to-gray-600 leading-[1.1] tracking-tighter mb-8 max-w-3xl mx-auto lg:mx-0 flex flex-wrap justify-center lg:justify-start">
+                    <h1 className="text-5xl md:text-7xl lg:text-[5.5rem] font-serif font-bold text-transparent bg-clip-text bg-gradient-to-br from-emerald-900 to-slate-700 leading-[1.1] tracking-tight mb-8 max-w-3xl mx-auto lg:mx-0 flex flex-wrap justify-center lg:justify-start">
                       {/* Staggered text animation */}
                       {t.hero.headline.split(" ").map((word, i) => (
                         <motion.span
@@ -328,7 +328,7 @@ function AppContent() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                      className="text-lg md:text-2xl text-gray-500 font-body leading-relaxed max-w-2xl mx-auto lg:mx-0 mb-12"
+                      className="text-lg md:text-2xl text-slate-600 font-body leading-relaxed max-w-2xl mx-auto lg:mx-0 mb-12"
                     >
                       {t.hero.subtitle}
                     </motion.p>
@@ -339,11 +339,11 @@ function AppContent() {
                       transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
                       className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center lg:justify-start"
                     >
-                      <motion.button 
+                      <motion.button
                         onClick={() => openBookNowModal('Flight')}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className="px-8 py-4 bg-blue-600 text-white font-headline font-bold rounded-2xl hover:bg-blue-700 active:scale-95 transition-all duration-200 shadow-lg shadow-blue-500/30 w-full sm:w-auto text-lg"
+                        className="px-8 py-4 bg-emerald-700 text-white font-headline font-bold rounded-2xl hover:bg-emerald-800 active:scale-95 transition-all duration-200 shadow-lg shadow-emerald-700/30 w-full sm:w-auto text-lg"
                       >
                         {t.hero.bookUmrah}
                       </motion.button>
@@ -385,7 +385,7 @@ function AppContent() {
                     transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                     className="mb-16 text-center md:text-left"
                   >
-                    <h2 className="text-4xl md:text-6xl font-headline font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-600 mb-6 tracking-tight">{t.nav.solutions}</h2>
+                    <h2 className="text-4xl md:text-6xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-900 to-slate-700 mb-6 tracking-tight">{t.nav.solutions}</h2>
                   </motion.div>
 
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -538,6 +538,15 @@ function AppContent() {
         onClose={closeBookNowModal}
         initialService={bookNowInitialService}
       />
+      <motion.button
+        onClick={handleHeaderBookNowClick}
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        className="md:hidden fixed bottom-5 right-5 z-40 bg-emerald-700 text-white px-5 py-3 rounded-full shadow-lg shadow-emerald-700/30 font-headline font-bold text-sm active:scale-95 transition-all"
+      >
+        {t.hero.cta}
+      </motion.button>
     </div>
   );
 }

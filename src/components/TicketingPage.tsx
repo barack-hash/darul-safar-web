@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Plane, PlaneTakeoff, PlaneLanding, Users, Calendar, MessageCircle, MapPin, Briefcase, AlertCircle, CheckCircle } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import AirportAutocomplete from './AirportAutocomplete';
+import SectionHeader from './ui/SectionHeader';
 
 const translations = {
   en: {
@@ -277,7 +278,7 @@ export default function TicketingPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="text-5xl md:text-7xl font-headline font-extrabold mb-6 tracking-tight text-white"
+              className="text-5xl md:text-7xl font-serif font-bold mb-6 tracking-tight text-white"
             >
               {t.title}
             </motion.h1>
@@ -413,7 +414,7 @@ export default function TicketingPage() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 disabled={isSubmitting}
-                className="w-full md:w-auto bg-blue-600 text-white font-headline font-bold px-8 py-4 rounded-2xl hover:bg-blue-700 active:scale-95 transition-all flex items-center justify-center gap-3 shadow-lg shadow-blue-500/30 text-lg disabled:opacity-70 disabled:cursor-not-allowed"
+                className="w-full md:w-auto bg-emerald-700 text-white font-headline font-bold px-8 py-4 rounded-2xl hover:bg-emerald-800 active:scale-95 transition-all flex items-center justify-center gap-3 shadow-lg shadow-emerald-700/30 text-lg disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 <MessageCircle className="w-6 h-6" />
                 {isSubmitting ? 'Loading...' : t.form.whatsappBtn}
@@ -425,15 +426,7 @@ export default function TicketingPage() {
 
       {/* Popular Routes Section */}
       <section className="w-full px-4 md:px-8 max-w-7xl mx-auto mb-32 md:mb-48">
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-headline font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-600 tracking-tight">{t.popularRoutes.title}</h2>
-        </motion.div>
+        <SectionHeader title={t.popularRoutes.title} className="mb-16" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
@@ -461,15 +454,7 @@ export default function TicketingPage() {
 
       {/* Baggage & Services Guide */}
       <section className="w-full px-4 md:px-8 max-w-7xl mx-auto mb-32 md:mb-48">
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-headline font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-600 tracking-tight">{t.baggageGuide.title}</h2>
-        </motion.div>
+        <SectionHeader title={t.baggageGuide.title} className="mb-16" />
 
         <div className="flex overflow-x-auto pb-8 gap-6 snap-x snap-mandatory scrollbar-hide">
           {[

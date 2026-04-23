@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Check, Droplets, RefreshCw, Footprints, Scissors, MessageCircle, Plane, ChevronDown, FileText, Briefcase, Heart, Landmark } from 'lucide-react';
+import { Check, Droplets, RefreshCw, Footprints, Scissors, Plane, ChevronDown, FileText, Briefcase, Heart, Landmark } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import SectionHeader from './ui/SectionHeader';
+import PackageCard from './pilgrimage/PackageCard';
 
 const translations = {
   en: {
@@ -172,10 +174,10 @@ export default function PilgrimagePage() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="text-center mb-16"
         >
-          <h1 className="text-5xl md:text-7xl font-headline font-black text-gray-900 tracking-tighter mb-6">
+          <h1 className="font-serif text-5xl md:text-7xl font-bold text-slate-900 tracking-tight mb-6">
             {pageT.title}
           </h1>
-          <p className="text-xl md:text-2xl text-gray-500 font-body max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl text-slate-600 font-body max-w-3xl mx-auto leading-relaxed">
             {pageT.subtitle}
           </p>
         </motion.div>
@@ -192,92 +194,41 @@ export default function PilgrimagePage() {
             className="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-105"
             referrerPolicy="no-referrer"
           />
+          <div className="absolute inset-0 bg-gradient-to-r from-emerald-950/35 via-transparent to-amber-700/20" />
         </motion.div>
       </section>
 
       {/* Packages Section */}
       <section className="w-full max-w-7xl mx-auto px-4 md:px-8 py-24">
-        <div className="text-center mb-16">
-          <h2 className="font-headline text-4xl font-black text-gray-900 tracking-tight mb-4">
-            {pageT.packagesTitle}
-          </h2>
-        </div>
+        <SectionHeader title={pageT.packagesTitle} eyebrow="Curated Journeys" className="mb-16" />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-stretch">
-          {/* Economy Umrah */}
-          <motion.div 
-            whileHover={{ y: -10 }}
-            className="relative overflow-hidden h-full rounded-[2rem] border border-slate-100 bg-white p-8 shadow-xl shadow-slate-100 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 flex flex-col group"
-          >
-            <span className="absolute bottom-4 right-6 text-7xl font-black text-slate-900/5 pointer-events-none select-none">01</span>
-            <div className="w-16 h-16 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mb-8 group-hover:scale-105 transition-transform duration-500">
-              <Plane className="w-8 h-8" />
-            </div>
-            <h3 className="text-3xl font-bold tracking-tight text-slate-900 mb-4">{pageT.economyUmrah.title}</h3>
-            <p className="text-slate-600 font-body text-lg mb-8 flex-grow">{pageT.economyUmrah.desc}</p>
-            
-            <ul className="space-y-4 mb-10">
-              {pageT.economyUmrah.inclusions.map((item, idx) => (
-                <li key={idx} className="flex items-start gap-3 text-slate-600 font-body">
-                  <Check className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-
-            <button 
-              onClick={() => handleWhatsApp(pageT.economyUmrah.title)}
-              className="relative overflow-hidden w-full py-4 border border-blue-200 bg-blue-50/80 hover:bg-blue-100 text-blue-700 rounded-2xl font-headline font-bold flex items-center justify-center gap-2 transition-all duration-300 shadow-lg shadow-blue-100/60 hover:shadow-xl hover:shadow-blue-200/70 active:scale-95"
-            >
-              <span className="absolute inset-0 bg-gradient-to-r from-white/10 via-white/50 to-white/10 -translate-x-full hover:translate-x-full transition-transform duration-700 pointer-events-none"></span>
-              <MessageCircle className="w-5 h-5" />
-              {pageT.discussWhatsApp}
-            </button>
-          </motion.div>
-
-          {/* Premium Hajj */}
-          <motion.div 
-            whileHover={{ y: -10 }}
-            className="relative overflow-hidden h-full rounded-[2rem] border border-slate-100 bg-white p-8 shadow-xl shadow-slate-100 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 flex flex-col group"
-          >
-            <span className="absolute bottom-4 right-6 text-7xl font-black text-slate-900/5 pointer-events-none select-none">02</span>
-            <div className="w-16 h-16 bg-amber-50 text-amber-600 rounded-full flex items-center justify-center mb-8 group-hover:scale-105 transition-transform duration-500">
-              <Landmark className="w-8 h-8" />
-            </div>
-            <h3 className="text-3xl font-bold tracking-tight text-slate-900 mb-4">{pageT.premiumHajj.title}</h3>
-            <p className="text-slate-600 font-body text-lg mb-8 flex-grow">{pageT.premiumHajj.desc}</p>
-            
-            <ul className="space-y-4 mb-10">
-              {pageT.premiumHajj.inclusions.map((item, idx) => (
-                <li key={idx} className="flex items-start gap-3 text-slate-600 font-body">
-                  <Check className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-
-            <button 
-              onClick={() => handleWhatsApp(pageT.premiumHajj.title)}
-              className="relative overflow-hidden w-full py-4 bg-amber-600 hover:bg-amber-700 active:scale-95 text-white rounded-2xl font-headline font-bold flex items-center justify-center gap-2 transition-all duration-300 shadow-lg shadow-amber-600/30 hover:shadow-xl hover:shadow-amber-500/40"
-            >
-              <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/30 to-white/0 -translate-x-full hover:translate-x-full transition-transform duration-700 pointer-events-none"></span>
-              <MessageCircle className="w-5 h-5" />
-              {pageT.discussWhatsApp}
-            </button>
-          </motion.div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-stretch">
+          <PackageCard
+            title={pageT.economyUmrah.title}
+            description={pageT.economyUmrah.desc}
+            inclusions={pageT.economyUmrah.inclusions}
+            icon={Plane}
+            tone="emerald"
+            indexLabel="01"
+            ctaLabel={pageT.discussWhatsApp}
+            onCtaClick={() => handleWhatsApp(pageT.economyUmrah.title)}
+          />
+          <PackageCard
+            title={pageT.premiumHajj.title}
+            description={pageT.premiumHajj.desc}
+            inclusions={pageT.premiumHajj.inclusions}
+            icon={Landmark}
+            tone="amber"
+            indexLabel="02"
+            ctaLabel={pageT.discussWhatsApp}
+            onCtaClick={() => handleWhatsApp(pageT.premiumHajj.title)}
+          />
         </div>
       </section>
 
       {/* Pilgrim's Guide Interactive Timeline */}
       <section className="w-full max-w-4xl mx-auto px-4 md:px-8 py-24">
-        <div className="text-center mb-16">
-          <h2 className="font-headline text-4xl font-black text-gray-900 tracking-tight mb-4">
-            {pageT.guideTitle}
-          </h2>
-          <p className="text-xl text-gray-500 font-body">
-            {pageT.guideSubtitle}
-          </p>
-        </div>
+        <SectionHeader title={pageT.guideTitle} subtitle={pageT.guideSubtitle} className="mb-16" />
 
         <div className="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-gray-200 before:to-transparent">
           {steps.map((step) => {

@@ -3,6 +3,7 @@ import { motion, animate } from 'motion/react';
 import { RefreshCw, ArrowRightLeft, Clock, Plus, MapPin, Activity, Plane, Building, Utensils, FileText, ChevronDown, Trash2 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import FlightTrackerBar from './FlightTrackerBar';
+import SectionHeader from './ui/SectionHeader';
 
 const CURRENCIES = ["USD", "ETB", "SAR", "AED", "EUR"];
 
@@ -160,8 +161,8 @@ export default function ToolsPage() {
           <div className="absolute inset-0 bg-gradient-to-r from-slate-900/95 via-slate-900/70 to-transparent z-0"></div>
           <div className="relative z-10 max-w-7xl mx-auto px-8 h-full flex items-center pt-20 pb-16">
             <div className="text-white max-w-2xl">
-              <h1 className="text-5xl font-bold mb-4">Travel &amp; Trading Tools</h1>
-              <p className="text-xl text-slate-200 leading-relaxed">
+              <h1 className="text-5xl font-serif font-bold mb-4">Travel &amp; Trading Tools</h1>
+              <p className="text-xl text-slate-200 leading-relaxed font-body">
                 Your digital concierge. Access real-time currency exchange rates, live flight tracking, and smart budget planning designed exclusively for the global traveler.
               </p>
             </div>
@@ -297,14 +298,7 @@ export default function ToolsPage() {
           transition={{ delay: 0.3, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="mt-24"
         >
-          <div className="text-center mb-10">
-            <h2 className="font-headline text-3xl font-bold text-gray-900 tracking-tight mb-2">
-              {pageT.clock.title}
-            </h2>
-            <p className="text-gray-500 font-body uppercase tracking-widest text-xs font-bold">
-              {pageT.clock.localTime}
-            </p>
-          </div>
+          <SectionHeader title={pageT.clock.title} subtitle={pageT.clock.localTime} className="mb-10" />
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {clockCities.map((city, idx) => (
@@ -348,7 +342,7 @@ export default function ToolsPage() {
         >
           <div className="flex flex-col md:flex-row items-center justify-between mb-10 gap-4">
             <div className="md:w-32 hidden md:block"></div>
-            <h2 className="font-headline text-3xl font-bold text-gray-900 tracking-tight text-center">
+            <h2 className="font-serif text-3xl font-bold text-gray-900 tracking-tight text-center">
               {pageT.planner.title}
             </h2>
             <div className="md:w-32 flex justify-end">
@@ -545,7 +539,7 @@ export default function ToolsPage() {
 
       <section className="w-full px-4 md:px-8 max-w-7xl mx-auto">
         <div className="mb-4">
-          <h2 className="font-headline text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
+          <h2 className="font-serif text-3xl md:text-4xl font-bold tracking-tight text-gray-900">
             Live Flight Tracker
           </h2>
           <p className="mt-2 text-base md:text-lg text-gray-500 font-body">
