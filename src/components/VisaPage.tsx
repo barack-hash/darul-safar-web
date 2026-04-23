@@ -394,7 +394,7 @@ export default function VisaPage() {
       <div className="w-full px-4 md:px-8 max-w-7xl mx-auto mt-8 mb-16">
         <section
           className="w-full bg-cover bg-center bg-no-repeat border border-white/20 transition-colors duration-500 py-32 md:py-48 rounded-[3rem] relative overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)]"
-          style={{ backgroundImage: "url('/services/VDS10.png')" }}
+          style={{ backgroundImage: "url('/services/VDS11.png')" }}
         >
           <div className="absolute inset-0 bg-gradient-to-r from-slate-900/95 via-slate-900/70 to-transparent z-0"></div>
           <div className="max-w-4xl mx-auto relative z-10 text-center px-4 text-white">
