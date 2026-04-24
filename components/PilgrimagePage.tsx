@@ -1,19 +1,12 @@
 "use client";
 
-import React, { useState, useRef } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { Check, Droplets, RefreshCw, Footprints, Scissors, Plane, ChevronDown, FileText, Briefcase, Heart, Landmark } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import SectionHeader from './ui/SectionHeader';
 import PackageCard from './pilgrimage/PackageCard';
 import Image from 'next/image';
-
-/** Tiny emerald→gold gradient for `placeholder="blur"` (matches brand, low LCP overhead). */
-const PILGRIMAGE_HERO_BLUR_DATA_URL =
-  'data:image/svg+xml;charset=utf-8,' +
-  encodeURIComponent(
-    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 8"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#047857"/><stop offset="1" stop-color="#d4af37"/></linearGradient></defs><rect width="12" height="8" fill="url(#g)"/></svg>'
-  );
 
 const translations = {
   en: {
@@ -104,36 +97,23 @@ export default function PilgrimagePage() {
   const t = translations[lang as keyof typeof translations] || translations.en;
   const [activeStep, setActiveStep] = useState<number | null>(1);
   const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
-  const [heroImageLoaded, setHeroImageLoaded] = useState(false);
-  const heroSectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: heroSectionRef,
-    offset: ['start start', 'end start']
-  });
-  /** Photo lags scroll (moves slower than headline/cards) for subtle depth. */
-  const heroPhotoY = useTransform(scrollYProgress, [0, 1], [0, 42]);
 
   const toggleItem = (id: string) => {
-    setCheckedItems(prev => ({ ...prev, [id]: !prev[id] }));
+    setCheckedItems((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
   const getIconForStep = (id: number) => {
     switch (id) {
-      case 1: return <Droplets className="w-6 h-6" />;
-      case 2: return <RefreshCw className="w-6 h-6" />;
-      case 3: return <Footprints className="w-6 h-6" />;
-      case 4: return <Scissors className="w-6 h-6" />;
-      default: return <Check className="w-6 h-6" />;
-    }
-  };
-
-  const getStepColor = (id: number) => {
-    switch (id) {
-      case 1: return { bg: 'bg-blue-500', text: 'text-blue-600', border: 'border-blue-200', shadow: 'shadow-blue-500/30' };
-      case 2: return { bg: 'bg-indigo-500', text: 'text-indigo-600', border: 'border-indigo-200', shadow: 'shadow-indigo-500/30' };
-      case 3: return { bg: 'bg-amber-500', text: 'text-amber-600', border: 'border-amber-200', shadow: 'shadow-amber-500/30' };
-      case 4: return { bg: 'bg-emerald-500', text: 'text-emerald-600', border: 'border-emerald-200', shadow: 'shadow-emerald-500/30' };
-      default: return { bg: 'bg-gray-500', text: 'text-gray-600', border: 'border-gray-200', shadow: 'shadow-gray-500/30' };
+      case 1:
+        return <Droplets className="w-6 h-6" />;
+      case 2:
+        return <RefreshCw className="w-6 h-6" />;
+      case 3:
+        return <Footprints className="w-6 h-6" />;
+      case 4:
+        return <Scissors className="w-6 h-6" />;
+      default:
+        return <Check className="w-6 h-6" />;
     }
   };
 
@@ -149,11 +129,18 @@ export default function PilgrimagePage() {
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/1234567890?text=${encodedMessage}`, '_blank');
   };
+
   const checklistData = [
     {
       category: t.categories.sacred,
       icon: <Heart className="w-5 h-5" />,
-      color: { bg: 'bg-rose-500', text: 'text-rose-600', border: 'border-rose-200', lightBg: 'bg-rose-50', shadow: 'shadow-rose-500/30' },
+      color: {
+        bg: 'bg-rose-400/90',
+        text: 'text-rose-800/85',
+        border: 'border-rose-200/70',
+        lightBg: 'bg-rose-50/75',
+        shadow: 'shadow-rose-400/20'
+      },
       items: [
         { id: 'ihram', label: t.items.ihram },
         { id: 'soap', label: t.items.soap }
@@ -162,7 +149,13 @@ export default function PilgrimagePage() {
     {
       category: t.categories.docs,
       icon: <FileText className="w-5 h-5" />,
-      color: { bg: 'bg-blue-500', text: 'text-blue-600', border: 'border-blue-200', lightBg: 'bg-blue-50', shadow: 'shadow-blue-500/30' },
+      color: {
+        bg: 'bg-amber-400/90',
+        text: 'text-amber-900/80',
+        border: 'border-amber-200/70',
+        lightBg: 'bg-amber-50/75',
+        shadow: 'shadow-amber-400/20'
+      },
       items: [
         { id: 'passport', label: t.items.passport },
         { id: 'visa', label: t.items.visa },
@@ -172,7 +165,13 @@ export default function PilgrimagePage() {
     {
       category: t.categories.comfort,
       icon: <Briefcase className="w-5 h-5" />,
-      color: { bg: 'bg-emerald-500', text: 'text-emerald-600', border: 'border-emerald-200', lightBg: 'bg-emerald-50', shadow: 'shadow-emerald-500/30' },
+      color: {
+        bg: 'bg-emerald-500/85',
+        text: 'text-emerald-900/80',
+        border: 'border-emerald-200/70',
+        lightBg: 'bg-emerald-50/75',
+        shadow: 'shadow-emerald-400/20'
+      },
       items: [
         { id: 'sandals', label: t.items.sandals },
         { id: 'mat', label: t.items.mat },
@@ -181,79 +180,78 @@ export default function PilgrimagePage() {
     }
   ];
 
-  return (
-    <div className="w-full min-h-screen bg-transparent flex flex-col items-center justify-start pb-24">
-      
-      {/* Hero Section */}
-      <section ref={heroSectionRef} className="w-full max-w-7xl mx-auto px-4 md:px-8 pt-32 pb-8 md:pb-10">
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center mb-16"
-        >
-          <h1 className="font-serif text-5xl md:text-7xl font-bold text-slate-900 tracking-tight mb-6">
-            {pageT.title}
-          </h1>
-          <p className="text-xl md:text-2xl text-slate-600 font-body max-w-3xl mx-auto leading-relaxed">
-            {pageT.subtitle}
-          </p>
-        </motion.div>
+  const packedCount = Object.values(checkedItems).filter(Boolean).length;
 
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-full max-w-6xl mx-auto aspect-[16/7] md:aspect-[21/9] overflow-hidden rounded-3xl shadow-2xl shadow-slate-200"
+  return (
+    <div className="relative w-full min-h-screen overflow-hidden pb-24">
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute left-1/2 top-[-20rem] h-[44rem] w-[44rem] -translate-x-1/2 rounded-full bg-emerald-200/35 blur-3xl" />
+        <div className="absolute right-[-16rem] top-[16rem] h-[34rem] w-[34rem] rounded-full bg-sky-200/30 blur-3xl" />
+        <div className="absolute bottom-[4rem] left-[-14rem] h-[32rem] w-[32rem] rounded-full bg-amber-100/55 blur-3xl" />
+      </div>
+
+      {/* Hero Canvas */}
+      <section className="mx-auto w-full max-w-7xl px-4 pb-10 pt-4 md:px-8 md:pb-20 md:pt-36">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+          className="relative w-full rounded-[2.25rem] border border-white/70 bg-white/45 p-1.5 shadow-[0_35px_100px_rgba(15,23,42,0.14)] backdrop-blur-2xl md:rounded-[3.4rem] md:p-2"
         >
-          <div
-            className="absolute inset-0 rounded-3xl relative"
-            style={{
-              WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
-              maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)'
-            }}
-          >
-            <motion.div
-              className="absolute left-0 right-0 top-0 h-[118%] w-full will-change-transform"
-              style={{ y: heroPhotoY }}
-            >
-              <Image
-                src="/pilgrimage.png"
-                alt="Pilgrimage"
-                fill
-                priority
-                placeholder="blur"
-                blurDataURL={PILGRIMAGE_HERO_BLUR_DATA_URL}
-                sizes="(min-width: 768px) 72rem, 100vw"
-                className="object-cover object-top transition-transform duration-700 hover:scale-105"
-                onLoadingComplete={() => setHeroImageLoaded(true)}
-                onError={() => setHeroImageLoaded(true)}
-              />
-            </motion.div>
-            {!heroImageLoaded && (
-              <div
-                className="pilgrimage-image-shimmer pointer-events-none absolute inset-0 z-10 rounded-3xl"
-                aria-hidden
-              />
-            )}
-            <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-r from-emerald-950/35 via-transparent to-amber-700/20 z-[1]" />
+          <div className="relative isolate min-h-[500px] overflow-hidden rounded-[2rem] bg-slate-200 [clip-path:inset(0_round_2rem)] [contain:paint] md:min-h-[680px] md:rounded-[2.65rem] md:[clip-path:inset(0_round_2.65rem)] lg:min-h-[720px]">
+            <Image
+              src="/pilgrimage.png"
+              alt="Darul Safar pilgrimage journey"
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover object-[50%_center] md:object-center"
+            />
+
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/78 via-slate-950/28 to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-r from-slate-950/58 via-slate-950/10 to-transparent pointer-events-none" />
+
+            <div className="absolute inset-x-0 bottom-0 z-20 px-5 pb-52 md:px-10 md:pb-36 lg:px-12 lg:pb-32">
+              <div className="max-w-4xl">
+                <h1 className="font-serif text-[2.65rem] font-black leading-[0.95] tracking-[-0.05em] text-white drop-shadow-[0_14px_34px_rgba(0,0,0,0.35)] md:text-7xl lg:text-[5.8rem]">
+                  {pageT.title}
+                </h1>
+                <p className="mt-4 max-w-2xl text-sm leading-6 text-white/88 md:mt-6 md:text-xl md:leading-9">
+                  {pageT.subtitle}
+                </p>
+              </div>
+            </div>
+
+            <div className="absolute bottom-3 left-3 right-3 z-30 rounded-[1.6rem] border border-white/30 bg-white/20 p-2 shadow-[0_24px_75px_rgba(0,0,0,0.24)] backdrop-blur-2xl md:bottom-4 md:left-4 md:right-4 md:rounded-[2rem] md:p-3">
+              <div className="grid gap-2 md:grid-cols-[1fr_auto] md:items-center md:gap-3">
+                <div className="rounded-[1.15rem] bg-white/[0.86] px-4 py-3 backdrop-blur-xl md:rounded-[1.45rem] md:px-5 md:py-4">
+                  <p className="max-w-2xl text-center text-xs leading-5 text-slate-800 md:text-left md:text-base md:leading-relaxed">
+                    {pageT.heroCtaText}
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:flex md:flex-nowrap md:gap-3">
+                  <button
+                    type="button"
+                    onClick={() => handleWhatsApp(pageT.economyUmrah.title)}
+                    className="inline-flex min-h-12 w-full items-center justify-center rounded-[1.15rem] bg-emerald-700 px-5 text-sm font-black text-white shadow-[0_18px_40px_rgba(4,120,87,0.28)] transition hover:bg-emerald-800 active:scale-[0.98] md:min-h-14 md:w-auto md:rounded-[1.45rem] md:px-6"
+                  >
+                    {pageT.discussWhatsApp}
+                  </button>
+                  <span className="inline-flex min-h-12 w-full items-center justify-center whitespace-normal rounded-[1.15rem] bg-white px-5 text-center text-sm font-black leading-5 text-slate-900 shadow-[0_14px_32px_rgba(15,23,42,0.10)] md:min-h-14 md:w-auto md:rounded-[1.45rem] md:px-6">
+                    {pageT.heroServicePill}
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </motion.div>
       </section>
 
-      {/* Packages Section — pulled up into hero fade via negative margin */}
-      <section className="relative w-full max-w-7xl mx-auto px-4 md:px-8 -mt-16 md:-mt-24 pt-4 md:pt-6 pb-24 overflow-visible">
-        <div
-          className="pointer-events-none absolute -top-28 md:-top-36 -left-16 md:-left-24 h-[min(22rem,70vw)] w-[min(22rem,70vw)] md:h-96 md:w-96 rounded-full bg-emerald-500/10 blur-3xl"
-          aria-hidden
-        />
-        <div
-          className="pointer-events-none absolute -top-16 md:-top-24 right-[-3rem] md:right-4 h-[min(20rem,65vw)] w-[min(20rem,65vw)] md:h-80 md:w-80 rounded-full bg-[color-mix(in_srgb,var(--color-gold)_10%,transparent)] blur-3xl"
-          aria-hidden
-        />
-
+      {/* Packages */}
+      <section className="w-full max-w-7xl mx-auto px-4 md:px-8 pt-24 md:pt-28 pb-20">
         <div className="relative z-10">
-          <SectionHeader title={pageT.packagesTitle} eyebrow="Curated Journeys" className="mb-16" />
+          <SectionHeader title={pageT.packagesTitle} eyebrow={pageT.packagesEyebrow} className="mb-16" />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-stretch">
             <PackageCard
@@ -280,152 +278,211 @@ export default function PilgrimagePage() {
         </div>
       </section>
 
-      {/* Pilgrim's Guide Interactive Timeline */}
-      <section className="w-full max-w-4xl mx-auto px-4 md:px-8 py-24">
-        <SectionHeader title={pageT.guideTitle} subtitle={pageT.guideSubtitle} className="mb-16" />
+      {/* Guide */}
+      <section className="w-full max-w-4xl mx-auto px-4 md:px-8 py-20 md:py-24">
+        <SectionHeader title={pageT.guideTitle} subtitle={pageT.guideSubtitle} className="mb-10 md:mb-12" />
 
-        <div className="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-gray-200 before:to-transparent">
-          {steps.map((step) => {
-            const isActive = activeStep === step.id;
-            return (
-              <motion.div 
-                key={step.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="relative flex items-start gap-6 group"
-              >
-                {/* Icon */}
-                <div className={`flex items-center justify-center w-10 h-10 rounded-full border transition-colors duration-500 shrink-0 z-10 mt-4 ${isActive ? 'bg-blue-600 border-blue-600 text-white shadow-lg shadow-blue-500/30' : 'bg-white border-gray-200 text-gray-400 group-hover:border-blue-300 group-hover:text-blue-500'}`}>
-                  <span className="font-headline font-bold text-sm">{step.id}</span>
-                </div>
-                
-                {/* Card */}
-                <motion.div 
-                  layout
-                  onClick={() => setActiveStep(isActive ? null : step.id)}
-                  className={`flex-1 cursor-pointer backdrop-blur-xl border rounded-2xl shadow-sm hover:shadow-md transition-all overflow-hidden ${
-                    isActive ? 'bg-white/70 p-10 border-blue-300 shadow-blue-500/10' : 'bg-white/60 p-6 border-white/80 hover:border-blue-200'
-                  }`}
+        <div className="rounded-[3rem] border border-white/70 bg-white/50 p-5 md:p-8 shadow-[0_30px_90px_rgba(15,23,42,0.08)] backdrop-blur-2xl">
+          <div className="relative space-y-6 before:absolute before:inset-0 before:ml-5 before:-translate-x-px before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-emerald-200/80 before:to-transparent">
+            {steps.map((step) => {
+              const isActive = activeStep === step.id;
+              return (
+                <motion.div
+                  key={step.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  className="relative flex items-start gap-6 group"
                 >
-                  <motion.div layout className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <div className={`p-2 rounded-xl ${isActive ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-500'}`}>
-                        {getIconForStep(step.id)}
-                      </div>
-                      <span className="font-headline text-xl font-bold text-gray-900">
-                        {step.title}
-                      </span>
-                    </div>
-                    <motion.div
-                      animate={{ rotate: isActive ? 180 : 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <ChevronDown className={`w-5 h-5 ${isActive ? 'text-blue-500' : 'text-gray-400'}`} />
-                    </motion.div>
-                  </motion.div>
+                  <div
+                    className={`mt-4 flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-bold transition-colors duration-500 z-10 font-headline ${
+                      isActive
+                        ? 'border border-emerald-700 bg-emerald-700 text-white shadow-lg shadow-emerald-700/25'
+                        : 'border border-white/80 bg-white/80 text-emerald-700'
+                    }`}
+                  >
+                    {step.id}
+                  </div>
 
-                  <AnimatePresence initial={false}>
-                    {isActive && (
-                      <motion.div 
-                        initial={{ opacity: 0, height: 0, marginTop: 0 }}
-                        animate={{ opacity: 1, height: 'auto', marginTop: 24 }}
-                        exit={{ opacity: 0, height: 0, marginTop: 0 }}
-                        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                        className="overflow-hidden"
-                      >
-                        <p className="text-gray-600 font-body text-lg leading-relaxed pt-6 border-t border-gray-100">
-                          {step.desc}
-                        </p>
+                  <motion.div
+                    layout
+                    onClick={() => setActiveStep(isActive ? null : step.id)}
+                    className={`flex-1 cursor-pointer overflow-hidden rounded-[2rem] border shadow-[0_18px_55px_rgba(15,23,42,0.06)] backdrop-blur-xl transition-all ${
+                      isActive
+                        ? 'border-emerald-200 bg-white/78 p-7 md:p-8'
+                        : 'border-white/80 bg-white/55 p-5 md:p-6 hover:border-emerald-100 hover:bg-white/70'
+                    }`}
+                  >
+                    <motion.div layout className="flex items-center justify-between gap-4">
+                      <div className="flex items-center gap-4">
+                        <div
+                          className={`flex rounded-2xl p-2.5 ${
+                            isActive ? 'bg-emerald-100/85 text-emerald-800' : 'bg-amber-50/90 text-amber-800/90'
+                          }`}
+                        >
+                          {getIconForStep(step.id)}
+                        </div>
+                        <span className="font-headline text-xl font-bold text-slate-900">{step.title}</span>
+                      </div>
+                      <motion.div animate={{ rotate: isActive ? 180 : 0 }} transition={{ duration: 0.3 }}>
+                        <ChevronDown className={`h-5 w-5 ${isActive ? 'text-emerald-600' : 'text-amber-600/90'}`} />
                       </motion.div>
-                    )}
-                  </AnimatePresence>
+                    </motion.div>
+
+                    <AnimatePresence initial={false}>
+                      {isActive && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                          animate={{ opacity: 1, height: 'auto', marginTop: 24 }}
+                          exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                          className="overflow-hidden"
+                        >
+                          <p className="border-t border-slate-200/70 pt-6 font-body text-base leading-8 text-slate-600 md:text-lg">
+                            {step.desc}
+                          </p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
                 </motion.div>
-              </motion.div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </section>
 
       {/* Packing Checklist */}
-      <section className="w-full bg-white text-gray-900 py-32 md:py-48 px-4 md:px-8 border-t border-gray-100">
-        <motion.div 
+      <section className="w-full px-4 md:px-8 pb-16 md:pb-20">
+        <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
+          viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start"
+          className="mx-auto max-w-7xl rounded-[3.25rem] border border-white/70 bg-white/50 p-6 shadow-[0_35px_100px_rgba(15,23,42,0.10)] backdrop-blur-2xl md:p-10 lg:p-12"
         >
-          
-          {/* Checklist Intro */}
-          <div>
-            <span className="font-label uppercase tracking-[0.2em] text-blue-600 mb-6 block text-sm font-bold">
-              {t.checklistTitle}
-            </span>
-            <h2 className="text-4xl md:text-6xl font-headline font-black mb-6 tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-gray-900 to-gray-600">
-              {t.checklistSubtitle}
-            </h2>
-            <p className="text-gray-500 text-xl font-body leading-relaxed mb-12">
-              {t.checklistDesc}
-            </p>
-            
-            <div className="p-8 bg-gray-50 border border-gray-200 rounded-[2rem]">
-               <div className="flex items-center gap-5 mb-4">
-                 <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-blue-500/30">
-                   <Check className="w-6 h-6" />
-                 </div>
-                 <div>
-                   <h4 className="font-headline font-bold text-xl text-gray-900">Progress</h4>
-                   <p className="text-base text-gray-500">
-                     {Object.values(checkedItems).filter(Boolean).length} of 8 items packed
-                   </p>
-                 </div>
-               </div>
-               <div className="w-full bg-gray-200 h-3 rounded-full mt-6 overflow-hidden">
-                 <motion.div 
-                   className="h-full bg-blue-600"
-                   initial={{ width: 0 }}
-                   animate={{ width: `${(Object.values(checkedItems).filter(Boolean).length / 8) * 100}%` }}
-                   transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                 />
-               </div>
-            </div>
-          </div>
+          <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-14">
+            <div>
+              <span className="mb-6 inline-flex rounded-full border border-emerald-100 bg-emerald-50 px-4 py-2 text-[11px] font-black uppercase tracking-[0.18em] text-emerald-800">
+                {t.checklistTitle}
+              </span>
+              <h2 className="mb-6 font-serif text-4xl font-black tracking-[-0.045em] text-slate-950 md:text-6xl">
+                {t.checklistSubtitle}
+              </h2>
+              <p className="mb-10 font-body text-base leading-8 text-slate-600 md:text-lg md:leading-8">
+                {t.checklistDesc}
+              </p>
 
-          {/* Checklist Interactive UI */}
-          <div className="space-y-8">
-            {checklistData.map((category, idx) => (
-              <div key={idx} className={`bg-white border border-gray-200 rounded-[2rem] p-8 shadow-sm hover:shadow-md transition-shadow duration-500 hover:${category.color.border}`}>
-                <h3 className="text-2xl font-headline font-bold text-gray-900 mb-6 flex items-center gap-4 border-b border-gray-100 pb-6">
-                  <span className={`p-3 ${category.color.lightBg} ${category.color.text} rounded-xl`}>
-                    {category.icon}
-                  </span>
-                  {category.category}
-                </h3>
-                <div className="space-y-3">
-                  {category.items.map((item) => {
-                    const isChecked = checkedItems[item.id] || false;
-                    return (
-                      <div 
-                        key={item.id}
-                        onClick={() => toggleItem(item.id)}
-                        className={`flex items-center gap-4 p-5 rounded-2xl cursor-pointer transition-all duration-300 border ${isChecked ? `${category.color.lightBg} ${category.color.border}` : 'bg-gray-50 border-transparent hover:bg-gray-100'}`}
-                      >
-                        <div className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors duration-300 ${isChecked ? `${category.color.bg} text-white shadow-md ${category.color.shadow}` : 'bg-white border border-gray-300'}`}>
-                          {isChecked && <Check className="w-4 h-4" />}
-                        </div>
-                        <span className={`font-body text-base transition-all duration-300 ${isChecked ? 'text-gray-400 line-through' : 'text-gray-700 font-medium'}`}>
-                          {item.label}
-                        </span>
-                      </div>
-                    );
-                  })}
+              <div className="rounded-[2rem] border border-white/75 bg-white/70 p-6 shadow-[0_18px_55px_rgba(15,23,42,0.07)] backdrop-blur-xl">
+                <div className="mb-4 flex items-center gap-5">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-600 text-white shadow-lg shadow-emerald-500/25">
+                    <Check className="h-6 w-6" />
+                  </div>
+                  <div>
+                    <h4 className="font-headline text-xl font-bold text-slate-900">{pageT.progressTitle}</h4>
+                    <p className="text-base text-slate-500">
+                      {pageT.progressText.replace('{count}', String(packedCount))}
+                    </p>
+                  </div>
+                </div>
+                <div className="mt-6 h-3 w-full overflow-hidden rounded-full bg-emerald-100/80">
+                  <motion.div
+                    className="h-full bg-gradient-to-r from-emerald-600 to-emerald-400"
+                    initial={{ width: 0 }}
+                    animate={{ width: `${(packedCount / 8) * 100}%` }}
+                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                  />
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
 
+            <div className="space-y-8">
+              {checklistData.map((category, idx) => (
+                <div
+                  key={idx}
+                  className="rounded-[2rem] border border-white/80 bg-white/65 p-6 shadow-[0_16px_50px_rgba(15,23,42,0.06)] backdrop-blur-xl transition-colors duration-300 hover:border-emerald-100/80 md:p-7"
+                >
+                  <h3 className="mb-6 flex items-center gap-4 border-b border-slate-200/70 pb-6 font-headline text-2xl font-bold text-slate-900">
+                    <span className={`rounded-xl p-3 ${category.color.lightBg} ${category.color.text}`}>
+                      {category.icon}
+                    </span>
+                    {category.category}
+                  </h3>
+                  <div className="space-y-3">
+                    {category.items.map((item) => {
+                      const isChecked = checkedItems[item.id] || false;
+                      return (
+                        <div
+                          key={item.id}
+                          onClick={() => toggleItem(item.id)}
+                          className={`flex cursor-pointer items-center gap-4 rounded-2xl border px-4 py-4 transition-all duration-300 ${
+                            isChecked
+                              ? `${category.color.lightBg} ${category.color.border} shadow-sm`
+                              : 'border-slate-200/55 bg-white/55 hover:border-slate-200/80 hover:bg-white/75'
+                          }`}
+                        >
+                          <div
+                            className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg transition-colors duration-300 ${
+                              isChecked
+                                ? `${category.color.bg} text-white shadow-sm ${category.color.shadow}`
+                                : 'border border-slate-200/80 bg-white'
+                            }`}
+                          >
+                            {isChecked && <Check className="h-4 w-4" />}
+                          </div>
+                          <span
+                            className={`font-body text-base transition-all duration-300 ${
+                              isChecked ? 'text-slate-500 line-through decoration-slate-300 decoration-1' : 'font-medium text-slate-700'
+                            }`}
+                          >
+                            {item.label}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </motion.div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="w-full px-4 pb-24 md:px-8 md:pb-32">
+        <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[3rem] border border-white/70 bg-slate-950 shadow-[0_35px_100px_rgba(15,23,42,0.16)]">
+          <div
+            className="pointer-events-none absolute -left-24 top-1/2 h-[22rem] w-[22rem] -translate-y-1/2 rounded-full bg-emerald-500/[0.22] blur-3xl"
+            aria-hidden
+          />
+          <div
+            className="pointer-events-none absolute -right-16 -top-20 h-[18rem] w-[18rem] rounded-full bg-amber-400/[0.18] blur-3xl"
+            aria-hidden
+          />
+          <div className="relative z-10 px-6 py-12 md:px-12 md:py-14 lg:px-14 lg:py-16">
+            <span className="mb-4 inline-flex rounded-full border border-white/15 bg-white/10 px-4 py-2 text-[11px] font-black uppercase tracking-[0.18em] text-emerald-200/95">
+              {pageT.finalEyebrow}
+            </span>
+            <h2 className="max-w-3xl font-serif text-3xl font-black tracking-[-0.04em] text-white md:text-5xl">
+              {pageT.finalTitle}
+            </h2>
+            <p className="mt-5 max-w-2xl text-base leading-8 text-white/75 md:text-lg md:leading-8">
+              {pageT.finalSubtitle}
+            </p>
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+              <button
+                type="button"
+                onClick={() => handleWhatsApp(pageT.economyUmrah.title)}
+                className="inline-flex min-h-14 w-full items-center justify-center rounded-[1.45rem] bg-emerald-600 px-8 font-black text-white shadow-[0_18px_40px_rgba(4,120,87,0.35)] transition hover:bg-emerald-500 sm:w-auto"
+              >
+                {pageT.discussWhatsApp}
+              </button>
+              <span className="inline-flex min-h-14 w-full items-center justify-center rounded-[1.45rem] border border-white/20 bg-white/10 px-8 font-black text-white backdrop-blur-sm sm:w-auto">
+                {pageT.heroServicePill ?? 'Umrah • Hajj • Ziyarah'}
+              </span>
+            </div>
+          </div>
+        </div>
       </section>
     </div>
   );

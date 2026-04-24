@@ -45,6 +45,17 @@ interface Translations {
     tools: string;
     toolsDesc: string;
   };
+  homePage: {
+    serviceEyebrow: string;
+    serviceStatement: string;
+    valueCards: {
+      guidance: { title: string; desc: string };
+      coordination: { title: string; desc: string };
+      pilgrimage: { title: string; desc: string };
+    };
+    cardLabel: string;
+    cardNote: string;
+  };
   toolsPage: {
     title: string;
     subtitle: string;
@@ -97,6 +108,14 @@ interface Translations {
       inclusions: string[];
     };
     discussWhatsApp: string;
+    heroCtaText: string;
+    heroServicePill: string;
+    packagesEyebrow: string;
+    progressTitle: string;
+    progressText: string;
+    finalEyebrow: string;
+    finalTitle: string;
+    finalSubtitle: string;
     guideTitle: string;
     guideSubtitle: string;
     steps: {
@@ -141,6 +160,26 @@ const translations: Record<Lang, Translations> = {
       visasDesc: "Expert processing for work, tourist, medical, and education permits globally.",
       tools: "Specialized Travel",
       toolsDesc: "Advanced logistics for enterprise-scale travel and bespoke vacation planning."
+    },
+    homePage: {
+      serviceEyebrow: "Travel services",
+      serviceStatement: "From pilgrimage and visa preparation to global ticketing and travel logistics, Darul Safar helps Ethiopian travelers move with clarity, dignity, and confidence.",
+      valueCards: {
+        guidance: {
+          title: "Premium guidance",
+          desc: "A calmer process for travelers who want clarity before commitment."
+        },
+        coordination: {
+          title: "Global coordination",
+          desc: "Flights, routes, documents, and timing handled with a polished workflow."
+        },
+        pilgrimage: {
+          title: "Pilgrimage care",
+          desc: "Support designed around trust, preparation, and meaningful travel."
+        }
+      },
+      cardLabel: "Curated service",
+      cardNote: "Smooth, guided, premium."
     },
     toolsPage: {
       title: "Live Currency Converter",
@@ -194,6 +233,15 @@ const translations: Record<Lang, Translations> = {
         inclusions: ["Hajj Visa Processing", "Direct Flights", "5-Star Hotel (Facing Haram)", "VIP Tents in Mina & Arafat", "Dedicated Scholar Guidance"]
       },
       discussWhatsApp: "Discuss on WhatsApp",
+      heroCtaText: "Guided pilgrimage planning with visa, flight, hotel, and preparation support.",
+      heroServicePill: "Umrah • Hajj • Ziyarah",
+      packagesEyebrow: "Sacred travel, carefully arranged",
+      progressTitle: "Progress",
+      progressText: "{count} of 8 items packed",
+      finalEyebrow: "Begin with clarity",
+      finalTitle: "Ready to plan your sacred journey?",
+      finalSubtitle:
+        "Share your travel window, group size, and preferred package. Darul Safar will help you understand the next step with calm, clear guidance.",
       guideTitle: "Pilgrim's Guide",
       guideSubtitle: "The simplified steps of Umrah.",
       steps: {
@@ -236,6 +284,26 @@ const translations: Record<Lang, Translations> = {
       visasDesc: "معالجة خبيرة لتصاريح العمل والسياحة والطبية والتعليمية على مستوى العالم.",
       tools: "سفر متخصص",
       toolsDesc: "لوجستيات متقدمة لسفر الشركات وتخطيط العطلات المخصصة."
+    },
+    homePage: {
+      serviceEyebrow: "خدمات السفر",
+      serviceStatement: "من تجهيز رحلات الحج والعمرة إلى التأشيرات وحجز التذاكر والخدمات اللوجستية، تساعد دار السفر المسافرين الإثيوبيين على التحرك بوضوح وكرامة وثقة.",
+      valueCards: {
+        guidance: {
+          title: "إرشاد متميز",
+          desc: "تجربة أكثر هدوءاً للمسافرين الذين يريدون الوضوح قبل اتخاذ القرار."
+        },
+        coordination: {
+          title: "تنسيق عالمي",
+          desc: "تنظيم الرحلات والمسارات والوثائق والمواعيد بطريقة احترافية."
+        },
+        pilgrimage: {
+          title: "رعاية الحج والعمرة",
+          desc: "دعم مبني على الثقة والاستعداد ومعنى الرحلة."
+        }
+      },
+      cardLabel: "خدمة مختارة",
+      cardNote: "سلسة، موجهة، ومتميزة."
     },
     toolsPage: {
       title: "محول العملات المباشر",
@@ -289,6 +357,15 @@ const translations: Record<Lang, Translations> = {
         inclusions: ["استخراج تأشيرة الحج", "رحلات طيران مباشرة", "فندق 5 نجوم (مواجه للحرم)", "خيام كبار الشخصيات في منى وعرفات", "إرشاد ديني متخصص"]
       },
       discussWhatsApp: "تواصل عبر واتساب",
+      heroCtaText: "تخطيط موجه للحج والعمرة مع دعم التأشيرة والطيران والفندق والاستعداد للرحلة.",
+      heroServicePill: "عمرة • حج • زيارة",
+      packagesEyebrow: "سفر إيماني مرتب بعناية",
+      progressTitle: "التقدم",
+      progressText: "{count} من 8 عناصر تم تجهيزها",
+      finalEyebrow: "ابدأ بوضوح",
+      finalTitle: "هل أنت مستعد لتخطيط رحلتك الإيمانية؟",
+      finalSubtitle:
+        "شاركنا موعد السفر وعدد المسافرين والباقه المناسبة لك، وستساعدك دار السفر على معرفة الخطوة التالية بإرشاد واضح وهادئ.",
       guideTitle: "دليل الحاج والمعتمر",
       guideSubtitle: "خطوات العمرة المبسطة.",
       steps: {
@@ -331,6 +408,26 @@ const translations: Record<Lang, Translations> = {
       visasDesc: "ለስራ፣ ለቱሪስት፣ ለህክምና እና ለትምህርት ፈቃዶች በዓለም አቀፍ ደረጃ የባለሙያ ሂደት።",
       tools: "ልዩ የጉዞ አገልግሎት",
       toolsDesc: "ለድርጅት ደረጃ ጉዞ እና ለተበጀ የእረፍት ጊዜ እቅድ የላቀ ሎጂስቲክስ።"
+    },
+    homePage: {
+      serviceEyebrow: "የጉዞ አገልግሎቶች",
+      serviceStatement: "ዳሩል ሰፈር ከዑምራና ሐጅ ዝግጅት እስከ ቪዛ፣ የአየር ትኬትና የጉዞ አቀናበር ድረስ ኢትዮጵያውያን ተጓዦች በግልጽነት፣ በክብርና በመተማመን እንዲጓዙ ያግዛል።",
+      valueCards: {
+        guidance: {
+          title: "የባለሙያ መመሪያ",
+          desc: "ከውሳኔ በፊት ግልጽነትን ለሚፈልጉ ተጓዦች የተረጋጋ ሂደት።"
+        },
+        coordination: {
+          title: "ዓለም አቀፍ አቀናበር",
+          desc: "በረራ፣ መንገድ፣ ሰነድና የጊዜ አቀናበር በተደራጀ ሂደት።"
+        },
+        pilgrimage: {
+          title: "የዑምራና ሐጅ እንክብካቤ",
+          desc: "በመተማመን፣ በዝግጅትና በትርጉም የተመሠረተ ድጋፍ።"
+        }
+      },
+      cardLabel: "የተመረጠ አገልግሎት",
+      cardNote: "ቀላል፣ የተመራ፣ ፕሪሚየም።"
     },
     toolsPage: {
       title: "የቀጥታ ምንዛሬ መቀየሪያ",
@@ -384,6 +481,15 @@ const translations: Record<Lang, Translations> = {
         inclusions: ["የሐጅ ቪዛ ሂደት", "ቀጥታ በረራዎች", "ባለ 5-ኮከብ ሆቴል (ሐረምን የሚመለከት)", "በሚና እና አረፋት የቪአይፒ ድንኳኖች", "የተሰጠ የሊቃውንት መመሪያ"]
       },
       discussWhatsApp: "በዋትስአፕ ያነጋግሩን",
+      heroCtaText: "ከቪዛ፣ በረራ፣ ሆቴል እና የጉዞ ዝግጅት ድጋፍ ጋር የተመራ የሐጅና ዑምራ እቅድ።",
+      heroServicePill: "ዑምራ • ሐጅ • ዚያራ",
+      packagesEyebrow: "በጥንቃቄ የተዘጋጀ ቅዱስ ጉዞ",
+      progressTitle: "ሂደት",
+      progressText: "ከ8 እቃዎች {count} ተዘጋጅተዋል",
+      finalEyebrow: "በግልጽነት ይጀምሩ",
+      finalTitle: "ቅዱስ ጉዞዎን ለማቀድ ዝግጁ ነዎት?",
+      finalSubtitle:
+        "የጉዞ ጊዜዎን፣ የቡድን ብዛትዎን እና የሚመርጡትን ፓኬጅ ያጋሩን። ዳሩል ሰፈር ቀጣዩን እርምጃ በግልጽና በተረጋጋ መመሪያ እንዲረዱ ይረዳዎታል።",
       guideTitle: "የተጓዥ መመሪያ",
       guideSubtitle: "ቀላል የዑምራ ደረጃዎች።",
       steps: {
@@ -426,6 +532,26 @@ const translations: Record<Lang, Translations> = {
       visasDesc: "Eeyyama hojii, tuuristii, yaalaa fi barnootaa idil-addunyaatti ogeessotaan raawwachuu.",
       tools: "Imala Addaa",
       toolsDesc: "Loojistiksii olaanaa imala dhaabbataaf fi karoora boqonnaa addaa."
+    },
+    homePage: {
+      serviceEyebrow: "Tajaajila imalaa",
+      serviceStatement: "Qophii Umraa fi Hajjii irraa kaasee hanga viizaa, tikkeettii xiyyaaraa, fi qindoomina imalaatti, Darul Safar imaltoota Itoophiyaa iftoomina, kabaja, fi amantaa waliin akka imalan gargaara.",
+      valueCards: {
+        guidance: {
+          title: "Qajeelfama olaanaa",
+          desc: "Adeemsa tasgabbaa'aa, imaltoota murtee dura iftoomina barbaadaniif."
+        },
+        coordination: {
+          title: "Qindoomina addunyaa",
+          desc: "Balali'aa, daandii, sanadoota, fi yeroo sirnaan qindaa'uun."
+        },
+        pilgrimage: {
+          title: "Kunuunsa imala amantii",
+          desc: "Deeggarsa amantaa, qophii, fi hiika imalaa irratti hundaa'e."
+        }
+      },
+      cardLabel: "Tajaajila filatame",
+      cardNote: "Salphaa, qajeelfamaa, olaanaa."
     },
     toolsPage: {
       title: "Jijjiirraa Maallaqaa Kallattii",
@@ -479,6 +605,15 @@ const translations: Record<Lang, Translations> = {
         inclusions: ["Adeemsa Viizaa Hajjii", "Balali'aa Kallattii", "Hoteela Urjii 5 (Haram kan ilaalu)", "Dunkaana VIP Minaa fi Arafaa keessatti", "Qajeelfama Hayyootaa Addaa"]
       },
       discussWhatsApp: "WhatsApp irratti Mari'adhaa",
+      heroCtaText: "Karoora Hajjii fi Umraa qajeelfamaa, deeggarsa viizaa, balalii, hoteelaa fi qophii imalaa waliin.",
+      heroServicePill: "Umrah • Hajjii • Ziyarah",
+      packagesEyebrow: "Imala amantii of eeggannoon qindaa'e",
+      progressTitle: "Adeemsa",
+      progressText: "Wantoota 8 keessaa {count} qophaa'e",
+      finalEyebrow: "Iftoominaan jalqabi",
+      finalTitle: "Imala kee qulqulluu karoorfachuuf qophiidhaa?",
+      finalSubtitle:
+        "Yeroo imalaa, baay'ina garee, fi paakeejii filattan nuuf qoodaa. Darul Safar tarkaanfii itti aanu iftoominaafi qajeelfama tasgabbaa'aa waliin akka hubattan isin gargaara.",
       guideTitle: "Qajeelfama Imalaa",
       guideSubtitle: "Sadarkaalee Umrah salphifaman.",
       steps: {

@@ -27,6 +27,12 @@ const normalizeService = (value: string): BookNowService => {
   return FLIGHT_SERVICE;
 };
 
+const fieldClassName =
+  'w-full rounded-2xl border border-white/80 bg-white/70 px-4 py-3 text-slate-900 placeholder:text-slate-400 shadow-sm transition focus:border-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/30';
+
+const labelClassName =
+  'mb-2 block text-xs font-label font-bold uppercase tracking-widest text-emerald-800/90';
+
 export default function BookNowModal({ isOpen, onClose, initialService = FLIGHT_SERVICE }: BookNowModalProps) {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -100,7 +106,7 @@ export default function BookNowModal({ isOpen, onClose, initialService = FLIGHT_
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[120] bg-gray-900/55 backdrop-blur-sm px-4 py-6 md:py-10 overflow-y-auto"
+          className="fixed inset-0 z-[120] overflow-y-auto bg-slate-950/60 px-4 py-6 backdrop-blur-md md:py-10"
           onClick={onClose}
         >
           <motion.div
@@ -108,43 +114,65 @@ export default function BookNowModal({ isOpen, onClose, initialService = FLIGHT_
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.98 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full max-w-lg mx-auto my-8 md:my-10 bg-white/95 border border-white/60 rounded-3xl shadow-[0_20px_55px_rgba(0,0,0,0.18)]"
+            className="relative mx-auto my-8 w-full max-w-xl overflow-hidden rounded-[2.75rem] border border-white/70 bg-white/80 shadow-[0_35px_100px_rgba(15,23,42,0.28)] backdrop-blur-2xl md:my-10"
             onClick={(event) => event.stopPropagation()}
           >
-            <div className="p-6 md:p-8">
+            <div
+              className="pointer-events-none absolute -right-16 -top-20 h-56 w-56 rounded-full bg-emerald-400/[0.22] blur-3xl"
+              aria-hidden
+            />
+            <div
+              className="pointer-events-none absolute -bottom-24 -left-12 h-52 w-52 rounded-full bg-amber-300/[0.18] blur-3xl"
+              aria-hidden
+            />
+            <div
+              className="pointer-events-none absolute bottom-1/4 left-1/3 h-40 w-40 rounded-full bg-sky-300/[0.14] blur-3xl"
+              aria-hidden
+            />
+
+            <div className="relative z-10 p-6 md:p-8">
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <p className="inline-block px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-[11px] font-bold tracking-[0.18em] uppercase mb-3">
+                  <p className="mb-3 inline-flex rounded-full border border-emerald-100 bg-emerald-50 px-3 py-1.5 text-[11px] font-black uppercase tracking-[0.18em] text-emerald-800">
                     Darul Safar
                   </p>
-                  <h2 className="text-2xl md:text-3xl font-headline font-extrabold text-gray-900 tracking-tight">
+                  <h2 className="font-serif text-3xl font-black tracking-[-0.04em] text-slate-950 md:text-4xl">
                     Book Now
                   </h2>
-                  <p className="mt-2 text-sm md:text-base text-gray-500 font-body">
+                  <p className="mt-2 font-body text-sm leading-7 text-slate-600 md:text-base">
                     Share your details and our team will contact you shortly.
                   </p>
                 </div>
                 <button
                   type="button"
                   onClick={onClose}
-                  className="w-10 h-10 rounded-full border border-gray-200 hover:border-gray-300 text-gray-500 hover:text-gray-800 active:scale-95 transition-all duration-200 flex items-center justify-center shrink-0"
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/80 bg-white/70 text-slate-500 shadow-sm transition hover:bg-white hover:text-slate-950 active:scale-95"
                   aria-label="Close modal"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="h-5 w-5" />
                 </button>
               </div>
 
               {isSuccess ? (
-                <div className="mt-6 rounded-2xl border border-blue-200 bg-blue-50/80 p-4 md:p-5 flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-blue-600 mt-0.5 shrink-0" />
-                  <p className="text-sm md:text-base text-blue-800 font-body leading-relaxed">
-                    Thank you, {name.trim()}! Our team will call you at {phone.trim()} to finalize your booking.
-                  </p>
+                <div className="mt-6 flex flex-col gap-4 rounded-[2rem] border border-emerald-100 bg-emerald-50/70 p-5 shadow-[0_14px_40px_rgba(4,120,87,0.08)] md:p-6">
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-emerald-700" aria-hidden />
+                    <p className="font-body leading-relaxed text-emerald-950">
+                      Thank you, {name.trim()}! Our team will call you at {phone.trim()} to finalize your booking.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={onClose}
+                    className="w-full rounded-[1.25rem] bg-slate-950 px-6 py-3 font-headline font-bold text-white transition hover:bg-emerald-800 active:scale-95"
+                  >
+                    Close
+                  </button>
                 </div>
               ) : (
                 <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
                   <div>
-                    <label htmlFor="lead-name" className="block text-sm font-headline font-bold text-gray-800 mb-2">
+                    <label htmlFor="lead-name" className={labelClassName}>
                       Name <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -153,13 +181,13 @@ export default function BookNowModal({ isOpen, onClose, initialService = FLIGHT_
                       value={name}
                       onChange={(event) => setName(event.target.value)}
                       placeholder="Enter your full name"
-                      className="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                      className={fieldClassName}
                       required
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="lead-phone" className="block text-sm font-headline font-bold text-gray-800 mb-2">
+                    <label htmlFor="lead-phone" className={labelClassName}>
                       Phone Number <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -168,20 +196,20 @@ export default function BookNowModal({ isOpen, onClose, initialService = FLIGHT_
                       value={phone}
                       onChange={(event) => setPhone(event.target.value)}
                       placeholder="Enter your phone number"
-                      className="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                      className={fieldClassName}
                       required
                     />
                   </div>
 
-                  <div>
-                    <label htmlFor="lead-service" className="block text-sm font-headline font-bold text-gray-800 mb-2">
+                  <div className="rounded-2xl border border-white/70 bg-white/45 p-3 shadow-sm backdrop-blur-sm">
+                    <label htmlFor="lead-service" className={labelClassName}>
                       Service
                     </label>
                     <select
                       id="lead-service"
                       value={service}
                       onChange={(event) => setService(normalizeService(event.target.value))}
-                      className="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                      className={fieldClassName}
                     >
                       {serviceOptions.map((option) => (
                         <option key={option} value={option}>
@@ -192,8 +220,8 @@ export default function BookNowModal({ isOpen, onClose, initialService = FLIGHT_
                   </div>
 
                   {submitState === 'error' && (
-                    <div className="rounded-2xl border border-red-200 bg-red-50/80 p-3 text-sm text-red-700 font-body flex items-start gap-2">
-                      <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
+                    <div className="flex items-start gap-2 rounded-2xl border border-red-200 bg-red-50/80 p-3 font-body text-sm text-red-700">
+                      <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
                       <span>{errorMessage}</span>
                     </div>
                   )}
@@ -201,11 +229,11 @@ export default function BookNowModal({ isOpen, onClose, initialService = FLIGHT_
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full mt-1 bg-blue-600 text-white px-6 py-3.5 rounded-2xl font-headline font-bold hover:bg-blue-700 active:scale-95 transition-all duration-200 shadow-lg shadow-blue-500/20 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="mt-1 inline-flex w-full items-center justify-center gap-2 rounded-[1.35rem] bg-slate-950 px-6 py-3.5 font-headline font-black text-white shadow-[0_18px_40px_rgba(15,23,42,0.18)] transition hover:bg-emerald-800 active:scale-95 disabled:cursor-not-allowed disabled:opacity-70"
                   >
                     {isLoading ? (
                       <>
-                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
                         Sending...
                       </>
                     ) : (

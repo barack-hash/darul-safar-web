@@ -34,15 +34,15 @@ type FlightDashboardData = {
 const statusBadgeClass = (status: string) => {
   const normalized = status.trim().toLowerCase();
   if (normalized === 'active' || normalized === 'landed') {
-    return 'bg-emerald-100 text-emerald-700 border border-emerald-200';
+    return 'bg-emerald-100 text-emerald-800 border border-emerald-200';
   }
   if (normalized === 'delayed') {
-    return 'bg-orange-100 text-orange-700 border border-orange-200';
+    return 'bg-amber-100 text-amber-800 border border-amber-200';
   }
   if (normalized === 'scheduled') {
-    return 'bg-gray-100 text-gray-700 border border-gray-200';
+    return 'bg-slate-100 text-slate-700 border border-slate-200';
   }
-  return 'bg-blue-100 text-blue-700 border border-blue-200';
+  return 'bg-emerald-50 text-emerald-800 border border-emerald-100';
 };
 
 const formatFlightTime = (isoTime?: string) => {
@@ -125,36 +125,36 @@ export default function FlightTrackerBar() {
     <div className="w-full">
       <form
         onSubmit={handleSubmit}
-        className="bg-white/10 backdrop-blur-md border border-white/20 shadow-lg rounded-2xl px-4 py-4 md:px-6 md:py-5"
+        className="rounded-[2.5rem] border border-white/70 bg-white/55 p-4 shadow-[0_24px_70px_rgba(15,23,42,0.08)] backdrop-blur-2xl md:p-6"
       >
-        <div className="flex flex-col lg:flex-row lg:items-center gap-3 lg:gap-4">
-          <div className="flex items-center gap-2.5 text-gray-600 shrink-0">
-            <Plane className="w-4 h-4 text-blue-600" />
-            <span className="text-xs uppercase tracking-[0.16em] font-headline font-bold">
+        <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:gap-4">
+          <div className="flex shrink-0 items-center gap-2.5 text-slate-600">
+            <Plane className="h-4 w-4 text-emerald-700" aria-hidden />
+            <span className="font-headline text-xs font-bold uppercase tracking-[0.16em] text-slate-600">
               Live Flight Tracker
             </span>
           </div>
-          <div className="flex-1 flex items-center gap-2">
+          <div className="flex flex-1 items-center gap-2">
             <input
               type="text"
               value={flightNumber}
               onChange={(event) => setFlightNumber(event.target.value)}
               placeholder="Flight Number (e.g., ET 500)"
-              className="w-full bg-white/70 border border-white/60 rounded-xl px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/60 focus:border-blue-400/70 transition"
+              className="w-full rounded-2xl border border-white/80 bg-white/75 px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-500 transition focus:border-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
             />
             <button
               type="submit"
               disabled={!flightNumber.trim() || isLoading}
-              className="h-10 min-w-10 px-3 rounded-xl bg-blue-600 text-white hover:bg-blue-700 active:scale-95 transition-all duration-200 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="flex h-10 min-w-10 items-center justify-center gap-2 rounded-2xl bg-slate-950 px-3 text-white shadow-sm transition hover:bg-emerald-800 disabled:cursor-not-allowed disabled:opacity-50"
               aria-label="Search flight status"
             >
               {isLoading ? (
                 <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  <span className="hidden sm:inline text-xs font-headline font-bold">Loading</span>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  <span className="hidden text-xs font-headline font-bold sm:inline">Loading</span>
                 </>
               ) : (
-                <Search className="w-4 h-4" />
+                <Search className="h-4 w-4" />
               )}
             </button>
           </div>
@@ -167,46 +167,44 @@ export default function FlightTrackerBar() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -4 }}
               transition={{ duration: 0.25, ease: 'easeOut' }}
-              className="mt-4 pt-4 border-t border-white/30"
+              className="mt-4 border-t border-white/50 pt-4"
             >
-              <div className="flex items-center justify-between mb-4">
-                <h4 className="text-xs uppercase tracking-[0.16em] font-headline font-bold text-gray-600">
+              <div className="mb-4 flex items-center justify-between">
+                <h4 className="font-headline text-xs font-bold uppercase tracking-[0.16em] text-slate-600">
                   Visual Flight Dashboard
                 </h4>
-                <span className={`px-3 py-1 rounded-full text-xs font-headline font-bold ${statusBadgeClass(dashboardData.status)}`}>
+                <span
+                  className={`rounded-full px-3 py-1 font-headline text-xs font-bold ${statusBadgeClass(dashboardData.status)}`}
+                >
                   {dashboardData.status}
                 </span>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-[1fr_1.5fr_1fr] items-center gap-4">
+              <div className="grid grid-cols-1 items-center gap-4 md:grid-cols-[1fr_1.5fr_1fr]">
                 <div className="text-center md:text-left">
-                  <p className="text-3xl md:text-4xl font-headline font-extrabold text-gray-900 tracking-tight">
+                  <p className="font-headline text-3xl font-extrabold tracking-tight text-slate-950 md:text-4xl">
                     {dashboardData.departure.iata}
                   </p>
-                  <p className="mt-1 text-sm font-body text-gray-300">
-                    {dashboardData.departure.time}
-                  </p>
-                  <p className="mt-0.5 text-sm font-body text-gray-300">
+                  <p className="mt-1 font-body text-sm text-slate-500">{dashboardData.departure.time}</p>
+                  <p className="mt-0.5 font-body text-sm text-slate-500">
                     Terminal {dashboardData.departure.terminal} | Gate {dashboardData.departure.gate}
                   </p>
                 </div>
 
                 <div className="flex items-center gap-3 px-2">
-                  <div className="flex-1 border-t-2 border-dashed border-gray-300" />
-                  <div className="w-10 h-10 rounded-full bg-white/70 border border-white/60 shadow-sm flex items-center justify-center">
-                    <Plane className="w-4 h-4 text-blue-600" />
+                  <div className="flex-1 border-t-2 border-dashed border-slate-300/80" />
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full border border-emerald-100 bg-emerald-50 shadow-sm">
+                    <Plane className="h-4 w-4 text-emerald-700" aria-hidden />
                   </div>
-                  <div className="flex-1 border-t-2 border-dashed border-gray-300" />
+                  <div className="flex-1 border-t-2 border-dashed border-slate-300/80" />
                 </div>
 
                 <div className="text-center md:text-right">
-                  <p className="text-3xl md:text-4xl font-headline font-extrabold text-gray-900 tracking-tight">
+                  <p className="font-headline text-3xl font-extrabold tracking-tight text-slate-950 md:text-4xl">
                     {dashboardData.arrival.iata}
                   </p>
-                  <p className="mt-1 text-sm font-body text-gray-300">
-                    {dashboardData.arrival.time}
-                  </p>
-                  <p className="mt-0.5 text-sm font-body text-gray-300">
+                  <p className="mt-1 font-body text-sm text-slate-500">{dashboardData.arrival.time}</p>
+                  <p className="mt-0.5 font-body text-sm text-slate-500">
                     Terminal {dashboardData.arrival.terminal} | Gate {dashboardData.arrival.gate}
                   </p>
                 </div>
@@ -222,9 +220,9 @@ export default function FlightTrackerBar() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -4 }}
               transition={{ duration: 0.25, ease: 'easeOut' }}
-              className="mt-4 pt-4 border-t border-white/30"
+              className="mt-4 border-t border-white/50 pt-4"
             >
-              <p className="text-sm font-body text-gray-700">{resultText}</p>
+              <p className="font-body text-sm text-slate-600">{resultText}</p>
             </motion.div>
           )}
         </AnimatePresence>

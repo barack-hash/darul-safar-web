@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useId, useMemo, useRef, useState } from 'react';
 
 type DestinationOption = {
   name: string;
@@ -47,6 +47,7 @@ export default function DestinationAutocomplete({
   placeholder,
   label,
 }: DestinationAutocompleteProps) {
+  const inputId = useId();
   const containerRef = useRef<HTMLDivElement>(null);
   const [searchTerm, setSearchTerm] = useState(value);
   const [isOpen, setIsOpen] = useState(false);
@@ -83,8 +84,11 @@ export default function DestinationAutocomplete({
 
   return (
     <div className="space-y-2 relative" ref={containerRef}>
-      <label className="block text-xs font-label font-bold text-blue-600 uppercase tracking-widest">{label}</label>
+      <label htmlFor={inputId} className="block text-xs font-label font-bold uppercase tracking-widest text-emerald-800/90">
+        {label}
+      </label>
       <input
+        id={inputId}
         type="text"
         value={searchTerm}
         onFocus={() => setIsOpen(true)}
@@ -95,7 +99,7 @@ export default function DestinationAutocomplete({
           setIsOpen(true);
         }}
         placeholder={placeholder}
-        className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm"
+        className="w-full rounded-xl border border-gray-200 bg-white/50 px-4 py-3 text-gray-900 shadow-sm backdrop-blur-md transition-all placeholder:text-gray-400 focus:border-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
       />
 
       {isOpen && (

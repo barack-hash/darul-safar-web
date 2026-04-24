@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useId, useMemo, useRef, useState } from 'react';
 
 type AirportOption = {
   code: string;
@@ -54,6 +54,7 @@ interface AirportAutocompleteProps {
 }
 
 export default function AirportAutocomplete({ value, onChange, placeholder, label }: AirportAutocompleteProps) {
+  const inputId = useId();
   const containerRef = useRef<HTMLDivElement>(null);
   const [searchTerm, setSearchTerm] = useState(value);
   const [isOpen, setIsOpen] = useState(false);
@@ -93,10 +94,11 @@ export default function AirportAutocomplete({ value, onChange, placeholder, labe
 
   return (
     <div className="space-y-2 relative" ref={containerRef}>
-      <label className="flex items-center gap-2 text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
+      <label htmlFor={inputId} className="flex items-center gap-2 text-xs font-label font-bold uppercase tracking-widest text-emerald-800/90">
         {label}
       </label>
       <input
+        id={inputId}
         type="text"
         value={searchTerm}
         onFocus={() => setIsOpen(true)}
@@ -107,7 +109,7 @@ export default function AirportAutocomplete({ value, onChange, placeholder, labe
           setIsOpen(true);
         }}
         placeholder={placeholder}
-        className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm"
+        className="w-full rounded-xl border border-gray-200 bg-white/50 px-4 py-3 text-gray-900 shadow-sm backdrop-blur-md transition-all placeholder:text-gray-400 focus:border-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
       />
 
       {isOpen && (
@@ -125,7 +127,7 @@ export default function AirportAutocomplete({ value, onChange, placeholder, labe
                     <p className="text-sm font-bold text-gray-900">{airport.name}</p>
                     <p className="text-xs text-gray-500">{airport.country}</p>
                   </div>
-                  <span className="px-2.5 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-bold tracking-wide">
+                  <span className="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-bold tracking-wide text-emerald-800">
                     {airport.code}
                   </span>
                 </div>

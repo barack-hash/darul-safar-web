@@ -1,17 +1,32 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'motion/react';
-import { CheckCircle, AlertCircle, Send, Globe2, FileText, Camera, Landmark, Files, MessageCircle } from 'lucide-react';
+import { CheckCircle, AlertCircle, Send, Globe2, FileText, Camera, Landmark, Files, MessageCircle, ClipboardList } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import DestinationAutocomplete from './DestinationAutocomplete';
-import SectionHeader from './ui/SectionHeader';
 
 const translations = {
   en: {
     title: "Global Visa Consultation Center",
     subtitle: "Navigating international borders with the precision of a global cartographer.",
+    heroBadge: "Visa consultation",
+    heroCtaText:
+      "Prepare your documents, understand requirements, and receive clear guidance before you apply.",
+    heroServicePill: "Work • Tourist • Medical • Education",
+    formEyebrow: "Start your visa review",
+    requirementsEyebrow: "Document readiness",
+    processEyebrow: "How it works",
+    processTitle: "A clearer path from documents to decision",
+    processDesc1: "Pick the visa category that fits your plans.",
+    processDesc2: "Gather passport, photos, and supporting documents.",
+    processDesc3: "Submit this form so we can review your file.",
+    processDesc4: "Receive clear guidance on what to do next.",
+    finalEyebrow: "Start with confidence",
+    finalTitle: "Ready to review your visa options?",
+    finalSubtitle:
+      "Share your destination, visa type, and travel window. Darul Safar will help you understand the next step with calm, clear guidance.",
     form: {
       visaType: "Visa Type",
       destination: "Destination",
@@ -73,6 +88,21 @@ const translations = {
   ar: {
     title: "مركز الاستعلام عن التأشيرات",
     subtitle: "التنقل عبر الحدود الدولية بدقة رسام الخرائط العالمي.",
+    heroBadge: "استشارة التأشيرات",
+    heroCtaText: "جهّز مستنداتك، وافهم المتطلبات، واحصل على إرشاد واضح قبل التقديم.",
+    heroServicePill: "عمل • سياحة • علاج • تعليم",
+    formEyebrow: "ابدأ مراجعة التأشيرة",
+    requirementsEyebrow: "جاهزية المستندات",
+    processEyebrow: "كيف نعمل",
+    processTitle: "مسار أوضح من المستندات إلى القرار",
+    processDesc1: "اختر فئة التأشيرة التي تناسب خططك.",
+    processDesc2: "اجمع جواز السفر والصور والمستندات الداعمة.",
+    processDesc3: "أرسل هذا النموذج لنراجع ملفك.",
+    processDesc4: "احصل على إرشاد واضح بشأن الخطوة التالية.",
+    finalEyebrow: "ابدأ بثقة",
+    finalTitle: "هل أنت مستعد لمراجعة خيارات التأشيرة؟",
+    finalSubtitle:
+      "شاركنا الوجهة ونوع التأشيرة وموعد السفر، وستساعدك دار السفر على فهم الخطوة التالية بإرشاد واضح وهادئ.",
     form: {
       visaType: "نوع التأشيرة",
       destination: "الوجهة",
@@ -134,6 +164,21 @@ const translations = {
   am: {
     title: "የቪዛ መጠየቂያ ማዕከል",
     subtitle: "ዓለም አቀፍ ድንበሮችን በዓለም አቀፍ ካርታ አዘጋጅ ትክክለኛነት ማሰስ።",
+    heroBadge: "የቪዛ ምክር",
+    heroCtaText: "ሰነዶችዎን ያዘጋጁ፣ መስፈርቶችን ይረዱ፣ እና ከማመልከትዎ በፊት ግልጽ መመሪያ ያግኙ።",
+    heroServicePill: "ስራ • ቱሪስት • ህክምና • ትምህርት",
+    formEyebrow: "የቪዛ ግምገማዎን ይጀምሩ",
+    requirementsEyebrow: "የሰነድ ዝግጁነት",
+    processEyebrow: "እንዴት እንሰራለን",
+    processTitle: "ከሰነዶች እስከ ውሳኔ የበለጠ ግልጽ መንገድ",
+    processDesc1: "ከእቅድዎ ጋር የሚስማማውን የቪዛ ምድብ ይምረጡ።",
+    processDesc2: "ፓስፖርት፣ ፎቶዎች እና ደጋፊ ሰነዶችን ያዝዙ።",
+    processDesc3: "ፋይልዎን እንድንገምግም ይህን ቅጽ ይላኩ።",
+    processDesc4: "ቀጣዩን እርምጃ በግልጽ ይወቁ።",
+    finalEyebrow: "በመተማመን ይጀምሩ",
+    finalTitle: "የቪዛ አማራጮችዎን ለመገምገም ዝግጁ ነዎት?",
+    finalSubtitle:
+      "መዳረሻዎን፣ የቪዛ አይነትዎን እና የጉዞ ጊዜዎን ያጋሩን። ዳሩል ሰፈር ቀጣዩን እርምጃ በግልጽና በተረጋጋ መመሪያ እንዲረዱ ይረዳዎታል።",
     form: {
       visaType: "የቪዛ አይነት",
       destination: "መዳረሻ",
@@ -195,6 +240,22 @@ const translations = {
   om: {
     title: "Wiirtuu Gaaffii Viizaa",
     subtitle: "Daangaa idil-addunyaa sirnawaa ta'een qaxxaamuruu.",
+    heroBadge: "Gorsa viizaa",
+    heroCtaText:
+      "Sanadoota kee qopheessi, ulaagaalee hubadhu, fi osoo hin galmeessin dura qajeelfama ifaa argadhu.",
+    heroServicePill: "Hojii • Turistii • Yaala • Barnoota",
+    formEyebrow: "Sakatta'iinsa viizaa kee jalqabi",
+    requirementsEyebrow: "Qophii sanadootaa",
+    processEyebrow: "Akkaataa itti hojjennu",
+    processTitle: "Daandii ifa ta'e sanadoota irraa gara murteetti",
+    processDesc1: "Gosa viizaa karoora kee waliin wal simu filadhu.",
+    processDesc2: "Paaspoortii, suuraa, fi sanadoota deeggarsaa walitti qabi.",
+    processDesc3: "Unka kana galchi akka faayilii kee ilaalnuuf.",
+    processDesc4: "Tarkaanfii itti aanu irratti qajeelfama ifaa argadhu.",
+    finalEyebrow: "Amanamummaadhaan jalqabi",
+    finalTitle: "Filannoowwan viizaa kee ilaaluuf qophiidhaa?",
+    finalSubtitle:
+      "Bakka deemtu, gosa viizaa, fi yeroo imalaa nuuf qoodi. Darul Safar tarkaanfii itti aanu qajeelfama ifaa fi tasgabbaa'aa waliin akka hubattu si gargaara.",
     form: {
       visaType: "Gosa Viizaa",
       destination: "Bakka Deeman",
@@ -257,7 +318,8 @@ const translations = {
 
 export default function VisaPage() {
   const { lang } = useLanguage();
-  const t = translations[lang];
+  const t = translations[lang as keyof typeof translations] ?? translations.en;
+  const formRef = useRef<HTMLElement | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
@@ -392,60 +454,113 @@ export default function VisaPage() {
     window.open(`https://wa.me/251911000000?text=${encodedMsg}`, '_blank');
   };
 
+  const scrollToForm = () => {
+    formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const inputClass =
+    'w-full rounded-2xl border border-white/80 bg-white/70 px-4 py-3 text-gray-900 shadow-sm transition focus:border-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/30';
+  const labelClass = 'block text-xs font-label font-bold uppercase tracking-widest text-emerald-800/90';
+
   return (
-    <div className="w-full min-h-screen bg-transparent flex flex-col items-center justify-start pb-24">
-      {/* Hero Section */}
-      <div className="w-full px-4 md:px-8 max-w-7xl mx-auto mt-8 mb-16">
-        <section className="w-full border border-white/20 transition-colors duration-500 py-32 md:py-48 rounded-[3rem] relative overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] min-h-[320px] md:min-h-[420px]">
-          <Image
-            src="/services/VDS11.png"
-            alt=""
-            fill
-            priority
-            className="object-cover"
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-900/95 via-slate-900/70 to-transparent z-0" />
-          <div className="max-w-4xl mx-auto relative z-10 text-center px-4 text-white">
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 border border-white/20 text-white font-label text-xs tracking-[0.2em] rounded-full uppercase font-bold bg-white/10 backdrop-blur-md"
-          >
-            <Globe2 className="w-4 h-4" />
-            Elite Travel Facilitation
-          </motion.div>
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="text-5xl md:text-7xl font-serif font-bold mb-6 tracking-tight text-white"
-          >
-            {t.title}
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="text-xl text-slate-100 font-body leading-relaxed max-w-2xl mx-auto"
-          >
-            {t.subtitle}
-          </motion.p>
-          </div>
-        </section>
+    <div className="relative w-full min-h-screen overflow-hidden pb-24">
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute left-1/2 top-[-20rem] h-[44rem] w-[44rem] -translate-x-1/2 rounded-full bg-emerald-200/35 blur-3xl" />
+        <div className="absolute right-[-16rem] top-[16rem] h-[34rem] w-[34rem] rounded-full bg-sky-200/30 blur-3xl" />
+        <div className="absolute bottom-[4rem] left-[-14rem] h-[32rem] w-[32rem] rounded-full bg-amber-100/55 blur-3xl" />
       </div>
 
-      {/* Interactive Form Section */}
-      <section className="w-full px-4 md:px-8 max-w-4xl mx-auto -mt-12 relative z-20">
-        <div className="bg-white/40 backdrop-blur-3xl border border-white/60 hover:border-blue-200 transition-colors duration-500 rounded-[2.5rem] p-8 md:p-12 shadow-[0_20px_40px_rgb(0,0,0,0.08)] relative overflow-hidden">
-          {/* Decorative Background Elements */}
-          <div className="absolute -top-24 -right-24 w-64 h-64 bg-blue-400/10 rounded-full blur-3xl pointer-events-none"></div>
-          <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-teal-400/10 rounded-full blur-3xl pointer-events-none"></div>
+      {/* Hero */}
+      <section className="mx-auto w-full max-w-7xl px-4 pb-10 pt-4 md:px-8 md:pb-20 md:pt-36">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+          className="relative w-full rounded-[2.25rem] border border-white/70 bg-white/45 p-1.5 shadow-[0_35px_100px_rgba(15,23,42,0.14)] backdrop-blur-2xl md:rounded-[3.4rem] md:p-2"
+        >
+          <div className="relative isolate min-h-[500px] overflow-hidden rounded-[2rem] bg-slate-200 [clip-path:inset(0_round_2rem)] [contain:paint] md:min-h-[680px] md:rounded-[2.65rem] md:[clip-path:inset(0_round_2.65rem)] lg:min-h-[720px]">
+            <Image
+              src="/services/VDS11.png"
+              alt="Darul Safar visa consultation"
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover object-center"
+            />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/78 via-slate-950/28 to-transparent" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-slate-950/58 via-slate-950/10 to-transparent" />
+
+            <div className="absolute left-5 top-6 z-20 md:left-10 md:top-8">
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/20 px-4 py-2 text-sm font-semibold text-white backdrop-blur-2xl">
+                <Globe2 className="h-4 w-4 shrink-0 text-white" aria-hidden />
+                <span>{t.heroBadge}</span>
+              </div>
+            </div>
+
+            <div className="absolute inset-x-0 bottom-0 z-20 px-5 pb-52 md:px-10 md:pb-44 lg:px-12 lg:pb-44">
+              <div className="max-w-4xl text-left">
+                <h1 className="font-serif text-[2.65rem] font-black leading-[0.95] tracking-[-0.05em] text-white drop-shadow-[0_14px_34px_rgba(0,0,0,0.35)] md:text-7xl lg:text-[5.2rem]">
+                  {t.title}
+                </h1>
+                <p className="mt-4 max-w-2xl text-sm leading-6 text-white/88 md:mt-6 md:text-xl md:leading-9">
+                  {t.subtitle}
+                </p>
+              </div>
+            </div>
+
+            <div className="absolute bottom-3 left-3 right-3 z-30 rounded-[1.6rem] border border-white/30 bg-white/20 p-2 shadow-[0_24px_75px_rgba(0,0,0,0.24)] backdrop-blur-2xl md:bottom-4 md:left-4 md:right-4 md:rounded-[2rem] md:p-3">
+              <div className="grid gap-2 md:grid-cols-[1fr_auto] md:items-center md:gap-3">
+                <div className="rounded-[1.15rem] bg-white/[0.86] px-4 py-3 backdrop-blur-xl md:rounded-[1.45rem] md:px-5 md:py-4">
+                  <p className="max-w-2xl text-center text-xs leading-5 text-slate-800 md:text-left md:text-base md:leading-relaxed">
+                    {t.heroCtaText}
+                  </p>
+                </div>
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:flex md:flex-nowrap md:gap-3">
+                  <button
+                    type="button"
+                    onClick={scrollToForm}
+                    className="inline-flex min-h-12 w-full items-center justify-center rounded-[1.15rem] bg-emerald-700 px-5 text-sm font-black text-white shadow-[0_18px_40px_rgba(4,120,87,0.28)] transition hover:bg-emerald-800 active:scale-[0.98] md:min-h-14 md:w-auto md:rounded-[1.45rem] md:px-6"
+                  >
+                    {t.form.submit}
+                  </button>
+                  <span className="inline-flex min-h-12 w-full items-center justify-center whitespace-normal rounded-[1.15rem] bg-white px-5 text-center text-sm font-black leading-5 text-slate-900 shadow-[0_14px_32px_rgba(15,23,42,0.10)] md:min-h-14 md:w-auto md:rounded-[1.45rem] md:px-6">
+                    {t.heroServicePill}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Visa review form */}
+      <section
+        id="visa-review"
+        ref={formRef}
+        className="relative z-20 mx-auto mb-28 w-full max-w-5xl px-4 md:mb-36 md:px-8"
+      >
+        <div className="relative overflow-hidden rounded-[3rem] border border-white/70 bg-white/55 p-6 shadow-[0_35px_100px_rgba(15,23,42,0.10)] backdrop-blur-2xl [clip-path:inset(0_round_3rem)] [contain:paint] md:p-10 lg:p-12">
+          <div
+            className="pointer-events-none absolute -right-16 top-0 h-56 w-56 rounded-full bg-emerald-400/15 blur-3xl"
+            aria-hidden
+          />
+          <div
+            className="pointer-events-none absolute -bottom-20 -left-12 h-52 w-52 rounded-full bg-sky-300/20 blur-3xl"
+            aria-hidden
+          />
+
+          <div className="relative z-10 mb-8 text-center md:mb-10">
+            <span className="mb-4 inline-flex rounded-full border border-emerald-100 bg-emerald-50 px-4 py-2 text-[11px] font-black uppercase tracking-[0.18em] text-emerald-800">
+              {t.formEyebrow}
+            </span>
+            <h2 className="font-serif text-3xl font-black tracking-[-0.04em] text-slate-950 md:text-4xl">
+              {t.form.submit}
+            </h2>
+          </div>
 
           <AnimatePresence mode="wait">
             {!isSubmitted ? (
-              <motion.form 
+              <motion.form
                 key="form"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -454,26 +569,32 @@ export default function VisaPage() {
                 className="relative z-10 space-y-8"
               >
                 {submitError && (
-                  <div className="rounded-2xl border border-red-200 bg-red-50/80 px-4 py-3 text-sm text-red-700 font-body flex items-start gap-2">
-                    <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
+                  <div className="flex items-start gap-2 rounded-2xl border border-red-200 bg-red-50/80 px-4 py-3 font-body text-sm text-red-700">
+                    <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
                     <span>{submitError}</span>
                   </div>
                 )}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  {/* Visa Type */}
+                <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                   <div className="space-y-2">
-                    <label className="block text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
-                      {t.form.visaType}
-                    </label>
-                    <select name="visaType" value={formData.visaType} onChange={handleChange} required className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all appearance-none shadow-sm">
-                      <option value="" disabled className="text-gray-500">Select...</option>
+                    <label className={labelClass}>{t.form.visaType}</label>
+                    <select
+                      name="visaType"
+                      value={formData.visaType}
+                      onChange={handleChange}
+                      required
+                      className={`${inputClass} appearance-none`}
+                    >
+                      <option value="" disabled className="text-gray-500">
+                        Select...
+                      </option>
                       {t.options.types.map((opt, i) => (
-                        <option key={i} value={opt} className="bg-white text-gray-900">{opt}</option>
+                        <option key={i} value={opt} className="bg-white text-gray-900">
+                          {opt}
+                        </option>
                       ))}
                     </select>
                   </div>
 
-                  {/* Destination */}
                   <div className="space-y-2">
                     <DestinationAutocomplete
                       value={formData.destination}
@@ -489,69 +610,91 @@ export default function VisaPage() {
                     />
                   </div>
 
-                  {/* Full Name */}
                   <div className="space-y-2">
-                    <label className="block text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
-                      {t.form.fullName}
-                    </label>
-                    <input name="fullName" value={formData.fullName} onChange={handleChange} required type="text" className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm" placeholder="John Doe" />
-                    {fieldErrors.fullName && <p className="text-xs text-red-600 font-body">{fieldErrors.fullName}</p>}
+                    <label className={labelClass}>{t.form.fullName}</label>
+                    <input
+                      name="fullName"
+                      value={formData.fullName}
+                      onChange={handleChange}
+                      required
+                      type="text"
+                      className={inputClass}
+                      placeholder="John Doe"
+                    />
+                    {fieldErrors.fullName && (
+                      <p className="font-body text-xs text-red-600">{fieldErrors.fullName}</p>
+                    )}
                   </div>
 
-                  {/* Phone Number */}
                   <div className="space-y-2">
-                    <label className="block text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
-                      {t.form.phone}
-                    </label>
-                    <input name="phone" value={formData.phone} onChange={handleChange} required type="tel" className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-sm" placeholder="+251..." />
-                    {fieldErrors.phone && <p className="text-xs text-red-600 font-body">{fieldErrors.phone}</p>}
+                    <label className={labelClass}>{t.form.phone}</label>
+                    <input
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      required
+                      type="tel"
+                      className={`${inputClass} placeholder:text-gray-400`}
+                      placeholder="+251..."
+                    />
+                    {fieldErrors.phone && (
+                      <p className="font-body text-xs text-red-600">{fieldErrors.phone}</p>
+                    )}
                   </div>
 
-                  {/* Preferred Month */}
                   <div className="space-y-2 md:col-span-2">
-                    <label className="block text-xs font-label font-bold text-blue-600 uppercase tracking-widest">
-                      {t.form.month}
-                    </label>
-                    <select name="month" value={formData.month} onChange={handleChange} required className="w-full bg-white/50 backdrop-blur-md border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all appearance-none shadow-sm">
-                      <option value="" disabled className="text-gray-500">Select...</option>
+                    <label className={labelClass}>{t.form.month}</label>
+                    <select
+                      name="month"
+                      value={formData.month}
+                      onChange={handleChange}
+                      required
+                      className={`${inputClass} appearance-none`}
+                    >
+                      <option value="" disabled className="text-gray-500">
+                        Select...
+                      </option>
                       {t.options.months.map((opt, i) => (
-                        <option key={i} value={opt} className="bg-white text-gray-900">{opt}</option>
+                        <option key={i} value={opt} className="bg-white text-gray-900">
+                          {opt}
+                        </option>
                       ))}
                     </select>
                   </div>
                 </div>
 
-                <div className="pt-8 border-t border-gray-200 flex flex-col md:flex-row items-center justify-between gap-6">
-                  <div className="flex items-center gap-3 text-gray-500 text-sm">
-                    <AlertCircle className="w-5 h-5 text-blue-600 shrink-0" />
+                <div className="flex flex-col items-stretch gap-6 border-t border-slate-200/70 pt-8 md:flex-row md:items-center md:justify-between">
+                  <div className="flex items-start gap-3 text-sm text-slate-600">
+                    <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-amber-600/90" aria-hidden />
                     <p>{t.disclaimer}</p>
                   </div>
-                  <button 
+                  <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full md:w-auto bg-emerald-700 text-white px-8 py-4 rounded-2xl font-headline font-bold uppercase tracking-widest hover:bg-emerald-800 hover:scale-105 active:scale-95 transition-all shadow-lg shadow-emerald-700/30 flex items-center justify-center gap-2 shrink-0 disabled:opacity-70 disabled:hover:scale-100"
+                    className="inline-flex min-h-14 w-full shrink-0 items-center justify-center gap-2 rounded-[1.35rem] bg-slate-950 px-8 font-black text-white shadow-[0_18px_40px_rgba(15,23,42,0.18)] transition hover:bg-emerald-800 disabled:cursor-not-allowed disabled:opacity-70 md:w-auto"
                   >
                     {isSubmitting ? t.form.sending : t.form.submit}
-                    {!isSubmitting && <Send className="w-4 h-4" />}
+                    {!isSubmitting && <Send className="h-4 w-4" aria-hidden />}
                   </button>
                 </div>
               </motion.form>
             ) : (
-              <motion.div 
+              <motion.div
                 key="success"
-                initial={{ opacity: 0, scale: 0.9 }}
+                initial={{ opacity: 0, scale: 0.96 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="relative z-10 flex flex-col items-center justify-center text-center py-16"
+                className="relative z-10 flex flex-col items-center justify-center rounded-[2rem] border border-emerald-100/80 bg-emerald-50/40 px-6 py-14 text-center backdrop-blur-sm md:py-16"
               >
-                <div className="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mb-6 shadow-sm border border-blue-100">
-                  <CheckCircle className="w-10 h-10 text-blue-600" />
+                <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-emerald-100 bg-emerald-50 text-emerald-700 shadow-sm">
+                  <CheckCircle className="h-10 w-10" aria-hidden />
                 </div>
-                <h3 className="text-2xl md:text-3xl font-headline font-bold text-gray-900 mb-4">
+                <h3 className="mb-4 max-w-lg font-headline text-2xl font-bold text-slate-900 md:text-3xl">
                   {t.success}
                 </h3>
-                <button 
+                <button
+                  type="button"
                   onClick={() => setIsSubmitted(false)}
-                  className="mt-8 px-8 py-3 bg-white border border-gray-200 text-gray-900 rounded-2xl hover:bg-gray-50 hover:border-gray-300 transition-colors shadow-sm font-bold"
+                  className="mt-4 rounded-2xl border border-slate-200 bg-white px-8 py-3 font-bold text-slate-900 shadow-sm transition hover:border-emerald-200 hover:bg-emerald-50/50"
                 >
                   {statusText.submitAnother}
                 </button>
@@ -561,46 +704,207 @@ export default function VisaPage() {
         </div>
       </section>
 
-      {/* Visual Requirement Grid */}
-      <section className="w-full px-4 md:px-8 max-w-7xl mx-auto mt-24 mb-32 md:mb-48 relative z-20">
-        <SectionHeader title={t.requirements.title} className="mb-16" />
+      {/* Process */}
+      <section className="mx-auto mb-28 w-full max-w-7xl px-4 md:mb-36 md:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+          className="rounded-[3rem] border border-white/70 bg-white/50 p-6 shadow-[0_30px_90px_rgba(15,23,42,0.08)] backdrop-blur-2xl md:p-10"
+        >
+          <div className="mb-8 text-center md:mb-10">
+            <span className="mb-3 inline-flex rounded-full border border-emerald-100 bg-emerald-50 px-4 py-2 text-[11px] font-black uppercase tracking-[0.18em] text-emerald-800">
+              {t.processEyebrow}
+            </span>
+            <h2 className="font-serif text-2xl font-black tracking-[-0.035em] text-slate-950 md:text-4xl">
+              {t.processTitle}
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
+            {[
+              {
+                step: '01',
+                title: t.form.visaType,
+                desc: t.processDesc1,
+                Icon: FileText
+              },
+              {
+                step: '02',
+                title: t.requirements.docs,
+                desc: t.processDesc2,
+                Icon: ClipboardList
+              },
+              {
+                step: '03',
+                title: t.form.submit,
+                desc: t.processDesc3,
+                Icon: Send
+              },
+              {
+                step: '04',
+                title: t.whatsappBtn,
+                desc: t.processDesc4,
+                Icon: MessageCircle
+              }
+            ].map((item, index) => {
+              const StepIcon = item.Icon;
+              return (
+                <motion.div
+                  key={item.step}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.06, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  className="relative overflow-hidden rounded-[2rem] border border-white/75 bg-white/65 p-6 shadow-[0_16px_50px_rgba(15,23,42,0.06)] backdrop-blur-xl transition hover:-translate-y-1 hover:bg-white"
+                >
+                  <span className="text-xs font-black text-emerald-600/80">{item.step}</span>
+                  <div className="mt-3 flex h-11 w-11 items-center justify-center rounded-xl border border-emerald-100 bg-emerald-50 text-emerald-700">
+                    <StepIcon className="h-5 w-5" aria-hidden />
+                  </div>
+                  <h3 className="mt-4 font-headline text-lg font-bold text-slate-900">{item.title}</h3>
+                  <p className="mt-2 font-body text-sm leading-relaxed text-slate-600">{item.desc}</p>
+                </motion.div>
+              );
+            })}
+          </div>
+        </motion.div>
+      </section>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            { title: t.requirements.passport, desc: activeReqs.passportDesc, icon: <FileText className="w-8 h-8 text-blue-600" /> },
-            { title: t.requirements.photos, desc: activeReqs.photosDesc, icon: <Camera className="w-8 h-8 text-blue-600" /> },
-            { title: t.requirements.financial, desc: activeReqs.financialDesc, icon: <Landmark className="w-8 h-8 text-blue-600" /> },
-            { title: t.requirements.docs, desc: activeReqs.docsDesc, icon: <Files className="w-8 h-8 text-blue-600" /> }
-          ].map((req, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              whileHover={{ scale: 1.05 }}
-              transition={{ delay: index * 0.1, duration: 0.5, ease: "easeOut" }}
-              className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-3xl p-6 shadow-sm hover:shadow-xl hover:shadow-blue-500/10 transition-all cursor-pointer group flex flex-col items-center text-center"
-            >
-              <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform origin-center">
-                {req.icon}
-              </div>
-              <h3 className="text-xl font-headline font-bold text-gray-900 mb-2">{req.title}</h3>
-              <p className="text-sm text-gray-500 font-body leading-relaxed">{req.desc}</p>
-            </motion.div>
-          ))}
-        </div>
+      {/* Requirements */}
+      <section className="relative z-20 mx-auto mb-28 w-full max-w-7xl px-4 md:mb-36 md:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+          className="rounded-[3rem] border border-white/70 bg-white/50 p-6 shadow-[0_30px_90px_rgba(15,23,42,0.08)] backdrop-blur-2xl md:p-10"
+        >
+          <div className="mb-8 text-center md:mb-10">
+            <span className="mb-3 inline-flex rounded-full border border-emerald-100 bg-emerald-50 px-4 py-2 text-[11px] font-black uppercase tracking-[0.18em] text-emerald-800">
+              {t.requirementsEyebrow}
+            </span>
+            <h2 className="font-serif text-2xl font-black tracking-[-0.035em] text-slate-950 md:text-4xl">
+              {t.requirements.title}
+            </h2>
+          </div>
 
-        <div className="mt-16 flex justify-center">
-          <motion.button 
-            onClick={handleWhatsApp}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="w-full md:w-auto bg-white border border-emerald-200 text-emerald-700 font-headline font-bold px-8 py-4 rounded-2xl hover:bg-emerald-50 active:scale-95 transition-all flex items-center justify-center gap-3 shadow-lg shadow-emerald-100/60 text-lg"
-          >
-            <MessageCircle className="w-6 h-6" />
-            {t.whatsappBtn}
-          </motion.button>
-        </div>
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
+            {[
+              {
+                title: t.requirements.passport,
+                desc: activeReqs.passportDesc,
+                bubble: 'border-emerald-100 bg-emerald-50 text-emerald-700'
+              },
+              {
+                title: t.requirements.photos,
+                desc: activeReqs.photosDesc,
+                bubble: 'border-amber-100 bg-amber-50 text-amber-800'
+              },
+              {
+                title: t.requirements.financial,
+                desc: activeReqs.financialDesc,
+                bubble: 'border-slate-200 bg-slate-100 text-slate-700'
+              },
+              {
+                title: t.requirements.docs,
+                desc: activeReqs.docsDesc,
+                bubble: 'border-emerald-100/80 bg-emerald-50/90 text-emerald-800'
+              }
+            ].map((req, index) => {
+              const icons = [
+                <FileText key="f" className="h-7 w-7" aria-hidden />,
+                <Camera key="c" className="h-7 w-7" aria-hidden />,
+                <Landmark key="l" className="h-7 w-7" aria-hidden />,
+                <Files key="fs" className="h-7 w-7" aria-hidden />
+              ];
+              return (
+                <motion.div
+                  key={req.title}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.06, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  className="flex min-h-[220px] flex-col items-center rounded-[2rem] border border-white/75 bg-white/65 p-6 text-center shadow-[0_16px_50px_rgba(15,23,42,0.06)] backdrop-blur-xl transition hover:-translate-y-1 hover:bg-white"
+                >
+                  <div
+                    className={`mb-5 flex h-14 w-14 items-center justify-center rounded-2xl border ${req.bubble}`}
+                  >
+                    {icons[index]}
+                  </div>
+                  <h3 className="font-headline text-lg font-bold text-slate-900">{req.title}</h3>
+                  <p className="mt-2 flex-grow font-body text-sm leading-relaxed text-slate-600">
+                    {req.desc}
+                  </p>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          <div className="mt-10 rounded-[2rem] border border-white/15 bg-slate-950/95 p-6 shadow-[0_24px_60px_rgba(15,23,42,0.2)] backdrop-blur-xl md:p-8">
+            <div className="flex flex-col items-center justify-between gap-4 md:flex-row md:gap-6">
+              <p className="max-w-xl text-center text-sm leading-relaxed text-white/80 md:text-left">
+                {t.processDesc4}
+              </p>
+              <motion.button
+                type="button"
+                onClick={handleWhatsApp}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="inline-flex w-full shrink-0 items-center justify-center gap-2 rounded-[1.35rem] bg-emerald-600 px-8 py-4 font-black text-white shadow-[0_18px_40px_rgba(4,120,87,0.35)] transition hover:bg-emerald-500 md:w-auto"
+              >
+                <MessageCircle className="h-6 w-6" aria-hidden />
+                {t.whatsappBtn}
+              </motion.button>
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="mx-auto w-full max-w-7xl px-4 pb-8 md:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+          className="relative overflow-hidden rounded-[3rem] border border-white/10 bg-slate-950 p-8 shadow-[0_35px_100px_rgba(15,23,42,0.18)] md:p-12"
+        >
+          <div
+            className="pointer-events-none absolute -left-20 top-1/2 h-72 w-72 -translate-y-1/2 rounded-full bg-emerald-500/[0.22] blur-3xl"
+            aria-hidden
+          />
+          <div
+            className="pointer-events-none absolute -right-16 top-0 h-64 w-64 rounded-full bg-sky-400/[0.18] blur-3xl"
+            aria-hidden
+          />
+
+          <div className="relative z-10 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+            <div>
+              <span className="mb-4 inline-flex rounded-full border border-white/15 bg-white/10 px-4 py-2 text-[11px] font-black uppercase tracking-[0.18em] text-emerald-200/95">
+                {t.finalEyebrow}
+              </span>
+              <h2 className="max-w-xl font-serif text-3xl font-black tracking-[-0.04em] text-white md:text-4xl">
+                {t.finalTitle}
+              </h2>
+              <p className="mt-4 max-w-xl text-base leading-8 text-white/75 md:text-lg md:leading-8">
+                {t.finalSubtitle}
+              </p>
+            </div>
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center lg:flex-col lg:items-stretch">
+              <button
+                type="button"
+                onClick={scrollToForm}
+                className="inline-flex min-h-14 w-full items-center justify-center rounded-[1.35rem] bg-white px-8 font-black text-slate-950 shadow-[0_14px_40px_rgba(0,0,0,0.2)] transition hover:bg-emerald-50 sm:w-auto lg:w-full"
+              >
+                {t.form.submit}
+              </button>
+              <span className="inline-flex min-h-12 w-full items-center justify-center rounded-[1.35rem] border border-white/20 bg-white/10 px-6 text-center text-sm font-black text-white backdrop-blur-sm sm:w-auto lg:w-full">
+                {t.heroServicePill}
+              </span>
+            </div>
+          </div>
+        </motion.div>
       </section>
     </div>
   );
