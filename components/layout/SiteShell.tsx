@@ -14,7 +14,8 @@ import {
   Moon,
   Plane,
   FileText,
-  Sparkles
+  Sparkles,
+  LogIn
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import BookNowModal, { type BookNowService } from '@/components/BookNowModal';
@@ -38,6 +39,9 @@ const pathToPage = (pathname: string): PageKey => {
   if (normalized === '/tools') return 'tools';
   return 'home';
 };
+
+const STAFF_PORTAL_URL =
+  process.env.NEXT_PUBLIC_STAFF_PORTAL_URL ?? 'https://dar-al-safar.eiqora.com/login';
 
 export default function SiteShell({ children }: { children: React.ReactNode }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -281,6 +285,14 @@ export default function SiteShell({ children }: { children: React.ReactNode }) {
               </AnimatePresence>
             </div>
 
+            <a
+              href={STAFF_PORTAL_URL}
+              className="inline-flex items-center gap-1.5 rounded-full border border-white/70 bg-white/55 px-4 py-2 font-headline text-sm font-bold text-slate-600 backdrop-blur-xl transition-colors hover:bg-white/80 hover:text-slate-950"
+            >
+              <LogIn className="h-4 w-4 shrink-0" aria-hidden />
+              {t.nav.staffSignIn}
+            </a>
+
             <button
               type="button"
               onClick={handleHeaderBookNowClick}
@@ -445,6 +457,13 @@ export default function SiteShell({ children }: { children: React.ReactNode }) {
                     OM
                   </button>
                 </div>
+                <a
+                  href={STAFF_PORTAL_URL}
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-[1.35rem] border border-white/70 bg-white/65 py-3 text-center font-headline text-sm font-bold text-slate-700 shadow-sm transition hover:bg-white active:scale-95"
+                >
+                  <LogIn className="h-4 w-4 shrink-0" aria-hidden />
+                  {t.nav.staffSignIn}
+                </a>
                 <button
                   type="button"
                   onClick={handleHeaderBookNowClick}
@@ -514,6 +533,14 @@ export default function SiteShell({ children }: { children: React.ReactNode }) {
                   <Link href="/tools" className="font-body text-sm text-white/65 transition-colors hover:text-emerald-200">
                     {t.nav.tools}
                   </Link>
+                </li>
+                <li>
+                  <a
+                    href={STAFF_PORTAL_URL}
+                    className="font-body text-sm text-white/65 transition-colors hover:text-emerald-200"
+                  >
+                    {t.nav.staffSignIn}
+                  </a>
                 </li>
               </ul>
             </div>

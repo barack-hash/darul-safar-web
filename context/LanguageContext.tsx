@@ -13,6 +13,7 @@ interface Translations {
     tools: string;
     solutions: string;
     services: string;
+    staffSignIn: string;
   };
   hero: {
     tag: string;
@@ -129,7 +130,7 @@ interface Translations {
 
 const translations: Record<Lang, Translations> = {
   en: {
-    nav: { home: "Home", pilgrimage: "Pilgrimage", ticketing: "Ticketing", visas: "Visas", tools: "Tools", solutions: "Solutions", services: "Services" },
+    nav: { home: "Home", pilgrimage: "Pilgrimage", ticketing: "Ticketing", visas: "Visas", tools: "Tools", solutions: "Solutions", services: "Services", staffSignIn: "Staff sign in" },
     hero: { 
       tag: "The Global Cartographer", 
       headline: "Connecting Ethiopian Travelers to the Globe.", 
@@ -253,7 +254,7 @@ const translations: Record<Lang, Translations> = {
     }
   },
   ar: {
-    nav: { home: "الرئيسية", pilgrimage: "الحج والعمرة", ticketing: "التذاكر", visas: "التأشيرات", tools: "الأدوات", solutions: "الحلول", services: "الخدمات" },
+    nav: { home: "الرئيسية", pilgrimage: "الحج والعمرة", ticketing: "التذاكر", visas: "التأشيرات", tools: "الأدوات", solutions: "الحلول", services: "الخدمات", staffSignIn: "دخول الموظفين" },
     hero: { 
       tag: "رسام الخرائط العالمي", 
       headline: "ربط المسافرين الإثيوبيين بالعالم.", 
@@ -377,7 +378,7 @@ const translations: Record<Lang, Translations> = {
     }
   },
   am: {
-    nav: { home: "ዋና ገፅ", pilgrimage: "ሐጅ እና ዑምራ", ticketing: "ትኬት", visas: "ቪዛ", tools: "መሳሪያዎች", solutions: "መፍትሄዎች", services: "አገልግሎቶች" },
+    nav: { home: "ዋና ገፅ", pilgrimage: "ሐጅ እና ዑምራ", ticketing: "ትኬት", visas: "ቪዛ", tools: "መሳሪያዎች", solutions: "መፍትሄዎች", services: "አገልግሎቶች", staffSignIn: "የሰራተኞች መግቢያ" },
     hero: { 
       tag: "ዓለም አቀፍ ካርታ አዘጋጅ", 
       headline: "ኢትዮጵያውያን ተጓዦችን ከዓለም ጋር ማገናኘት።", 
@@ -501,7 +502,7 @@ const translations: Record<Lang, Translations> = {
     }
   },
   om: {
-    nav: { home: "Fuula Duraa", pilgrimage: "Hajjii fi Umrah", ticketing: "Tikeetii", visas: "Viizaa", tools: "Meeshaalee", solutions: "Furmaata", services: "Tajaajiloota" },
+    nav: { home: "Fuula Duraa", pilgrimage: "Hajjii fi Umrah", ticketing: "Tikeetii", visas: "Viizaa", tools: "Meeshaalee", solutions: "Furmaata", services: "Tajaajiloota", staffSignIn: "Seensa hojjettootaa" },
     hero: { 
       tag: "Kaartaa Idil-addunyaa", 
       headline: "Imaltoota Itoophiyaa Addunyaa Waliin Walquunnamsiisuu.", 
